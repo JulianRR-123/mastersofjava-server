@@ -28,39 +28,39 @@ class BootstrapControllerTest {
     private BootstrapController controller;
 
     @Test
-	void testShouldBootstrap() {
-		when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
+    void testShouldBootstrap() {
+        when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
 
-		assertEquals("bootstrap", controller.bootstrap(null));
-	}
-
-    @Test
-	void testIsAlreadyBootstrapped() {
-		when(bootstrapService.isBootstrapNeeded()).thenReturn(false);
-
-		assertEquals("redirect:/", controller.bootstrap(mock(HttpServletRequest.class)));
-	}
+        assertEquals("bootstrap", controller.bootstrap(null));
+    }
 
     @Test
-	void testIsAlreadyBootstrappedDoBootstrap() {
-		when(bootstrapService.isBootstrapNeeded()).thenReturn(false);
+    void testIsAlreadyBootstrapped() {
+        when(bootstrapService.isBootstrapNeeded()).thenReturn(false);
 
-		assertEquals("redirect:/control", controller.doBootstrap(null));
-	}
-
-    @Test
-	void testDoBootstrap() throws IOException {
-		when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
-		assertEquals("redirect:/control", controller.doBootstrap(mock(RedirectAttributes.class)));
-	}
+        assertEquals("redirect:/", controller.bootstrap(mock(HttpServletRequest.class)));
+    }
 
     @Test
-	void testDoBootstrapFailure() throws IOException {
-		when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
-		doThrow(IOException.class)
-			.when(bootstrapService)
-			.bootstrap();
+    void testIsAlreadyBootstrappedDoBootstrap() {
+        when(bootstrapService.isBootstrapNeeded()).thenReturn(false);
 
-		assertEquals("redirect:/bootstrap", controller.doBootstrap(mock(RedirectAttributes.class)));
-	}
+        assertEquals("redirect:/control", controller.doBootstrap(null));
+    }
+
+    @Test
+    void testDoBootstrap() throws IOException {
+        when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
+        assertEquals("redirect:/control", controller.doBootstrap(mock(RedirectAttributes.class)));
+    }
+
+    @Test
+    void testDoBootstrapFailure() throws IOException {
+        when(bootstrapService.isBootstrapNeeded()).thenReturn(true);
+        doThrow(IOException.class)
+                .when(bootstrapService)
+                .bootstrap();
+
+        assertEquals("redirect:/bootstrap", controller.doBootstrap(mock(RedirectAttributes.class)));
+    }
 }
