@@ -8,21 +8,28 @@ Assignments for previous years can be found at [https://github.com/First8/master
 
 ### Requirements
 
-- Java 17+
-- Maven 3.5+
+- JDK 21 (Temurin recommended; the worker needs `javac` as well as `java`)
+- Maven Wrapper included (or Maven 3.6.3+)
 - [Keycloak](https://www.keycloak.org)
 - [PostgreSQL](https://www.postgresql.org)
 - [Docker (Optional)](https://www.docker.com)
 
 ## Building
 
-Building the software is done using maven. The command below will build the software and run all testcases.
+If you use SDKMAN, run `sdk env install` once and `sdk env` from the project root to select the JDK in `.sdkmanrc`.
+Otherwise, install JDK 21 and set `JAVA_HOME` and `PATH` to that installation. Check `./mvnw -version` reports Java 21.
+
+Import or reload `pom.xml` in your IDE so it uses the Java 21 language level. Set the IDE's project SDK and Maven runner/importer JDK to 21 as well; these machine-specific settings are not committed.
+
+Building the software is done using Maven. The command below builds the software and runs all tests.
 
 ```shell
-$ mvn clean verify 
+$ ./mvnw clean verify
 ```
 
 ## Building Containers
+The Java 21 deployment migration is tracked in [docs/TASKS.md](docs/TASKS.md). The existing Jib base images still use Java 17; complete task 5's base-image update before building containers for the Java 21 application.
+
 Building the containers is also done using maven and supports building to the docker-daemon and building and pushing
 to a registry directly.
 
@@ -170,5 +177,4 @@ separate browser session, e.g. using a 'private window' or another browser imple
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
 

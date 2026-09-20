@@ -22,7 +22,7 @@
     </parent>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <moj.image.base>moj</moj.image.base>
         <moj.image.tag>17</moj.image.tag>
 
@@ -272,9 +272,9 @@
                         <configFile>${project.basedir}/ide/eclipse-format.xml</configFile>
                         <lineEnding>LF</lineEnding>
                         <skip>${format.skip}</skip>
-                        <compilerSource>1.${java.version}</compilerSource>
-                        <compilerCompliance>1.${java.version}</compilerCompliance>
-                        <compilerTargetPlatform>1.${java.version}</compilerTargetPlatform>
+                        <compilerSource>${java.version}</compilerSource>
+                        <compilerCompliance>${java.version}</compilerCompliance>
+                        <compilerTargetPlatform>${java.version}</compilerTargetPlatform>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -305,10 +305,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                        <release>17</release>
-                        <source>17</source>
-                        <target>17</target>
+                        <release>${java.version}</release>
                     </configuration>
                 </plugin>
                 <plugin>

@@ -45,17 +45,23 @@ These are compatibility minimums, not a recommendation to pin all dependencies i
 
 Build plugins: Compiler `3.13.0`, Surefire `3.2.5`, JaCoCo `0.8.12`, Formatter `2.24.1`, ImpSort `1.12.0`, and Jib `3.4.6`. The newer formatter required whitespace-only changes in two existing bootstrap test files.
 
-Validation: `LANG=en_US.UTF-8 ./mvnw -B -ntp -Dno-format clean verify` passed on Temurin JDK 21. Resolved dependencies and the effective POM confirmed the versions above; Jib's build goal was resolved and inspected without building or publishing images. Java 17 bytecode remains configured until task 2; Java 21-specific assignment coverage and container verification remain in later tasks.
+Validation: `LANG=en_US.UTF-8 ./mvnw -B -ntp -Dno-format clean verify` passed on Temurin JDK 21. Resolved dependencies and the effective POM confirmed the versions above; Jib's build goal was resolved and inspected without building or publishing images. At task 1 completion, Java 17 bytecode was still configured; task 2 changes the target. Java 21-specific assignment coverage and container verification remain in later tasks.
 
 ### 2. Align local development and CI on Java 21
 
-- [ ] Set `<java.version>21</java.version>` in `pom.xml`. Replace the compiler plugin's hardcoded `17` settings with one `<release>${java.version}</release>` setting and remove redundant `source`/`target` settings.
-- [ ] Update `.sdkmanrc` to an available Temurin 21 release and configure the IDE to use JDK 21.
-- [ ] Change `.github/workflows/ci.yml` to set up Temurin Java 21. Ensure the build runs on this repository's intended branch instead of being skipped by the existing fork condition.
-- [ ] Check the formatter's `1.${java.version}` settings and use the Java 21 syntax supported by the selected formatter. Verify formatting/import checks work as well as compilation.
-- [ ] Update README prerequisites to Java 21 and check `./mvnw -version` reports Java 21.
+- [x] Set `<java.version>21</java.version>` in `pom.xml`. Replace the compiler plugin's hardcoded `17` settings with one `<release>${java.version}</release>` setting and remove redundant `source`/`target` settings.
+- [x] Update `.sdkmanrc` to an available Temurin 21 release and document IDE setup for JDK 21. IDE-specific SDK and Maven runner settings must be selected locally when importing the project.
+- [x] Change `.github/workflows/ci.yml` to set up Temurin Java 21. Ensure the build runs on this repository's intended branch instead of being skipped by the existing fork condition.
+- [x] Check the formatter's `1.${java.version}` settings and use the Java 21 syntax supported by the selected formatter. Verify formatting/import checks work as well as compilation.
+- [x] Update README prerequisites to Java 21 and check `./mvnw -version` reports Java 21.
 
 **Done when:** local development and CI use Java 21, and Maven targets Java 21 bytecode.
+
+**Completed:** Maven's compiler and formatter now use `21` from the shared Java property. SDKMAN selects the installed Temurin `21.0.12+1.1-tem`, and CI requests Temurin 21. The workflow no longer excludes fork `main` branches or ignores workflow-only changes; pull-request title edits can rerun WIP checks. Its artifact upload action was updated from the [retired v3](https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/) to v4.
+
+Validation: `sdk env` and `./mvnw -version` selected Java 21; compiled application class files have major version `65` (Java 21). `LANG=en_US.UTF-8 ./mvnw -B -ntp -Dno-format clean verify` passed with 61 tests passing and 2 skipped. The normal formatting-enabled path also passed with `./mvnw -B -ntp -DskipTests verify`, without source changes. Workflow YAML and Java/trigger settings were checked locally; a GitHub-hosted run awaits pushing these changes. IDE setup is documented in the README; no IDE-specific configuration exists in this checkout to verify.
+
+Container base images still need task 5's Java 21 update before image builds can run this application.
 
 ### 3. Verify the application and assignment compiler
 

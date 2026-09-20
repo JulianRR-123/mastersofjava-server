@@ -11,9 +11,8 @@ on:
       - '*.adoc'
       - '*.txt'
       - '.github/ISSUE_TEMPLATE/**'
-      - '.github/**'
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
     paths-ignore:
       - '.gitignore'
       - '.dockerignore'
@@ -21,7 +20,6 @@ on:
       - '*.adoc'
       - '*.txt'
       - '.github/ISSUE_TEMPLATE/**'
-      - '.github/**'
   workflow_dispatch:
 
 env:
@@ -49,7 +47,7 @@ jobs:
         run: |
           echo -n ${{ github.event.number }} > pull-request-number
       - name: Upload pull request number
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pull-request-number-${{ github.event.number }}
           path: pull-request-number
@@ -57,17 +55,14 @@ jobs:
   ci-sanity-check:
     name: "CI Sanity Check"
     runs-on: ubuntu-latest
-    # Skip main in forks
-    if: "github.repository == 'mastersofjava/mastersofjava' || !endsWith(github.ref, '/main')"
     steps:
       - name: Build
         run: sleep 30
   build:
     name: "Build Masters of Java"
     runs-on: ubuntu-latest
-    # Skip main in forks
     # Skip draft PRs and those with WIP in the subject, rerun as soon as its removed
-    if: "(github.repository == 'mastersofjava/mastersofjava' || !endsWith(github.ref, '/main')) && ( \
+    if: "( \
            github.event_name != 'pull_request' || ( \
              github.event.pull_request.draft == false && \
              github.event.pull_request.state != 'closed' && \
@@ -85,11 +80,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
       - name: Generate .m2 cache key
         id: m2-cache-key
         run: |
