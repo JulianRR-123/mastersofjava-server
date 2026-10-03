@@ -24,7 +24,9 @@
     <properties>
         <java.version>21</java.version>
         <moj.image.base>moj</moj.image.base>
-        <moj.image.tag>17</moj.image.tag>
+        <moj.image.tag>21</moj.image.tag>
+        <moj.image.jdk>eclipse-temurin:21-jdk-noble</moj.image.jdk>
+        <moj.image.source>https://github.com/JulianRR-123/mastersofjava-server</moj.image.source>
 
         <!-- Boot 2.7 manages an older Byte Buddy; align core and agent for Java 21. -->
         <byte-buddy.version>1.14.19</byte-buddy.version>
@@ -296,6 +298,7 @@
                     <artifactId>git-commit-id-maven-plugin</artifactId>
                     <version>5.0.0</version>
                     <configuration>
+                        <commitIdGenerationMode>full</commitIdGenerationMode>
                         <includeOnlyProperties>
                             <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
                         </includeOnlyProperties>
@@ -433,7 +436,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                         <platforms>
                                             <platform>
                                                 <architecture>amd64</architecture>
@@ -460,6 +463,8 @@
                                         <args>--spring.profiles.active=docker-single</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>
@@ -472,7 +477,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                         <platforms>
                                             <platform>
                                                 <architecture>amd64</architecture>
@@ -499,6 +504,8 @@
                                         <args>--spring.profiles.active=docker-controller</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>
@@ -511,7 +518,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                         <platforms>
                                             <platform>
                                                 <architecture>amd64</architecture>
@@ -538,6 +545,8 @@
                                         <args>--spring.profiles.active=docker-worker</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>
@@ -563,7 +572,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                     </from>
                                     <to>
                                         <image>${moj.image.base}-single:${moj.image.tag}</image>
@@ -576,6 +585,8 @@
                                         <args>--spring.profiles.active=docker-single</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>
@@ -588,7 +599,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                     </from>
                                     <to>
                                         <image>${moj.image.base}-controller:${moj.image.tag}</image>
@@ -601,6 +612,8 @@
                                         <args>--spring.profiles.active=docker-controller</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>
@@ -613,7 +626,7 @@
                                 </goals>
                                 <configuration>
                                     <from>
-                                        <image>eclipse-temurin:17-jdk-focal</image>
+                                        <image>${moj.image.jdk}</image>
                                     </from>
                                     <to>
                                         <image>${moj.image.base}-worker:${moj.image.tag}</image>
@@ -626,6 +639,8 @@
                                         <args>--spring.profiles.active=docker-worker</args>
                                         <labels>
                                             <commit>${git.commit.id.abbrev}</commit>
+                                            <org.opencontainers.image.source>${moj.image.source}</org.opencontainers.image.source>
+                                            <org.opencontainers.image.revision>${git.commit.id.full}</org.opencontainers.image.revision>
                                         </labels>
                                     </container>
                                 </configuration>

@@ -46,30 +46,44 @@ preview string templates through the worker's compiler and test runner. They als
 syntax is rejected when disabled. Run them with the full build above and `JAVA_HOME` set to JDK 21.
 
 ## Building Containers
-The Java 21 deployment migration is tracked in [docs/TASKS.md](docs/TASKS.md). The existing Jib base images still use Java 17; complete task 5's base-image update before building containers for the Java 21 application.
 
-Building the containers is also done using maven and supports building to the docker-daemon and building and pushing
-to a registry directly.
+The deployment plan is tracked in [docs/TASKS.md](docs/TASKS.md). Both Jib profiles use the full
+Temurin 21 JDK image `eclipse-temurin:21-jdk-noble`, configured once through `moj.image.jdk`.
+The default application image tag is `21`; registry releases use `sha-<full-commit-sha>` instead.
+
+Build and test the packaged JAR first:
+
+```shell
+LANG=en_US.UTF-8 ./mvnw -B -Dno-format clean verify
+```
 
 ### Docker Build
-To build all the containers in the Docker daemon the following can be used.
+
+Build the controller and worker into the local Docker daemon:
 
 ```shell
-$ export REGISTRY=<your-registry>
-$ mvn -Dmoj.image.base=${REGISTRY}/moj/moj -P docker-build clean deploy
+./mvnw -B -Pdocker-build initialize jib:dockerBuild@controller jib:dockerBuild@worker
 ```
+
+This creates local images named `moj-controller:21` and `moj-worker:21`. The `single`
+execution remains available explicitly as `jib:dockerBuild@single`.
 
 ### Registry Build
-To build and push all the containers to a container registry the following can be used.
+
+The publishing workflow planned in task 6 will run the verification above, then publish only the
+controller and worker for `linux/amd64` and `linux/arm64`:
 
 ```shell
-$ export REGISTRY=<your-registry>
-$ export REGISTRY_USERNAME=<your-push-user>
-$ export REGISTRY_PASSWORD=<your-registry-password>
-
-$ mvn -Dmoj.image.base=${REGISTRY}/moj/moj -P registry-build clean deploy
+./mvnw -B -Pregistry-build initialize jib:build@controller jib:build@worker \
+  -Dmoj.image.base=ghcr.io/julianrr-123/moj \
+  -Dmoj.image.tag=sha-${GITHUB_SHA}
 ```
-This will build and push all containers to your registry.  
+
+Supply `REGISTRY_USERNAME` and `REGISTRY_PASSWORD` through the workflow's credentials. Both packages
+will be private. `initialize` loads the checked-out commit's full SHA for the OCI revision label;
+`moj.image.source` supplies the repository URL. Retain this phase when invoking image goals separately
+from the JAR build. Do not use `clean` between verification and image creation: Jib packages the
+existing JAR. Do not use `deploy` for this workflow, because it also invokes the `single` image build.
 
 ## Running Containers
 To run everything in containers see [deploying with docker compose](src/deploy/docker-compose).

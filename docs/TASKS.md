@@ -109,22 +109,30 @@ The README now documents JDK selection and preview behavior: ordinary compilatio
 
 File: [`pom.xml`](../pom.xml).
 
-- [ ] Keep the existing Jib `registry-build` profile and its controller/worker Spring profiles and `amd64`/`arm64` platforms.
-- [ ] Replace the Java 17 base image references in both `registry-build` and `docker-build` with a maintained Temurin 21 JDK image. Verify the chosen tag supports both architectures. Update all executions, including `single`, because the shared JAR now targets Java 21; preferably define the base image once as a Maven property.
-- [ ] Build and test the JAR first, then invoke only the two named image executions. The following is the intended workflow command shape; run the publishing commands in Actions after task 6 supplies credentials:
+- [x] Keep the existing Jib `registry-build` profile and its controller/worker Spring profiles and `amd64`/`arm64` platforms.
+- [x] Replace the Java 17 base image references in both `registry-build` and `docker-build` with a maintained Temurin 21 JDK image. Verify the chosen tag supports both architectures. Update all executions, including `single`, because the shared JAR now targets Java 21; preferably define the base image once as a Maven property.
+- [x] Build and test the JAR first, then invoke only the two named image executions. The following is the intended workflow command shape; run the publishing commands in Actions after task 6 supplies credentials:
 
 ```sh
 ./mvnw -B -Dno-format clean verify
-./mvnw -B -Pregistry-build jib:build@controller jib:build@worker \
+./mvnw -B -Pregistry-build initialize jib:build@controller jib:build@worker \
   -Dmoj.image.base=ghcr.io/julianrr-123/moj \
   -Dmoj.image.tag=sha-${GITHUB_SHA}
 ```
 
-- [ ] Add OCI source/revision labels to the two Jib executions so packages identify the repository and commit.
+- [x] Add OCI source/revision labels to the two Jib executions so packages identify the repository and commit.
 
-The images use `containerizingMode=packaged`, so the JAR must exist before publishing. Do not use the existing generic `deploy` command for this workflow: it also builds the unneeded `single` image. No Dockerfile is needed. See the [Jib Maven documentation](https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md).
+The images use `containerizingMode=packaged`, so the JAR must exist before publishing. The `initialize` phase populates Git revision labels in this separate Maven invocation. Do not use the existing generic `deploy` command for this workflow: it also builds the unneeded `single` image. No Dockerfile is needed. See the [Jib Maven documentation](https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md).
 
 **Done when:** the workflow build approach targets exactly `moj-controller` and `moj-worker`, retaining their respective runtime profiles and using Java 21 JDK base images.
+
+**Completed:** All six executions in `registry-build` and `docker-build` use the shared `moj.image.jdk=eclipse-temurin:21-jdk-noble` property. The default local image tag is now `21`. Registry builds retain `linux/amd64` and `linux/arm64`, packaged JAR mode, and the existing Spring profiles. The [official Temurin image catalog](https://github.com/docker-library/official-images/blob/master/library/eclipse-temurin) and a live Docker Hub manifest inspection both confirmed the selected base tag supports amd64 and arm64.
+
+OCI source and full-revision labels are configured for all executions, alongside the existing abbreviated commit label. Git metadata generation now uses full mode, and the documented separate image invocation includes `initialize` to resolve those labels. The README uses named controller/worker executions instead of the all-image `deploy` command.
+
+Validation: `LANG=en_US.UTF-8 ./mvnw -B -Dno-format clean verify` passed on JDK 21 with 70 tests passing and 2 existing skips. After verification, `./mvnw -B -Pdocker-build initialize jib:dockerBuild@controller jib:dockerBuild@worker -Dmoj.image.base=moj-task5 -Dmoj.image.tag=verification` built exactly the two local amd64 images. Image inspection confirmed each Spring profile, source URL, and full current HEAD revision. Temporary containers reported Java `21.0.12.1` in both images and `javac 21.0.12.1` in the worker. The registry profile's effective configuration was inspected for both platforms; arm64 execution and GHCR publishing were not performed here.
+
+The base image resolved to `sha256:70898f0f893a6b772a0f29834d8b022e3ac20b6a0c33a922973cf66342ef56be` during validation. The configured tag remains mutable so subsequent builds can receive Temurin 21 updates. Publishing with credentials remains task 6, with published-image verification in task 7.
 
 ### 6. Add a GitHub Actions publishing workflow
 
