@@ -159,10 +159,10 @@ Local validation: actionlint v1.7.12 passed. Structural checks confirmed the tri
 
 ### 7. Verify package access
 
-- [ ] Check that both packages link to this repository and have the intended visibility. New packages default to private.
-- [ ] Pull both images by their published SHA tag from another machine. For private packages, use a PAT (classic) with `read:packages` and an account allowed to read the packages; pass the token through `docker login ghcr.io --password-stdin`.
-- [ ] Verify the published manifests include the server's architecture and record both image digests.
-- [ ] Run `java -version` in each pulled image using an entrypoint override, and `javac -version` in the worker image. All must report version 21.
+- [x] Check that both packages link to this repository and have the intended visibility. New packages default to private.
+- [x] Pull both images by their published SHA tag from another machine. For private packages, use a PAT (classic) with `read:packages` and an account allowed to read the packages; pass the token through `docker login ghcr.io --password-stdin`.
+- [x] Verify the published manifests include the server's architecture and record both image digests.
+- [x] Run `java -version` in each pulled image using an entrypoint override, and `javac -version` in the worker image. All must report version 21.
 
 **Done when:** both images pull successfully without building anything locally, both run Java 21, and the worker includes the Java 21 compiler.
 
@@ -186,12 +186,18 @@ Validation: `docker compose --env-file <temporary-test-env> -f docker-compose.ya
 
 ### 9. Add explicit persistent storage
 
-- [ ] Mount a named PostgreSQL volume at `/var/lib/postgresql/data` while using PostgreSQL 15.
-- [ ] Mount a separate named controller volume at `/data`, matching `application-docker-controller.yaml`. Decide how existing assignments and application files will be seeded into it.
-- [ ] Check whether any worker files need to survive recreation; persist only what is actually required, separately from controller data.
-- [ ] If reusing an existing installation, back up and migrate its current data before replacing mounts. Keep the Compose project name stable so future commands select the same volumes.
+- [x] Mount a named PostgreSQL volume at `/var/lib/postgresql/data` while using PostgreSQL 15.
+- [x] Mount a separate named controller volume at `/data`, matching `application-docker-controller.yaml`. Decide how existing assignments and application files will be seeded into it.
+- [x] Check whether any worker files need to survive recreation; persist only what is actually required, separately from controller data.
+- [x] If reusing an existing installation, back up and migrate its current data before replacing mounts. Keep the Compose project name stable so future commands select the same volumes.
 
 **Done when:** database records and controller files survive container recreation in a disposable test deployment. Never use `docker compose down -v` on the real deployment.
+
+**Completed:** The server Compose file declares `postgresql_data` at PostgreSQL 15's `/var/lib/postgresql/data` and a separate `controller_data` at `/data`. The default project name is `moj-server`; `.env.example` records `COMPOSE_PROJECT_NAME` so volume selection stays stable. The server README documents empty-volume seeding, uploading assignments through `/control`, and backup/migration of existing data before replacing mounts. No existing installation was migrated in this task.
+
+Worker storage review: assignment downloads and compilation workspaces are temporary; bundled libraries and the security policy are recreated by `BootstrapService`. No required worker state needs persistence with the bundled configuration. Custom worker files would need explicit provisioning separately from controller data.
+
+Validation: Compose configuration passed with disposable settings. In the isolated `moj-task9-disposable` project, real PostgreSQL 15 records in both `iam` and `moj`, plus controller assignment and session file markers, survived `up -d --no-deps --force-recreate`; container IDs changed and both named mounts were verified. The published controller image used a shell entrypoint for this storage-only check, bypassing application/authentication startup. The documented seed command copied hidden assignment files into an empty volume and rejected a second copy into the populated volume. Disposable containers, networks, and volumes were removed afterward. Full application deployment remains task 14.
 
 ### 10. Replace default credentials
 
