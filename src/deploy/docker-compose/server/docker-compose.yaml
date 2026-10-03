@@ -1,4 +1,3 @@
-version: '2.4'
 services:
   postgresql:
     image: postgres:15
@@ -6,12 +5,10 @@ services:
     mem_reservation: 128m
     mem_limit: 512m
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:5432:5432"
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_MULTIPLE_DATABASES: "iam:iam:iam,moj:moj:moj"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
+      POSTGRES_MULTIPLE_DATABASES: "iam:iam:${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env},moj:moj:${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
     volumes:
       - "./scripts:/docker-entrypoint-initdb.d"
     networks:
@@ -24,7 +21,7 @@ services:
     mem_limit: 1g
     restart: unless-stopped
     ports:
-      - "8888:8080"
+      - "127.0.0.1:8888:8080"
     command:
       - "start-dev"
       - "--import-realm"
@@ -32,11 +29,11 @@ services:
       - "--hostname-strict-https=false"
       - "--http-enabled=true"
     environment:
-      KEYCLOAK_ADMIN: "keycloak"
-      KEYCLOAK_ADMIN_PASSWORD: "keycloak"
+      KEYCLOAK_ADMIN: "${KEYCLOAK_ADMIN:?Set KEYCLOAK_ADMIN in .env}"
+      KEYCLOAK_ADMIN_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD:?Set KEYCLOAK_ADMIN_PASSWORD in .env}"
       KC_DB: postgres
       KC_DB_USERNAME: iam
-      KC_DB_PASSWORD: iam
+      KC_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/iam"
     volumes:
       - "./realms:/opt/keycloak/data/import"
@@ -49,19 +46,18 @@ services:
         condition: service_started
 
   controller:
-    image: ghcr.io/julianrr-123/moj-controller:sha-86267d23f1ff8f97f65e3f057b762626f65ab06c
+    image: ghcr.io/${GHCR_OWNER:?Set GHCR_OWNER in .env}/moj-controller:${MOJ_IMAGE_TAG:?Set MOJ_IMAGE_TAG to a published SHA tag in .env}
     cpus: 2
     mem_reservation: 1g
     mem_limit: 2g
     restart: unless-stopped
     ports:
-      - "8080:8080"
-      - "61616:61616"
+      - "127.0.0.1:8080:8080"
     environment:
       OIDC_ISSUER_URI: "http://host.docker.internal:8888/realms/moj"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql:5432/moj"
       SPRING_DATASOURCE_USERNAME: "moj"
-      SPRING_DATASOURCE_PASSWORD: "moj"
+      SPRING_DATASOURCE_PASSWORD: "${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
     networks:
       - moj
@@ -74,7 +70,7 @@ services:
         condition: service_started
 
   worker:
-    image: ghcr.io/julianrr-123/moj-worker:sha-86267d23f1ff8f97f65e3f057b762626f65ab06c
+    image: ghcr.io/${GHCR_OWNER:?Set GHCR_OWNER in .env}/moj-worker:${MOJ_IMAGE_TAG:?Set MOJ_IMAGE_TAG to a published SHA tag in .env}
     cpus: 3
     mem_reservation: 1g
     mem_limit: 2g

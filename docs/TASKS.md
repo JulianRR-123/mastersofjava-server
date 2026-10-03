@@ -172,13 +172,17 @@ Local validation: actionlint v1.7.12 passed. Structural checks confirmed the tri
 
 ### 8. Create a separate server Compose configuration
 
-- [ ] Create `src/deploy/docker-compose/server/compose.yaml` from the corrected all-in-one example. Use a standalone file so production port mappings cannot accidentally merge with development mappings.
-- [ ] Copy the required `scripts/` and `realms/` assets into that directory and keep their relative mounts valid. Remove the obsolete `version` field.
-- [ ] Set the controller and worker images to `ghcr.io/${GHCR_OWNER}/moj-controller:${MOJ_IMAGE_TAG}` and `ghcr.io/${GHCR_OWNER}/moj-worker:${MOJ_IMAGE_TAG}`. Require both variables using Compose's `${VAR:?message}` form in the actual file.
-- [ ] Keep `CONTROLLER_URI=http://controller:8080`, `CONTROLLER_BROKER_URI=tcp://controller:61616`, and the corrected `postgresql` database hostname.
-- [ ] Create `.env.example` with placeholders for image settings, `PUBLIC_IP`, public URLs, and credentials. Supply the actual IP and URLs through the server's untracked `.env` at deployment time. Ignore the real server `.env` in Git.
+- [x] Create `src/deploy/docker-compose/server/docker-compose.yaml` from the corrected all-in-one example. Use a standalone file so production port mappings cannot accidentally merge with development mappings.
+- [x] Copy the required `scripts/` and `realms/` assets into that directory and keep their relative mounts valid. Remove the obsolete `version` field.
+- [x] Set the controller and worker images to `ghcr.io/${GHCR_OWNER}/moj-controller:${MOJ_IMAGE_TAG}` and `ghcr.io/${GHCR_OWNER}/moj-worker:${MOJ_IMAGE_TAG}`. Require both variables using Compose's `${VAR:?message}` form in the actual file.
+- [x] Keep `CONTROLLER_URI=http://controller:8080`, `CONTROLLER_BROKER_URI=tcp://controller:61616`, and the corrected `postgresql` database hostname.
+- [x] Create `.env.example` with placeholders for image settings, `PUBLIC_IP`, public URLs, and credentials. Supply the actual IP and URLs through the server's untracked `.env` at deployment time. Ignore the real server `.env` in Git.
 
-**Done when:** `docker compose --env-file .env -f compose.yaml config --quiet` passes from the new directory with local test values, and no application service has a `build:` section.
+**Done when:** `docker compose --env-file .env -f docker-compose.yaml config --quiet` passes from the new directory with local test values, and no application service has a `build:` section.
+
+**Completed:** Added standalone `server/docker-compose.yaml`, copied `scripts/` and `realms/`, and added `.env.example` plus setup instructions. Both GHCR image references require nonempty `GHCR_OWNER` and `MOJ_IMAGE_TAG`; database and Keycloak credentials come from the untracked server `.env`. Public IP and URL placeholders are reserved for tasks 12–13; the copied local authentication settings remain until those tasks. The obsolete `version` field is removed. HTTP ports are loopback-only, and PostgreSQL and Artemis have no published host ports.
+
+Validation: `docker compose --env-file <temporary-test-env> -f docker-compose.yaml config --quiet` passed from the server directory with disposable values. Resolved configuration checks confirmed the matching image tag, internal controller/broker URLs, PostgreSQL hostname, matching database credentials, valid asset mounts, and absence of `build:` sections. Missing and empty image variables were rejected. Copied assets match the all-in-one originals, Git ignores the server `.env`, and `git diff --check` passed. No containers were started; runtime deployment validation remains task 14. Persistence, database-script safety, broker credentials, readiness, and public authentication remain in their numbered tasks.
 
 ### 9. Add explicit persistent storage
 
@@ -233,7 +237,7 @@ See Docker's [Compose startup-order guidance](https://docs.docker.com/compose/ho
 - [ ] Install Docker Engine and the Compose plugin. Allow SSH from your administration IP and keep application access restricted during setup.
 - [ ] Copy the server deployment directory, including scripts and realm JSON, to a stable location such as `/opt/moj`. Create its `.env` and log in to GHCR if needed. The server does not need Java, Maven, or the application source tree.
 - [ ] Check resource limits against the server's capacity. Current service memory limits total about 5.5 GiB before OS/proxy overhead; tune worker concurrency to available CPU and memory.
-- [ ] From that directory run `docker compose --env-file .env -f compose.yaml pull`, then `docker compose --env-file .env -f compose.yaml up -d`.
+- [ ] From that directory run `docker compose --env-file .env -f docker-compose.yaml pull`, then `docker compose --env-file .env -f docker-compose.yaml up -d`.
 - [ ] Inspect `ps` and service logs, create a Keycloak user in the `moj` realm's `admin` group, open `/control`, and submit an assignment to verify controller-to-worker processing.
 - [ ] Repeat task 3's existing-assignment and Java 21-assignment checks using the published containers. Verify their configured Java paths and `JAVA_HOME` work inside the images.
 

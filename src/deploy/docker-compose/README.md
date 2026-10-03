@@ -1,4 +1,7 @@
 # Deploying with Docker Compose
+For the standalone GHCR server configuration, see the [server setup](server/README.md).
+Its implementation progress is tracked in [the deployment tasks](../../../docs/TASKS.md).
+
 For deploying with Docker Compose there are two options.
 
 * Deploy and All-In-One solution.
@@ -65,4 +68,3 @@ starting the next.
 * postgresql
 * iam
 * single
-
