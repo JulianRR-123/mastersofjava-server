@@ -1,0 +1,101 @@
+name: Publish application images
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# Serialize publishers so simultaneous runs cannot overwrite the same SHA tag.
+concurrency:
+  group: publish-application-images
+  cancel-in-progress: false
+
+permissions: {}
+
+env:
+  LANG: en_US.UTF-8
+  IMAGE_BASE: ghcr.io/julianrr-123/moj
+  IMAGE_TAG: sha-${{ github.sha }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  publish:
+    name: Verify and publish controller and worker
+    if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out the triggering commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Temurin JDK 21
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: pom.xml
+
+      - name: Build and test the packaged JAR
+        run: ./mvnw -B -ntp -Dno-format clean verify
+
+      - name: Refuse to overwrite existing SHA tags
+        env:
+          REGISTRY_USERNAME: ${{ github.actor }}
+          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for role in controller worker; do
+            repository="${IMAGE_BASE#ghcr.io/}-${role}"
+            token=$(curl --fail --silent --show-error --get \
+              --user "${REGISTRY_USERNAME}:${REGISTRY_PASSWORD}" \
+              --data-urlencode 'service=ghcr.io' \
+              --data-urlencode "scope=repository:${repository}:pull" \
+              https://ghcr.io/token | jq -er '.token')
+            echo "::add-mask::${token}"
+            status=$(curl --silent --show-error --output /dev/null --write-out '%{http_code}' \
+              --header "Authorization: Bearer ${token}" \
+              --header 'Accept: application/vnd.oci.image.index.v1+json, application/vnd.docker.distribution.manifest.list.v2+json, application/vnd.oci.image.manifest.v1+json, application/vnd.docker.distribution.manifest.v2+json' \
+              "https://ghcr.io/v2/${repository}/manifests/${IMAGE_TAG}")
+            case "${status}" in
+              404) ;;
+              200)
+                echo "::error::${repository}:${IMAGE_TAG} already exists; publish a new commit instead of overwriting it."
+                exit 1
+                ;;
+              *)
+                echo "::error::Cannot check ${repository}:${IMAGE_TAG}: registry returned HTTP ${status}."
+                exit 1
+                ;;
+            esac
+          done
+
+      - name: Publish both application images
+        env:
+          REGISTRY_USERNAME: ${{ github.actor }}
+          REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ./mvnw -B -ntp -Pregistry-build initialize jib:build@controller jib:build@worker \
+            "-Dmoj.image.base=${IMAGE_BASE}" \
+            "-Dmoj.image.tag=${IMAGE_TAG}"
+
+      # This step only runs after BOTH Jib executions succeed.
+      - name: Record the published image pair
+        run: |
+          {
+            echo '### Published application images'
+            echo
+            echo "Commit: ${GITHUB_SHA}"
+            echo
+            echo "- ${IMAGE_BASE}-controller:${IMAGE_TAG}"
+            echo "- ${IMAGE_BASE}-worker:${IMAGE_TAG}"
+            echo
+            echo 'Both images published successfully. Verify private package access in task 7 before deployment.'
+          } >> "${GITHUB_STEP_SUMMARY}"

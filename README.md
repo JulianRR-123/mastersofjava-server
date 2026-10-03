@@ -57,6 +57,10 @@ Build and test the packaged JAR first:
 LANG=en_US.UTF-8 ./mvnw -B -Dno-format clean verify
 ```
 
+The original `ci.yml` workflow is manual-only to avoid duplicate automatic builds. It can still be
+started from GitHub Actions for a test-only run. Pull requests and pushes to other branches no longer
+trigger that workflow automatically.
+
 ### Docker Build
 
 Build the controller and worker into the local Docker daemon:
@@ -70,7 +74,8 @@ execution remains available explicitly as `jib:dockerBuild@single`.
 
 ### Registry Build
 
-The publishing workflow planned in task 6 will run the verification above, then publish only the
+The [publishing workflow](.github/workflows/publish-images.yml) runs on pushes to `master` and can
+be started manually from that branch. It runs the verification above, then publishes only the
 controller and worker for `linux/amd64` and `linux/arm64`:
 
 ```shell
@@ -79,11 +84,17 @@ controller and worker for `linux/amd64` and `linux/arm64`:
   -Dmoj.image.tag=sha-${GITHUB_SHA}
 ```
 
-Supply `REGISTRY_USERNAME` and `REGISTRY_PASSWORD` through the workflow's credentials. Both packages
-will be private. `initialize` loads the checked-out commit's full SHA for the OCI revision label;
+The workflow supplies `REGISTRY_USERNAME` from `github.actor` and `REGISTRY_PASSWORD` from its
+automatic `GITHUB_TOKEN`, with `contents: read` and `packages: write`. No personal push token is needed.
+New GHCR packages default to private; confirm their visibility and pull access in task 7. `initialize` loads the checked-out commit's full SHA for the OCI revision label;
 `moj.image.source` supplies the repository URL. Retain this phase when invoking image goals separately
 from the JAR build. Do not use `clean` between verification and image creation: Jib packages the
 existing JAR. Do not use `deploy` for this workflow, because it also invokes the `single` image build.
+
+The workflow serializes publishers and refuses to overwrite either image's existing SHA tag. A rerun
+is possible if neither tag was published. If one or both already exist, publish a new commit instead.
+If a run partially publishes, do not deploy that pair: only a successful run with both image references
+in its summary is a deployment candidate. The workflow does not deploy to the server.
 
 ## Running Containers
 To run everything in containers see [deploying with docker compose](src/deploy/docker-compose).

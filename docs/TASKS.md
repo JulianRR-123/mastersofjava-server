@@ -138,16 +138,24 @@ The base image resolved to `sha256:70898f0f893a6b772a0f29834d8b022e3ac20b6a0c33a
 
 Create `.github/workflows/publish-images.yml`.
 
-- [ ] Start with `workflow_dispatch` and pushes to the chosen release branch. Restrict manual publishing to that trusted branch too; do not publish from pull requests.
-- [ ] Check out the repository, set up Temurin Java 21 with Maven caching, and run task 5's commands in the same job. Preserve the existing CI locale setting (`LANG=en_US.UTF-8`). Publishing must stop if verification fails.
-- [ ] Give the job `contents: read` and `packages: write` permissions.
-- [ ] Supply `REGISTRY_USERNAME: ${{ github.actor }}` and `REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}` to the publishing step. The POM already reads those variables.
-- [ ] Use the same `sha-<full-commit-sha>` tag for both images. Deploy a tag only after both publishes succeed; do not overwrite release tags or depend on `latest`.
-- [ ] Use maintained action versions, preferably pinned to commit SHAs. Do not copy the fork-skipping condition or `.github/**` ignore rule from `ci.yml`.
+- [x] Start with `workflow_dispatch` and pushes to the chosen release branch. Restrict manual publishing to that trusted branch too; do not publish from pull requests.
+- [x] Check out the repository, set up Temurin Java 21 with Maven caching, and run task 5's commands in the same job. Preserve the existing CI locale setting (`LANG=en_US.UTF-8`). Publishing must stop if verification fails.
+- [x] Give the job `contents: read` and `packages: write` permissions.
+- [x] Supply `REGISTRY_USERNAME: ${{ github.actor }}` and `REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}` to the publishing step. The POM already reads those variables.
+- [x] Use the same `sha-<full-commit-sha>` tag for both images. Deploy a tag only after both publishes succeed; do not overwrite release tags or depend on `latest`.
+- [x] Use maintained action versions, preferably pinned to commit SHAs. Do not copy the fork-skipping condition or `.github/**` ignore rule from `ci.yml`.
 
 GitHub documents workflow authentication and package visibility in its [Container registry guide](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
 
 **Done when:** one Actions run passes tests and publishes both packages for the same commit.
+
+**CI trigger change:** At the user's request, `ci.yml` is now manual-only (`workflow_dispatch`). The publishing workflow owns automatic verification on `master`; automatic pull-request and other-branch CI checks are disabled. The earlier task 2 notes describe the configuration at that task's completion.
+
+**Implemented; awaiting first successful Actions run:** Added `.github/workflows/publish-images.yml` with push and manual triggers restricted to `master`, Temurin JDK 21, Maven caching, the existing UTF-8 locale, and the full build/test gate. The following publishing step runs only the two named Jib executions with one full-SHA tag and step-scoped registry credentials. Job permissions are `contents: read` and `packages: write`.
+
+The workflow pins the official `actions/checkout` v7.0.1 and `actions/setup-java` v6.0.1 releases to their verified commit SHAs. Publishers are serialized without cancelling an active run. Before publishing, an authenticated registry check rejects existing SHA tags and fails on authentication or unexpected registry errors. A success summary lists both images only after both Jib executions succeed. If publishing partially succeeds, use a new commit rather than overwrite the existing tag; do not deploy the incomplete pair.
+
+Local validation: actionlint v1.7.12 passed. Structural checks confirmed the triggers, branch restriction, permissions, full-SHA tag, test-before-publish order, and exact controller/worker goals. Seven mocked registry scenarios verified acceptance of missing tags and rejection of existing tags, authentication failures, and server errors. Task 5 already verified the unchanged Maven build and local Jib image commands. The workflow has not yet been committed, pushed, or run on GitHub; task 6 is not complete until one hosted run publishes both images successfully.
 
 ### 7. Verify package access
 

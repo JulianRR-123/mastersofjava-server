@@ -1,25 +1,8 @@
 name: Masters of Java CI
 
+# Automatic master verification is handled by publish-images.yml.
+# Keep this workflow available for an explicit test-only run.
 on:
-  push:
-    branches-ignore:
-      - 'dependabot/**'
-    paths-ignore:
-      - '.gitignore'
-      - '.dockerignore'
-      - '*.md'
-      - '*.adoc'
-      - '*.txt'
-      - '.github/ISSUE_TEMPLATE/**'
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review, edited]
-    paths-ignore:
-      - '.gitignore'
-      - '.dockerignore'
-      - '*.md'
-      - '*.adoc'
-      - '*.txt'
-      - '.github/ISSUE_TEMPLATE/**'
   workflow_dispatch:
 
 env:
