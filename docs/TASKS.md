@@ -201,12 +201,53 @@ Validation: Compose configuration passed with disposable settings. In the isolat
 
 ### 10. Replace default credentials
 
-- [ ] Generate separate passwords for the PostgreSQL administrator, IAM database user, MoJ database user, and Keycloak administrator. Configure matching values on both sides of each connection.
-- [ ] Replace the default Artemis credentials in the controller and worker using matching `SPRING_ARTEMIS_USER` and `SPRING_ARTEMIS_PASSWORD` values; verify broker authentication in the private test.
-- [ ] Update `scripts/create-databases.sh`: it currently logs `POSTGRES_MULTIPLE_DATABASES`, including passwords. Remove that logging and handle SQL values safely. Its current delimiter parsing also cannot accept arbitrary password characters unchanged.
-- [ ] Store server secrets in an untracked `.env` readable only by the deployment account. Disable the unused H2 console with `SPRING_H2_CONSOLE_ENABLED=false`.
+- [x] Generate separate passwords for the PostgreSQL administrator, IAM database user, MoJ database user, and Keycloak administrator. Configure matching values on both sides of each connection.
+- [x] Replace the default Artemis credentials in the controller and worker using matching `SPRING_ARTEMIS_USER` and `SPRING_ARTEMIS_PASSWORD` values; verify broker authentication in the private test.
+- [x] Update `scripts/create-databases.sh`: it currently logs `POSTGRES_MULTIPLE_DATABASES`, including passwords. Remove that logging and handle SQL values safely. Its current delimiter parsing also cannot accept arbitrary password characters unchanged.
+- [x] Store server secrets in an untracked `.env` readable only by the deployment account. Disable the unused H2 console with `SPRING_H2_CONSOLE_ENABLED=false`.
 
 **Done when:** no default credentials remain in the server configuration and no secrets appear in Git or initialization logs. PostgreSQL initialization scripts run only on an empty data directory; changing `.env` does not rotate existing database passwords.
+
+**Completed:** Added `server/generate-env.py` to generate five separate random
+passwords and non-default Keycloak/Artemis usernames into an exclusive, mode-600,
+untracked `.env`. The generated deployment file remains local; `MOJ_IMAGE_TAG`
+must be selected after publishing the new application revision. Compose requires
+all credentials and supplies matching IAM, MoJ, and controller/worker values.
+Both application services disable the H2 console.
+
+The server database initializer now takes IAM and MoJ passwords separately,
+reads them with `psql`'s environment-variable support, and quotes SQL literals
+without delimiter parsing. Passwords are neither printed nor passed as command
+arguments; statement/error logging is suppressed for credential creation and
+initialization failures produce a generic diagnostic.
+
+Broker review found that Spring Boot 2.7 disables security on embedded Artemis,
+so changing client credentials alone was insufficient. Added an opt-in application
+configuration, enabled in server Compose with `MOJ_BROKER_AUTHENTICATION_ENABLED`,
+that installs the configured account and grants send/consume access only to the
+two operation queues. Other profiles retain their existing behavior. **Publish
+new controller/worker images before using this server configuration**; existing
+published images do not include this change.
+
+Validation: disposable PostgreSQL 15 initialization accepted passwords containing
+spaces, commas, colons, dollar signs, backslashes, quotes, and SQL-injection text.
+Both database users authenticated over TCP; incorrect passwords failed. Success
+and deliberately triggered duplicate-role failure logs contained no passwords.
+The disposable container and its data volume were removed. A local TCP broker
+test passed message round-trips for both operation queues and rejected incorrect,
+`admin`/`admin`, and absent credentials; missing configured credentials prevented
+startup. Compose checks passed for matching values and rejected missing required
+credentials. Generator checks confirmed unique secrets, permissions, Git exclusion,
+and refusal to overwrite an existing `.env`.
+`LANG=en_US.UTF-8 ./mvnw -B -ntp clean verify` passed on Temurin JDK 21,
+including formatting/import checks: 74 tests ran, 72 passed, and 2 existing tests
+were skipped. `git diff --check` passed, and generated passwords were absent
+from the patch and new source files.
+
+The server README documents secure generation/copying and deliberate rotation of
+existing PostgreSQL/Keycloak accounts. No existing installation was modified;
+`.env` changes do not rotate persisted accounts. Full published-container private
+smoke testing remains task 14.
 
 ### 11. Make startup wait for readiness
 

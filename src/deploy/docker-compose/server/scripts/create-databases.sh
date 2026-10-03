@@ -1,24 +1,28 @@
 #!/bin/bash
+# Called by the PostgreSQL entrypoint only for an empty data directory.
+set +x
+set -euo pipefail
 
-set -e
-set -u
+: "${POSTGRES_USER:?POSTGRES_USER is required}"
+: "${IAM_DB_PASSWORD:?IAM_DB_PASSWORD is required}"
+: "${MOJ_DB_PASSWORD:?MOJ_DB_PASSWORD is required}"
 
-function create_user_and_database() {
-  local database=$(echo $1 | tr ':' ' ' | awk  '{print $1}')
-  local username=$(echo $1 | tr ':' ' ' | awk  '{print $2}')
-  local password=$(echo $1 | tr ':' ' ' | awk  '{print $3}')
-
-  echo "  Creating user and database '$database'"
-  psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
-      CREATE USER $username WITH PASSWORD '$password';
-      CREATE DATABASE $database OWNER $username;
-EOSQL
-}
-
-if [ -n "$POSTGRES_MULTIPLE_DATABASES" ]; then
-  echo "Multiple database creation requested: $POSTGRES_MULTIPLE_DATABASES"
-  for db in $(echo $POSTGRES_MULTIPLE_DATABASES | tr ',' ' '); do
-    create_user_and_database $db
-  done
-  echo "Multiple databases created"
+# Read secrets inside psql, not through command-line arguments. Quoted psql
+# variables escape SQL literals without delimiter parsing. Hide statement errors,
+# which may contain the expanded password literal, from initialization logs.
+if ! psql -X --quiet --set=ON_ERROR_STOP=1 --set=ECHO=none \
+    --username "$POSTGRES_USER" --dbname postgres 2>/dev/null <<'SQL'
+SET log_statement = 'none';
+SET log_min_error_statement = 'panic';
+\getenv iam_password IAM_DB_PASSWORD
+\getenv moj_password MOJ_DB_PASSWORD
+CREATE USER iam WITH PASSWORD :'iam_password';
+CREATE DATABASE iam OWNER iam;
+CREATE USER moj WITH PASSWORD :'moj_password';
+CREATE DATABASE moj OWNER moj;
+SQL
+then
+    echo "Database initialization failed; check database state and required environment values." >&2
+    exit 1
 fi
+echo "IAM and MoJ databases created."

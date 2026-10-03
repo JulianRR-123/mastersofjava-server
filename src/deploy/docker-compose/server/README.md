@@ -7,12 +7,18 @@ development file. Both application images use the same published SHA tag.
 From this directory, prepare the environment file:
 
 ```sh
-cp .env.example .env
-chmod 600 .env
+python3 generate-env.py
 ```
 
-Fill in the image settings and credentials, then validate without starting any
-containers:
+The generator creates separate random passwords for PostgreSQL administration,
+IAM, MoJ, Keycloak administration, and Artemis, plus non-default Keycloak and
+broker usernames. It writes `.env` with mode `600`, prints no secrets, and refuses
+to overwrite an existing file. Run it as the deployment account. Python 3 is
+needed only to generate the file; alternatively generate it locally and copy it
+securely to the server, keeping mode `600` and the deployment account as owner.
+
+Fill in `MOJ_IMAGE_TAG` and any deployment-specific settings, then validate without
+starting any containers:
 
 ```sh
 docker compose --env-file .env -f docker-compose.yaml config --quiet
@@ -31,17 +37,52 @@ Only the HTTP ports are published, on loopback: controller port 8080 and Keycloa
 port 8888. PostgreSQL and Artemis are reachable only on the Compose network.
 The worker connects to `controller:8080` and `controller:61616` internally.
 
-Named persistent storage is configured. Safe database initialization, broker
-credentials, and readiness checks follow in tasks 10–11. The copied database
-script currently logs credentials and cannot safely handle arbitrary password
-characters; use disposable alphanumeric values for configuration checks until
-task 10 replaces it. Do not start a real server deployment with this baseline.
+Named persistent storage and credentials are configured. Readiness checks follow
+in task 11; full application testing remains task 14.
 
 `PUBLIC_IP`, `MOJ_BASE_URL`, and `AUTH_BASE_URL` are placeholders for tasks 12–13
 and are not consumed yet. Authentication still uses the copied
 `host.docker.internal` hostname and localhost client redirects. Keycloak still
 uses `start-dev`; the public login configuration, production authentication, and
 HTTPS will be completed in later tasks.
+
+## Credentials and initialization
+
+All credentials are required by Compose; there are no fallback passwords in this
+server configuration. PostgreSQL receives `IAM_DB_PASSWORD` and `MOJ_DB_PASSWORD`
+as separate environment values. Keycloak and the controller use those same
+values for their database connections. The database initializer reads values
+inside `psql` and uses [quoted SQL literals](https://www.postgresql.org/docs/15/app-psql.html#APP-PSQL-INTERPOLATION)
+to preserve punctuation, spaces, quotes, and backslashes. It reports only generic
+initialization errors so failed SQL cannot expose a password in logs. Do not enable
+shell tracing or SQL statement logging during initialization.
+
+The generator uses hexadecimal passwords to avoid `.env` escaping issues. If
+supplying your own secrets, account for Compose environment-file quoting and
+interpolation: single-quoted values preserve literal `$` characters. Validate
+without displaying the resolved configuration. Keep `.env`, database role dumps,
+and backups private; container inspection and full `docker compose config` output
+can disclose environment secrets to anyone with Docker access.
+
+The controller explicitly enables broker authentication with
+`MOJ_BROKER_AUTHENTICATION_ENABLED=true`. This opt-in application configuration
+is required because Spring Boot 2.7's embedded broker disables security by default.
+It installs only the configured `SPRING_ARTEMIS_USER`/`SPRING_ARTEMIS_PASSWORD`
+account and grants send/consume access to `operation_request` and
+`operation_response`. The worker uses the same credentials. Both services disable
+the unused H2 console with `SPRING_H2_CONSOLE_ENABLED=false`. Publish new application
+images containing this security configuration before using this Compose file;
+older images do not enforce the opt-in flag.
+
+For an existing installation, **changing `.env` does not rotate stored passwords**.
+PostgreSQL initialization only runs on an empty volume. Back up first, stop clients,
+then deliberately change PostgreSQL roles (`postgres`, `iam`, and `moj`) using an
+interactive administration session such as `psql`'s `\password` command. Update
+the matching `.env` entries and recreate the affected services. Do not rerun the
+initializer or delete volumes to rotate credentials. Update an existing Keycloak
+administrator through Keycloak administration; `KEYCLOAK_ADMIN_PASSWORD` bootstraps
+an account only on first creation. To rotate Artemis credentials, change both
+shared `.env` entries and recreate the controller and worker together.
 
 ## Persistent storage and first-time seeding
 

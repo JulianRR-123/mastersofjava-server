@@ -10,7 +10,8 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
-      POSTGRES_MULTIPLE_DATABASES: "iam:iam:${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env},moj:moj:${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
+      IAM_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
+      MOJ_DB_PASSWORD: "${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
     volumes:
       - "postgresql_data:/var/lib/postgresql/data"
       - "./scripts:/docker-entrypoint-initdb.d"
@@ -62,6 +63,10 @@ services:
       SPRING_DATASOURCE_USERNAME: "moj"
       SPRING_DATASOURCE_PASSWORD: "${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+      SPRING_ARTEMIS_USER: "${ARTEMIS_USER:?Set ARTEMIS_USER in .env}"
+      SPRING_ARTEMIS_PASSWORD: "${ARTEMIS_PASSWORD:?Set ARTEMIS_PASSWORD in .env}"
+      SPRING_H2_CONSOLE_ENABLED: "false"
+      MOJ_BROKER_AUTHENTICATION_ENABLED: "true"
     volumes:
       - "controller_data:/data"
     networks:
@@ -83,6 +88,9 @@ services:
     environment:
       CONTROLLER_URI: "http://controller:8080"
       CONTROLLER_BROKER_URI: "tcp://controller:61616"
+      SPRING_ARTEMIS_USER: "${ARTEMIS_USER:?Set ARTEMIS_USER in .env}"
+      SPRING_ARTEMIS_PASSWORD: "${ARTEMIS_PASSWORD:?Set ARTEMIS_PASSWORD in .env}"
+      SPRING_H2_CONSOLE_ENABLED: "false"
       SPRING_JMS_LISTENER_CONCURRENCY: 3
       SPRING_JMS_LISTENER_MAX_CONCURRENCY: 3
     networks:
