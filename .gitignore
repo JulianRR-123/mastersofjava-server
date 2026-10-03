@@ -27,3 +27,4 @@ application-single-local.yaml
 .factorypath
 /scripts
 src/deploy/docker-compose/server/.env
+src/deploy/docker-compose/server/generated/

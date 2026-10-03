@@ -300,12 +300,46 @@ were removed afterward. Published-image and browser acceptance remain task 14.
 
 ### 12. Choose the public URLs
 
-- [ ] Configure `PUBLIC_IP` in the server's `.env` when deploying. Derive the IP-based MoJ and authentication URLs from it, and use the same configuration when generating Keycloak hostname and client redirect settings. Realm JSON does not expand Compose variables automatically; provide an explicit rendering step. Changing the IP must not require rebuilding application images, and an existing realm must be updated as described in task 13.
-- [ ] For an initial restricted IP test, use `http://<PUBLIC_IP>:8080` for MoJ and `http://<PUBLIC_IP>:8888` for authentication. Restrict these ports to your own IP during the test and use disposable credentials.
-- [ ] For public use, choose HTTPS URLs. Recommended: `https://moj.example.com` and `https://auth.example.com`, with both DNS records pointing to the server's public IP.
-- [ ] If users must enter the numeric IP directly, choose an HTTPS certificate solution valid for that IP and decide how MoJ and authentication will be routed, such as separate ports. Do not treat a domain certificate as valid for an IP address.
+- [x] Configure `PUBLIC_IP` in the server's `.env` when deploying. Derive the IP-based MoJ and authentication URLs from it, and use the same configuration when generating Keycloak hostname and client redirect settings. Realm JSON does not expand Compose variables automatically; provide an explicit rendering step. Changing the IP must not require rebuilding application images, and an existing realm must be updated as described in task 13.
+- [x] For an initial restricted IP test, use `http://<PUBLIC_IP>:8080` for MoJ and `http://<PUBLIC_IP>:8888` for authentication. Restrict these ports to your own IP during the test and use disposable credentials.
+- [x] For public use, choose HTTPS URLs. Recommended: `https://moj.example.com` and `https://auth.example.com`, with both DNS records pointing to the server's public IP.
+- [x] If users must enter the numeric IP directly, choose an HTTPS certificate solution valid for that IP and decide how MoJ and authentication will be routed, such as separate ports. Do not treat a domain certificate as valid for an IP address.
 
 **Done when:** you have one exact MoJ base URL and one exact authentication base URL for each environment. A domain pointing to the public IP still serves the application from that server.
+
+**Completed URL selection and repository preparation:** The chosen public
+origins are `https://moj.avaj.com` for MoJ and `https://auth.avaj.com` for
+authentication, with issuer `https://auth.avaj.com/realms/moj`. Both origins
+are defaults in `.env.example` and are documented in the server README.
+`PUBLIC_IP` is optional for these explicit domain URLs. The restricted numeric-IP
+test is implemented/documented as an optional alternative; public numeric-IP HTTPS
+is not needed for the chosen domain approach. Applying the `.env` on the server
+and pointing both DNS records to its public IP remain deployment actions; no server
+or DNS changes were made in this task.
+
+Added `src/deploy/docker-compose/server/prepare-urls.py`, using only Python's
+standard library. Public mode (the default) requires two explicit HTTPS origins.
+Restricted mode derives HTTP origins on ports 8080/8888 from `PUBLIC_IP`, including
+IPv6, with explicit per-origin overrides. The script validates literal URL values
+without executing `.env` or printing credentials. It renders ignored
+`generated/urls.env` with both origins, the exact issuer, and Keycloak 21.1's
+full hostname URL, plus `generated/realms/realm-mastersofjava.json` with the MoJ
+client's matching root/base URL, redirect URIs, web origin, and post-logout redirects.
+Other clients and realm settings stay intact. Regeneration changes deployment
+files only; application images need no rebuild.
+
+The environment template and README document domain/DNS choices, rendering,
+optional IP testing, file permissions, and existing-realm handling. Generated
+settings and realm files are prepared for task 13; Compose still uses the old
+hostname/import until that integration. HTTPS/proxy setup remains tasks 15–16.
+
+Validation: disposable CLI checks passed for HTTPS domains, quoted values/comments,
+IPv4/IPv6 derivation, explicit overrides, regeneration after an IP change, missing
+or malformed values, origin-scoped redirects, source-template preservation,
+unrelated realm/client preservation, credential exclusion, and output permissions.
+Invalid public HTTP input left existing output untouched. Git ignores generated
+files, and `git diff --check` passed. No real `.env`, server, DNS, or live realm was
+modified. No Java files changed, so the Maven suite was not rerun.
 
 ### 13. Fix Keycloak URLs and client redirects
 

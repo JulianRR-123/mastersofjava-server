@@ -14,7 +14,7 @@ The generator creates separate random passwords for PostgreSQL administration,
 IAM, MoJ, Keycloak administration, and Artemis, plus non-default Keycloak and
 broker usernames. It writes `.env` with mode `600`, prints no secrets, and refuses
 to overwrite an existing file. Run it as the deployment account. Python 3 is
-needed only to generate the file; alternatively generate it locally and copy it
+needed to generate the environment and render URLs; alternatively prepare these locally and copy them
 securely to the server, keeping mode `600` and the deployment account as owner.
 
 Fill in `MOJ_IMAGE_TAG` and any deployment-specific settings, then validate without
@@ -40,11 +40,84 @@ The worker connects to `controller:8080` and `controller:61616` internally.
 Named persistent storage, credentials, and readiness checks are configured.
 Full published-image application testing remains task 14.
 
-`PUBLIC_IP`, `MOJ_BASE_URL`, and `AUTH_BASE_URL` are placeholders for tasks 12–13
-and are not consumed yet. Authentication still uses the copied
+`prepare-urls.py` renders the chosen URLs and realm, as described below. Compose
+will consume the generated files in task 13. Authentication still uses the copied
 `host.docker.internal` hostname and localhost client redirects. Keycloak still
 uses `start-dev`; the public login configuration, production authentication, and
 HTTPS will be completed in later tasks.
+
+## Deployment URLs
+
+The chosen public approach uses two HTTPS domains pointing to this server:
+one for MoJ and one for authentication. The selected origins are recorded in
+`.env.example`; keep these literal values in the server `.env`:
+
+```dotenv
+PUBLIC_IP=
+MOJ_BASE_URL=https://moj.avaj.com
+AUTH_BASE_URL=https://auth.avaj.com
+```
+
+`PUBLIC_IP` is optional when both URLs are explicit. Set DNS records for both
+domains to the server's public IP. Certificates, HTTPS routing, and firewall
+configuration follow in tasks 15–16; preparation does not provision them.
+The corresponding issuer is `https://auth.avaj.com/realms/moj`.
+
+From this directory, render and review the exact URLs:
+
+```sh
+python3 prepare-urls.py
+```
+
+The default public mode requires two explicit HTTPS origins. Origins can include
+a port, but cannot contain credentials, a path, query, or fragment. A trailing
+slash is removed. URL values can be plain or single/double quoted with a trailing
+comment; use literal values rather than `${PUBLIC_IP}` or other interpolation.
+The script reads only the three URL keys, does not execute `.env`, and prints
+only the resolved URLs. It never changes `.env` or the source realm template.
+
+Outputs, ignored by Git and regenerated after every URL change, are:
+
+| File | Contents |
+| --- | --- |
+| `generated/urls.env` | Exact MoJ/authentication origins, `OIDC_ISSUER_URI=<AUTH_BASE_URL>/realms/moj`, and Keycloak 21.1's `KC_HOSTNAME_URL=<AUTH_BASE_URL>` |
+| `generated/realms/realm-mastersofjava.json` | The `moj` client with matching root/base URL, redirect URIs, web origin, and post-logout redirects |
+
+All client redirects are scoped to the chosen MoJ origin; no global wildcard is
+added. The URL environment file has mode `600`; the realm has mode `644` so
+Keycloak's container user can read it. Run preparation as the deployment account.
+Task 13 will use the URL environment file after `.env` in Compose and mount the
+generated realm directory for import. Until then, these files are reviewable
+preparation artifacts and do not change the running authentication configuration.
+The hostname setting follows the [Keycloak 21.1.2 hostname guide](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/hostname.adoc);
+task 13 must remove the old `--hostname` argument because it cannot be combined
+with the full hostname URL.
+An existing realm needs an explicit administration update or migration in task
+13; startup import does not replace it. Changing the server IP behind unchanged
+domains needs a DNS update, with no image rebuild. Changing either origin needs
+regeneration and the corresponding authentication update.
+
+For an optional restricted IP test, leave both base URLs empty and set `PUBLIC_IP`:
+
+```dotenv
+PUBLIC_IP=203.0.113.10
+MOJ_BASE_URL=
+AUTH_BASE_URL=
+```
+
+```sh
+python3 prepare-urls.py --mode restricted
+```
+
+This derives `http://203.0.113.10:8080` and `http://203.0.113.10:8888`; the example
+IP must be replaced. Numeric IPv6 addresses are also supported. Explicit origins
+override the respective derived URL. Restrict any test HTTP exposure to your own
+administration IP and use disposable credentials. Current Compose bindings are
+still loopback-only; URL preparation does not open any ports.
+
+If choosing numeric IPs for public HTTPS instead, set two explicit HTTPS origins
+and arrange certificates valid for that IP plus separate routing/ports. A domain
+certificate does not establish trusted HTTPS for a numeric IP URL.
 
 ## Startup and recovery
 
