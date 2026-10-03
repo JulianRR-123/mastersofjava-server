@@ -17,18 +17,19 @@ to overwrite an existing file. Run it as the deployment account. Python 3 is
 needed to generate the environment and render URLs; alternatively prepare these locally and copy them
 securely to the server, keeping mode `600` and the deployment account as owner.
 
-Fill in `MOJ_IMAGE_TAG` and any deployment-specific settings, then validate without
-starting any containers:
+Fill in `MOJ_IMAGE_TAG` and the deployment URLs, render their configuration, then
+validate without starting any containers:
 
 ```sh
-docker compose --env-file .env -f docker-compose.yaml config --quiet
+python3 prepare-urls.py
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml config --quiet
 ```
 
 `GHCR_OWNER`, `MOJ_IMAGE_TAG`, and the credential values are required. For private
 packages, authenticate to GHCR before pulling with an account that has package
 read access. No Java or Maven installation is needed on the server.
 
-Keep `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
+Keep the Python scripts, `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
 to the server; their mounts are relative to the Compose file. `.env` is ignored
 by Git. Avoid sharing the full output of `docker compose config`, which includes
 resolved credentials.
@@ -40,11 +41,11 @@ The worker connects to `controller:8080` and `controller:61616` internally.
 Named persistent storage, credentials, and readiness checks are configured.
 Full published-image application testing remains task 14.
 
-`prepare-urls.py` renders the chosen URLs and realm, as described below. Compose
-will consume the generated files in task 13. Authentication still uses the copied
-`host.docker.internal` hostname and localhost client redirects. Keycloak still
-uses `start-dev`; the public login configuration, production authentication, and
-HTTPS will be completed in later tasks.
+Compose consumes the generated URL settings and realm, as described below.
+Keycloak still uses `start-dev`; production authentication and HTTPS routing are
+completed in tasks 15–16. Until routing for the selected public origins exists,
+controller startup can fail while fetching OIDC discovery. Do not substitute an
+internal issuer to bypass that failure.
 
 ## Deployment URLs
 
@@ -86,14 +87,17 @@ Outputs, ignored by Git and regenerated after every URL change, are:
 All client redirects are scoped to the chosen MoJ origin; no global wildcard is
 added. The URL environment file has mode `600`; the realm has mode `644` so
 Keycloak's container user can read it. Run preparation as the deployment account.
-Task 13 will use the URL environment file after `.env` in Compose and mount the
-generated realm directory for import. Until then, these files are reviewable
-preparation artifacts and do not change the running authentication configuration.
-The hostname setting follows the [Keycloak 21.1.2 hostname guide](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/hostname.adoc);
-task 13 must remove the old `--hostname` argument because it cannot be combined
-with the full hostname URL.
-An existing realm needs an explicit administration update or migration in task
-13; startup import does not replace it. Changing the server IP behind unchanged
+Pass the URL environment file after `.env` in **every** Compose command, as shown
+throughout this guide. Compose requires the generated hostname and issuer; the
+realm bind mount refuses to create a missing source directory. Regenerate after
+editing URLs and before recreating services; generated files are a snapshot.
+The hostname setting follows the [Keycloak 21.1.2 hostname guide](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/hostname.adoc):
+`KC_HOSTNAME_URL` sets the full origin, with strict hostname and backchannel
+settings so all advertised endpoints use that origin. There is no competing
+`--hostname` argument. The rendered realm also sets its frontend URL to the same
+authentication origin. The generated import is mounted read-only.
+An existing realm needs the administration update below; startup import does not
+replace it. Changing the server IP behind unchanged
 domains needs a DNS update, with no image rebuild. Changing either origin needs
 regeneration and the corresponding authentication update.
 
@@ -119,14 +123,81 @@ If choosing numeric IPs for public HTTPS instead, set two explicit HTTPS origins
 and arrange certificates valid for that IP plus separate routing/ports. A domain
 certificate does not establish trusted HTTPS for a numeric IP URL.
 
+## Updating an existing realm
+
+For a new database, startup imports the rendered realm. For an existing `moj`
+realm, [Keycloak 21.1 skips startup import](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/importExport.adoc).
+Regenerating JSON or restarting alone does not update saved client settings.
+Back up the IAM database and record the current realm/client URL fields before
+a deliberate change during a maintenance window.
+
+1. Render the new URLs, then recreate `auth` with both environment files. Open its
+   administration console through the configured authentication origin and sign
+   in with the current administrator credentials.
+2. Select realm `moj`. In **Realm settings → General**, set **Frontend URL** to
+   the exact `AUTH_BASE_URL` shown by preparation and save. This replaces any old
+   realm-level hostname override.
+3. Open **Clients → moj → Settings**. Set **Root URL** to `MOJ_BASE_URL`, **Home URL**
+   to `MOJ_BASE_URL/`, **Valid redirect URIs** to `MOJ_BASE_URL/*`, **Web origins** to
+   `MOJ_BASE_URL`, and **Valid post logout redirect URIs** to `MOJ_BASE_URL/*`.
+   Replace old entries rather than adding alternatives. Save and compare with the
+   generated realm's `moj` client, including `attributes.post.logout.redirect.uris`.
+4. Recreate controller and worker with both environment files, then perform the
+   discovery and browser checks below. Existing users, groups, client IDs/secrets,
+   and unrelated client settings are retained by this field-only update.
+
+Use the actual rendered origins in place of these variable names. Do not delete
+or reimport the realm to change URLs. If authentication and application origins
+remain unchanged while their IP changes, update DNS/routing only.
+
+## Verify issuer, routing, and browser redirects
+
+Both browsers and the controller must reach the **same** issuer. From the server
+and again from another machine/network with access to the deployment, run:
+
+```sh
+python3 verify-oidc.py --issuer https://auth.avaj.com/realms/moj
+```
+
+Use the exact rendered issuer for restricted tests. The checker requires HTTP
+200, an exact issuer, and public realm URLs for authorization, token, keys,
+userinfo, and logout endpoints. It uses normal TLS certificate verification.
+To test DNS/routing and Java TLS trust inside the running controller, run from
+this directory using Bash (the pipe must fail if either command fails):
+
+```sh
+set -o pipefail
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml \
+  exec -T controller java /opt/moj-healthchecks/FetchOidc.java | \
+  python3 verify-oidc.py --issuer https://auth.avaj.com/realms/moj --discovery-file -
+```
+
+If controller startup is blocked on discovery, use `run --rm --no-deps
+--entrypoint java controller /opt/moj-healthchecks/FetchOidc.java` in place of
+`exec -T controller java ...`; this checks from the same service network/settings.
+If the server cannot route to its own public IP, configure split DNS so
+`auth.avaj.com` resolves internally to the HTTPS proxy, or arrange hairpin routing.
+The proxy must serve the same hostname with a trusted certificate. For a
+containerized proxy, a network alias for the public hostname on that proxy can
+provide internal resolution. Do not point the HTTPS hostname directly at
+Keycloak's HTTP backend or change the issuer to `http://auth:8080`. The obsolete
+`host.docker.internal` host-gateway mappings have been removed.
+
+Finally, open MoJ in a browser, log in, open `/control` with an administrator,
+and log out. Verify both returns stay on the selected MoJ origin and Keycloak
+redirects use the authentication origin; no localhost/internal hostname or
+global redirect allowance should appear. Discovery checks alone do not prove
+login/logout acceptance. These live checks require the server routing and
+HTTPS setup; record them when running tasks 14–17.
+
 ## Startup and recovery
 
 Use Docker Compose 2.17 or newer (dependency `restart: true` support). Start and
 wait for readiness with:
 
 ```sh
-docker compose --env-file .env -f docker-compose.yaml up -d --wait --wait-timeout 600
-docker compose --env-file .env -f docker-compose.yaml ps
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml ps
 ```
 
 PostgreSQL must accept TCP connections before Keycloak starts. Using TCP avoids
@@ -148,8 +219,8 @@ All services retain `restart: unless-stopped`. Dependency `restart: true` also
 restarts dependents after explicit Compose restart/update operations. For example:
 
 ```sh
-docker compose --env-file .env -f docker-compose.yaml restart postgresql
-docker compose --env-file .env -f docker-compose.yaml up -d --wait --wait-timeout 600
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml restart postgresql
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
 ```
 
 [Compose startup ordering](https://docs.docker.com/compose/how-tos/startup-order/)
@@ -232,7 +303,7 @@ volume before starting the controller:
 ```sh
 SEED_DATA_DIR=/absolute/path/to/controller-data
 # The source directory must exist. This refuses to overwrite a populated volume.
-docker compose --env-file .env -f docker-compose.yaml run --rm --no-deps \
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml run --rm --no-deps \
   --entrypoint /bin/sh -v "$SEED_DATA_DIR:/seed:ro" controller -ec '
     test -d /seed/assignments
     test -z "$(ls -A /data)" || { echo "Controller volume is not empty" >&2; exit 1; }
@@ -275,7 +346,7 @@ Populate the new named volumes from the verified backups before starting service
 use the empty-volume controller seeding command above for restored controller files.
 Check that database records and assignments are present after recreation.
 
-For routine recreation, use `docker compose --env-file .env -f docker-compose.yaml
+For routine recreation, use `docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml
 up -d --force-recreate`. Named volumes survive container removal and `down`.
 **Never run `docker compose down -v` on the real deployment**, or remove its named
 volumes. Changing project names can make an intact installation appear empty.

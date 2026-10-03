@@ -343,20 +343,58 @@ modified. No Java files changed, so the Maven suite was not rerun.
 
 ### 13. Fix Keycloak URLs and client redirects
 
-- [ ] Replace `host.docker.internal` with the chosen externally reachable authentication hostname/URL, using options supported by the selected Keycloak version.
-- [ ] Set `OIDC_ISSUER_URI` to `<AUTH_BASE_URL>/realms/moj`. The browser and controller must both reach that issuer; check connectivity from inside the controller network as well as externally.
-- [ ] Update the imported realm's `moj` client redirect URIs to the chosen MoJ origin (for example, `https://moj.example.com/*`). Configure matching web origins and post-logout redirects without a global `*` allowance.
-- [ ] Remove obsolete host-gateway entries when no longer needed. If the server cannot reach its own public address, arrange internal DNS/routing for the same public hostname rather than changing the issuer to `http://auth:8080`.
-- [ ] For an existing realm, update it through Keycloak administration or a deliberate migration; startup import does not overwrite an existing realm automatically.
+- [x] Replace `host.docker.internal` with the chosen externally reachable authentication hostname/URL, using options supported by the selected Keycloak version.
+- [x] Set `OIDC_ISSUER_URI` to `<AUTH_BASE_URL>/realms/moj`. The browser and controller must both reach that issuer; check connectivity from inside the controller network as well as externally.
+- [x] Update the imported realm's `moj` client redirect URIs to the chosen MoJ origin (for example, `https://moj.example.com/*`). Configure matching web origins and post-logout redirects without a global `*` allowance.
+- [x] Remove obsolete host-gateway entries when no longer needed. If the server cannot reach its own public address, arrange internal DNS/routing for the same public hostname rather than changing the issuer to `http://auth:8080`.
+- [x] For an existing realm, update it through Keycloak administration or a deliberate migration; startup import does not overwrite an existing realm automatically.
 
 **Done when:** discovery at `<AUTH_BASE_URL>/realms/moj/.well-known/openid-configuration` returns the exact expected issuer and browser-reachable endpoints. Login and logout return to MoJ.
+
+**Implemented; live deployment acceptance pending:** Server Compose consumes
+`KC_HOSTNAME_URL` and `OIDC_ISSUER_URI` from the URL renderer, using a second
+`--env-file generated/urls.env` after `.env`. Missing generated settings fail
+configuration. Keycloak 21.1 uses hostname v1's full URL with strict hostname and
+backchannel settings; the competing hostname argument and both host-gateway
+entries are removed. Its generated realm import is read-only and refuses to
+create a missing bind source. The realm frontend URL now matches the exact
+authentication origin as well as the origin-scoped MoJ client settings.
+
+The README documents a field-only administration update for existing realms,
+including realm frontend URL, root/home URL, redirect URIs, web origin, and
+post-logout redirects. It explains startup-import skipping, regeneration after
+URL changes, and internal DNS/routing to the same public HTTPS proxy. All current
+Compose instructions load both environment files; task 14's commands are updated.
+Added `verify-oidc.py` to check the exact issuer and advertised public endpoints,
+and `healthchecks/FetchOidc.java` to fetch discovery using the controller image's
+Java runtime, network, and TLS trust without requiring curl or Python inside it.
+
+Validation: Compose rendering passed with generated public settings and rejected
+omitting them. In an isolated PostgreSQL/Keycloak 21.1.2 deployment, a loopback
+backend discovery fetch advertised exactly `https://auth.avaj.com/realms/moj` and
+matching public endpoints. After regeneration/recreation with different test
+origins, startup import retained the old saved realm/client settings as expected.
+An explicit administration field update applied the new origins while preserving
+a user and unrelated client attribute. Discovery then passed for the updated
+issuer, including an actual fetch from the controller image's Java 21 runtime
+on the same disposable network. Negative checker cases rejected wrong issuers,
+internal/missing endpoints, malformed JSON, and non-object documents. A separate
+fresh restricted test completed HTTP login, authorization-code exchange, and
+logout, with both redirects returning to the configured MoJ origin. Disposable
+containers, network, volumes, and temporary credential files were removed.
+`git diff --check` passed. No application Java code changed; the deployment Java
+helper ran successfully in the controller image, so Maven was not rerun.
+
+The checklist tracks repository implementation. The **Done when** live-domain discovery
+and browser login/logout checks still require server/DNS/HTTPS deployment in the
+following tasks; no real environment, realm, DNS, or server was changed here.
 
 ### 14. Prepare the server and run a private smoke test
 
 - [ ] Install Docker Engine and the Compose plugin. Allow SSH from your administration IP and keep application access restricted during setup.
-- [ ] Copy the server deployment directory, including scripts and realm JSON, to a stable location such as `/opt/moj`. Create its `.env` and log in to GHCR if needed. The server does not need Java, Maven, or the application source tree.
+- [ ] Copy the server deployment directory, including scripts and realm JSON, to a stable location such as `/opt/moj`. Create its `.env`, run `python3 prepare-urls.py` (or use `--mode restricted` for the IP test), and log in to GHCR if needed. The server does not need Java, Maven, or the application source tree.
 - [ ] Check resource limits against the server's capacity. Current service memory limits total about 5.5 GiB before OS/proxy overhead; tune worker concurrency to available CPU and memory.
-- [ ] From that directory run `docker compose --env-file .env -f docker-compose.yaml pull`, then `docker compose --env-file .env -f docker-compose.yaml up -d`.
+- [ ] From that directory run `docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull`, then `docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d`.
 - [ ] Inspect `ps` and service logs, create a Keycloak user in the `moj` realm's `admin` group, open `/control`, and submit an assignment to verify controller-to-worker processing.
 - [ ] Repeat task 3's existing-assignment and Java 21-assignment checks using the published containers. Verify their configured Java paths and `JAVA_HOME` work inside the images.
 

@@ -36,8 +36,6 @@ services:
     command:
       - "start-dev"
       - "--import-realm"
-      - "--hostname=host.docker.internal"
-      - "--hostname-strict-https=false"
       - "--http-enabled=true"
     environment:
       KEYCLOAK_ADMIN: "${KEYCLOAK_ADMIN:?Set KEYCLOAK_ADMIN in .env}"
@@ -47,8 +45,17 @@ services:
       KC_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/iam"
       KC_HEALTH_ENABLED: "true"
+      # Keycloak 21.1 hostname v1: full external origin, including scheme/port.
+      KC_HOSTNAME_URL: "${KC_HOSTNAME_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
+      KC_HOSTNAME_STRICT: "true"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
     volumes:
-      - "./realms:/opt/keycloak/data/import"
+      - type: bind
+        source: ./generated/realms
+        target: /opt/keycloak/data/import
+        read_only: true
+        bind:
+          create_host_path: false
       - "./healthchecks:/opt/moj-healthchecks:ro"
     healthcheck:
       # Keycloak 21.1 serves health on 8080; it has Bash but no curl/wget.
@@ -59,8 +66,6 @@ services:
       retries: 12
     networks:
       - moj
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       postgresql:
         condition: service_healthy
@@ -75,7 +80,7 @@ services:
     ports:
       - "127.0.0.1:8080:8080"
     environment:
-      OIDC_ISSUER_URI: "http://host.docker.internal:8888/realms/moj"
+      OIDC_ISSUER_URI: "${OIDC_ISSUER_URI:?Run prepare-urls.py and load generated/urls.env after .env}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql:5432/moj"
       SPRING_DATASOURCE_USERNAME: "moj"
       SPRING_DATASOURCE_PASSWORD: "${MOJ_DB_PASSWORD:?Set MOJ_DB_PASSWORD in .env}"
@@ -95,8 +100,6 @@ services:
       retries: 12
     networks:
       - moj
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     depends_on:
       postgresql:
         condition: service_healthy

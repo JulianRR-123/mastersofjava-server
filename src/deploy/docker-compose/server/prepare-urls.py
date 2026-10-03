@@ -99,6 +99,8 @@ def render_realm(template, urls):
     clients = [client for client in realm["clients"] if client["clientId"] == "moj"]
     if realm["realm"] != "moj" or len(clients) != 1:
         raise ValueError("Realm template must contain realm moj and exactly one moj client")
+    # Realm-level overrides must agree with the server's external hostname.
+    realm.setdefault("attributes", {})["frontendUrl"] = urls["AUTH_BASE_URL"]
     client = clients[0]
     origin = urls["MOJ_BASE_URL"]
     client["rootUrl"] = origin
@@ -144,7 +146,7 @@ def main():
         parser.exit(1, f"URL preparation failed: {error}\n")
     for key in ["MOJ_BASE_URL", "AUTH_BASE_URL", "OIDC_ISSUER_URI"]:
         print(f"{key}={urls[key]}")
-    print(f"Rendered URL settings and realm in {args.output_dir}; Compose integration follows in task 13.")
+    print(f"Rendered URL settings and realm in {args.output_dir}; load urls.env after .env in Compose.")
 
 
 if __name__ == "__main__":
