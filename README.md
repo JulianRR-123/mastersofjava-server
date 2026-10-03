@@ -27,6 +27,24 @@ Building the software is done using Maven. The command below builds the software
 $ ./mvnw clean verify
 ```
 
+### Assignment compilation on Java 21
+
+The worker needs `JAVA_HOME` pointing to a full JDK 21 when no suitable JDK is configured under
+`moj.server.languages.java-versions`. Explicit entries must have a matching `version` and valid
+`compiler`/`runtime` paths. The worker accepts a configured JDK whose version is at least the assignment's
+`java-version`, using the first suitable entry, then falling back to `JAVA_HOME`.
+
+Ordinary assignments compile with the selected JDK without `--release`; `java-version: 17` therefore does
+not enforce Java 17 syntax or bytecode when JDK 21 is selected. For Java 21 assignments, declare
+`java-version: 21`. Set `java-preview-enabled: true` explicitly only when preview syntax is needed;
+the worker compiles it with `--enable-preview --release` for the selected JDK's version. Older preview
+syntax is not guaranteed to work on JDK 21. If an assignment needs an older JDK's exact behavior,
+configure that JDK before newer entries and verify the assignment separately.
+
+The runtime integration tests exercise existing Java 17 assignments, Java 21 record patterns, and Java 21
+preview string templates through the worker's compiler and test runner. They also check that preview
+syntax is rejected when disabled. Run them with the full build above and `JAVA_HOME` set to JDK 21.
+
 ## Building Containers
 The Java 21 deployment migration is tracked in [docs/TASKS.md](docs/TASKS.md). The existing Jib base images still use Java 17; complete task 5's base-image update before building containers for the Java 21 application.
 

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,23 @@ public class AssignmentSubmitTest extends BaseRuntimeTest {
         return Stream.of("sequential", "parallel");
     }
 
+    private static Stream<String> compilerAssignments() {
+        return Stream.of("sequential", "parallel", "java21", "java21-preview");
+    }
+
+    @Test
+    public void shouldRejectPreviewFeaturesWhenDisabled() {
+        startSelectedAssignment("java21-preview-disabled");
+        CompileAttempt attempt = doCompile(createSourceMessageWithNoTimeout());
+        CompileAttempt result = refresh(attempt);
+        Assertions.assertThat(result.getCompilerOutput()).contains("preview feature", "disabled");
+        Assertions.assertThat(result.getSuccess()).isFalse();
+        Assertions.assertThat(result.getAborted()).isFalse();
+        Assertions.assertThat(result.getTimeout()).isFalse();
+    }
+
     @ParameterizedTest
-    @MethodSource("assignments")
+    @MethodSource("compilerAssignments")
     public void shouldCompile(String assignment) {
         startSelectedAssignment(assignment);
         SourceMessage src = createSourceMessageWithNoTimeout();
@@ -73,7 +89,7 @@ public class AssignmentSubmitTest extends BaseRuntimeTest {
     }
 
     @ParameterizedTest
-    @MethodSource("assignments")
+    @MethodSource("compilerAssignments")
     public void shouldTest(String assignment) {
         startSelectedAssignment(assignment);
         SourceMessage src = createSourceMessageWithNoTimeout();

@@ -1,0 +1,34 @@
+name: java21-preview
+display-name: java21-preview
+author:
+  name: Masters of Java
+labels:
+  - java21
+difficulty: 1
+java-version: 21
+java-preview-enabled: true
+duration: PT30S
+compile-timeout: PT10S
+submit-timeout: PT10S
+test-timeout: PT5S
+execution-model: sequential
+scoring-rules:
+  maximum-resubmits: 2
+  resubmit-penalty: 50%
+  success-bonus: 200
+  test-penalty: 20%
+assignment-files:
+  assignment: assets/assignment.txt
+  sources:
+    base: src/main/java
+    editable:
+      - Assignment.java
+  test-sources:
+    base: src/test/java
+    tests:
+      - VisibleTest.java
+  test-resources:
+    base: src/test/resources
+    files: []
+  solution:
+    - assets/solution/Assignment.java

@@ -65,12 +65,20 @@ Container base images still need task 5's Java 21 update before image builds can
 
 ### 3. Verify the application and assignment compiler
 
-- [ ] Run `./mvnw -B -Dno-format clean verify` under JDK 21 and fix failures. Also run the normal formatting-enabled build to check the developer workflow.
-- [ ] Test Java runtime-version detection and worker compiler selection with JDK 21. Update explicit worker Java paths/version entries if configured; otherwise verify the `JAVA_HOME` fallback selects JDK 21.
-- [ ] Run representative existing assignments and a new assignment declaring `java-version: 21` that uses a Java 21 language feature. Verify both compilation and test execution.
-- [ ] Check assignments using preview features separately. The current worker normally compiles with the selected JDK without `--release`; when preview is enabled, it uses that JDK's release. Preserve separate older JDKs only if assignments require their exact language or preview behavior.
+- [x] Run `./mvnw -B -Dno-format clean verify` under JDK 21 and fix failures. Also run the normal formatting-enabled build to check the developer workflow.
+- [x] Test Java runtime-version detection and worker compiler selection with JDK 21. Update explicit worker Java paths/version entries if configured; otherwise verify the `JAVA_HOME` fallback selects JDK 21.
+- [x] Run representative existing assignments and a new assignment declaring `java-version: 21` that uses a Java 21 language feature. Verify both compilation and test execution.
+- [x] Check assignments using preview features separately. The current worker normally compiles with the selected JDK without `--release`; when preview is enabled, it uses that JDK's release. Preserve separate older JDKs only if assignments require their exact language or preview behavior.
 
 **Done when:** the test suite passes on Java 21 and both existing and Java 21 assignments compile and execute successfully in a local test setup. Repeat the end-to-end checks with the published images in task 14.
+
+**Completed:** Added runtime-version and compiler-selection tests for explicitly configured JDK 21 and the `JAVA_HOME` fallback, including existing Java 17 assignments and rejection of a request for a newer JDK. No concrete worker Java paths are configured in the application profiles; local verification used the Temurin 21 `JAVA_HOME` fallback.
+
+The existing sequential and parallel assignments compile and execute on JDK 21. New `java21` and `java21-preview` fixtures declare `java-version: 21` and exercise record patterns/pattern matching for switch and preview string templates respectively, through the local controller/broker/worker test setup. A separate fixture verifies that the compiler rejects preview syntax with preview disabled. The compiler and runtime needed no production-code changes.
+
+Validation: `LANG=en_US.UTF-8 ./mvnw -B -Dno-format clean verify` passed on Temurin `21.0.12+1.1`, with 70 tests passing and 2 existing skips. Tests require local socket access for the embedded broker. The formatting-enabled build also passed with `LANG=en_US.UTF-8 ./mvnw -B -DskipTests verify`; tests are skipped on that second pass because the full suite already ran above.
+
+The README now documents JDK selection and preview behavior: ordinary compilation does not enforce an older `--release`, and preview compilation targets the selected JDK's release. The checked fixtures require no older JDK; assignments outside this repository that rely on older preview syntax still need separate verification. Published-container end-to-end checks remain in task 14.
 
 **Pause here:** the Java 21 migration is verified locally. Image publishing can be a separate session.
 
