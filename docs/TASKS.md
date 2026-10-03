@@ -86,13 +86,24 @@ The README now documents JDK selection and preview behavior: ordinary compilatio
 
 ### 4. Record the deployment settings
 
-- [ ] Record the server's CPU architecture (`amd64` or `arm64`), available memory, and intended release branch. Keep the public IP configurable at deployment time; do not record a fixed IP here or bake one into an image.
-- [ ] Use these image names for the current repository owner, unless you deliberately choose another namespace:
+- [x] Record the server's CPU architecture (`amd64` or `arm64`), available memory, and intended release branch. Keep the public IP configurable at deployment time; do not record a fixed IP here or bake one into an image.
+- [x] Use these image names for the current repository owner, unless you deliberately choose another namespace:
   - `ghcr.io/julianrr-123/moj-controller`
   - `ghcr.io/julianrr-123/moj-worker`
-- [ ] Choose whether the packages will be public or private. Public packages make server pulls simpler; private packages require server credentials.
+- [x] Choose whether the packages will be public or private. Public packages make server pulls simpler; private packages require server credentials.
+
+**Confirmed settings:**
+
+- Server architecture: `amd64` (`x86_64`).
+- Server RAM: 16 GB.
+- Publishing branch: `master`.
+- Package visibility: private. Configure server pull credentials in task 7.
+- Public IP: configurable at deployment time.
+- Image namespace: `julianrr-123`, using the controller and worker image names above.
 
 **Done when:** these choices are written down. Image names use lowercase.
+
+**Completed:** All deployment settings above are confirmed. Registry publishing and access verification remain in tasks 5–7.
 
 ### 5. Reuse the existing image build
 
