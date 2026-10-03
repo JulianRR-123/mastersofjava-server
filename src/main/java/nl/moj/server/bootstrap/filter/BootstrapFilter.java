@@ -42,6 +42,12 @@ public class BootstrapFilter extends OncePerRequestFilter {
     private BootstrapService bootstrapService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        // Container readiness must work before the first browser setup.
+        return "/actuator/health".equals(request.getServletPath());
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
             FilterChain filterChain) throws ServletException, IOException {
         if (!isBootstrapUrl(httpServletRequest) && bootstrapService.isBootstrapNeeded()) {

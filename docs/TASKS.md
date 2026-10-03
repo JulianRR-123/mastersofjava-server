@@ -251,14 +251,52 @@ smoke testing remains task 14.
 
 ### 11. Make startup wait for readiness
 
-- [ ] Add a PostgreSQL health check using `pg_isready`, with an appropriate startup allowance.
-- [ ] Add a version-appropriate Keycloak readiness check and a controller check using `/actuator/health`. Verify the probe tools exist inside each image; do not assume `curl` is installed.
-- [ ] Use `condition: service_healthy` for dependencies where readiness checks are defined. Confirm the imported `moj` realm is available before considering authentication usable.
-- [ ] Keep restart policies and verify recovery after a dependency restart; startup ordering alone does not handle every later failure.
+- [x] Add a PostgreSQL health check using `pg_isready`, with an appropriate startup allowance.
+- [x] Add a version-appropriate Keycloak readiness check and a controller check using `/actuator/health`. Verify the probe tools exist inside each image; do not assume `curl` is installed.
+- [x] Use `condition: service_healthy` for dependencies where readiness checks are defined. Confirm the imported `moj` realm is available before considering authentication usable.
+- [x] Keep restart policies and verify recovery after a dependency restart; startup ordering alone does not handle every later failure.
 
 See Docker's [Compose startup-order guidance](https://docs.docker.com/compose/how-tos/startup-order/).
 
 **Done when:** a cold start settles into healthy services without manual restart ordering.
+
+**Completed:** PostgreSQL uses TCP `pg_isready`, avoiding the temporary socket-only
+initialization server, with a 60-second startup allowance. Keycloak enables health
+on port 8080 for the pinned 21.1 image, and requires HTTP 200 from `/health/ready`
+and the imported `moj` realm's discovery endpoint. The controller checks
+`/actuator/health`, including database and JMS health. Both HTTP probes use a
+read-only mounted Bash script; Bash/TCP support was verified in the actual images.
+Keycloak has no curl/wget. Keycloak and controller have 120-second startup allowances.
+
+Dependencies now use `service_healthy` and `restart: true`, retaining each service's
+`unless-stopped` policy. The README documents Compose 2.17+, waiting for startup,
+recovery checks, and the limits of startup ordering and unhealthy-state handling.
+
+Cold-start testing exposed two application blockers, now fixed with regression
+tests: the bootstrap filter redirected health requests to `/bootstrap` on an
+empty installation, and Boot 2.7 omitted configured credentials from its embedded
+Artemis connection factory. The exact health endpoint bypasses the bootstrap
+filter; the opt-in broker configuration now applies credentials to the application
+connection factory, including the default caching wrapper. **Publish new images
+containing these fixes before deploying this readiness configuration.**
+
+Validation: `LANG=en_US.UTF-8 ./mvnw -B -ntp clean verify` passed on Temurin JDK 21
+with 76 tests run, 74 passed, and 2 existing skips, including formatting/import
+checks. The test run required local socket access outside the sandbox. Both local
+application images rebuilt successfully. In the isolated `moj-task11-disposable`
+deployment, a cold start on empty volumes reached healthy PostgreSQL, Keycloak,
+and controller, plus a running worker with HTTP/JMS health `UP`; every service
+had zero process restarts. The realm probe accepted `moj` and rejected a missing
+realm. Direct database and controller/broker restarts recovered health without
+restarting their clients or the worker. An explicit Compose Keycloak restart
+restarted controller and worker automatically and recovered all health checks.
+Compose configuration, shell syntax, and `git diff --check` passed.
+
+The disposable test used local images, unpublished random credentials, no host
+ports, and an internal `http://auth:8080` issuer/hostname override to isolate task
+11 from tasks 12–13's pending public URL configuration. No real deployment was
+modified. Disposable containers, networks, volumes, and local verification images
+were removed afterward. Published-image and browser acceptance remain task 14.
 
 ### 12. Choose the public URLs
 

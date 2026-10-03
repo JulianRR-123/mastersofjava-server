@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.net.ServerSocket;
 
 import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
@@ -62,6 +63,24 @@ class ArtemisSecurityConfigurationTest {
                 assertThatThrownBy(factory::createConnection).isInstanceOf(JMSException.class);
             }
         });
+    }
+
+    @Test
+    void authenticatesApplicationConnectionsWithAndWithoutCaching() {
+        for (boolean caching : new boolean[] { true, false }) {
+            runner.withPropertyValues("spring.jms.cache.enabled=" + caching).run(context -> {
+                assertThat(context).hasNotFailed();
+                try (Connection connection = context.getBean(ConnectionFactory.class).createConnection()) {
+                    connection.start();
+                    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+                    var queue = session.createQueue("operation_response");
+                    try (MessageConsumer consumer = session.createConsumer(queue)) {
+                        session.createProducer(queue).send(session.createTextMessage("application"));
+                        assertThat(((TextMessage) consumer.receive(5000)).getText()).isEqualTo("application");
+                    }
+                }
+            });
+        }
     }
 
     @Test

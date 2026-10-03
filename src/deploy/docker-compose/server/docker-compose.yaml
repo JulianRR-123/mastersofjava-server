@@ -7,6 +7,13 @@ services:
     mem_reservation: 128m
     mem_limit: 512m
     restart: unless-stopped
+    healthcheck:
+      # TCP avoids the temporary Unix-socket server used during initialization.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $$POSTGRES_USER -d postgres"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 6
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}"
@@ -39,15 +46,25 @@ services:
       KC_DB_USERNAME: iam
       KC_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/iam"
+      KC_HEALTH_ENABLED: "true"
     volumes:
       - "./realms:/opt/keycloak/data/import"
+      - "./healthchecks:/opt/moj-healthchecks:ro"
+    healthcheck:
+      # Keycloak 21.1 serves health on 8080; it has Bash but no curl/wget.
+      test: ["CMD", "/bin/bash", "/opt/moj-healthchecks/http-ready.sh", "/health/ready", "/realms/moj/.well-known/openid-configuration"]
+      interval: 10s
+      timeout: 10s
+      start_period: 120s
+      retries: 12
     networks:
       - moj
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       postgresql:
-        condition: service_started
+        condition: service_healthy
+        restart: true
 
   controller:
     image: ghcr.io/${GHCR_OWNER:?Set GHCR_OWNER in .env}/moj-controller:${MOJ_IMAGE_TAG:?Set MOJ_IMAGE_TAG to a published SHA tag in .env}
@@ -69,15 +86,24 @@ services:
       MOJ_BROKER_AUTHENTICATION_ENABLED: "true"
     volumes:
       - "controller_data:/data"
+      - "./healthchecks:/opt/moj-healthchecks:ro"
+    healthcheck:
+      test: ["CMD", "/bin/bash", "/opt/moj-healthchecks/http-ready.sh", "/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      start_period: 120s
+      retries: 12
     networks:
       - moj
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
       postgresql:
-        condition: service_started
+        condition: service_healthy
+        restart: true
       auth:
-        condition: service_started
+        condition: service_healthy
+        restart: true
 
   worker:
     image: ghcr.io/${GHCR_OWNER:?Set GHCR_OWNER in .env}/moj-worker:${MOJ_IMAGE_TAG:?Set MOJ_IMAGE_TAG to a published SHA tag in .env}
@@ -97,7 +123,8 @@ services:
       - moj
     depends_on:
       controller:
-        condition: service_started
+        condition: service_healthy
+        restart: true
 
 networks:
   moj: {}

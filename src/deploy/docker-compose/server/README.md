@@ -28,7 +28,7 @@ docker compose --env-file .env -f docker-compose.yaml config --quiet
 packages, authenticate to GHCR before pulling with an account that has package
 read access. No Java or Maven installation is needed on the server.
 
-Keep `scripts/` and `realms/` beside `docker-compose.yaml` when copying this directory
+Keep `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
 to the server; their mounts are relative to the Compose file. `.env` is ignored
 by Git. Avoid sharing the full output of `docker compose config`, which includes
 resolved credentials.
@@ -37,14 +37,57 @@ Only the HTTP ports are published, on loopback: controller port 8080 and Keycloa
 port 8888. PostgreSQL and Artemis are reachable only on the Compose network.
 The worker connects to `controller:8080` and `controller:61616` internally.
 
-Named persistent storage and credentials are configured. Readiness checks follow
-in task 11; full application testing remains task 14.
+Named persistent storage, credentials, and readiness checks are configured.
+Full published-image application testing remains task 14.
 
 `PUBLIC_IP`, `MOJ_BASE_URL`, and `AUTH_BASE_URL` are placeholders for tasks 12–13
 and are not consumed yet. Authentication still uses the copied
 `host.docker.internal` hostname and localhost client redirects. Keycloak still
 uses `start-dev`; the public login configuration, production authentication, and
 HTTPS will be completed in later tasks.
+
+## Startup and recovery
+
+Use Docker Compose 2.17 or newer (dependency `restart: true` support). Start and
+wait for readiness with:
+
+```sh
+docker compose --env-file .env -f docker-compose.yaml up -d --wait --wait-timeout 600
+docker compose --env-file .env -f docker-compose.yaml ps
+```
+
+PostgreSQL must accept TCP connections before Keycloak starts. Using TCP avoids
+accepting the temporary socket-only database used by the initialization scripts.
+Keycloak 21.1 enables health endpoints on port 8080; its probe requires HTTP 200
+from both `/health/ready` and the `moj` realm's OIDC discovery endpoint. This also
+rejects a missing realm. The controller waits for PostgreSQL and Keycloak, and
+the worker waits for HTTP 200 from the controller's `/actuator/health` (which
+includes database and JMS health). Startup allowances are 60 seconds for
+PostgreSQL and 120 seconds each for Keycloak and the controller, with retries
+afterward. A successful early probe ends the allowance immediately.
+
+The HTTP probes use `/bin/bash` and its TCP support, verified in Keycloak 21.1
+and the Temurin 21 application images; Keycloak has no `curl` or `wget`.
+`healthchecks/` is mounted read-only. Recheck these tools and the health endpoint
+port when upgrading images; newer Keycloak versions use different health ports.
+
+All services retain `restart: unless-stopped`. Dependency `restart: true` also
+restarts dependents after explicit Compose restart/update operations. For example:
+
+```sh
+docker compose --env-file .env -f docker-compose.yaml restart postgresql
+docker compose --env-file .env -f docker-compose.yaml up -d --wait --wait-timeout 600
+```
+
+[Compose startup ordering](https://docs.docker.com/compose/how-tos/startup-order/)
+applies to startup; it does not continuously enforce dependency health. A database
+or broker interruption relies on application reconnection, while a process exit
+uses the restart policy. Docker does not restart a process just because it is
+unhealthy, and daemon restarts do not apply Compose's dependency ordering.
+After a host reboot, check `ps` and run the waiting `up` command above. If a service
+stays unhealthy, inspect its logs and healthcheck history, correct the cause, then
+recreate the affected services. Avoid sharing logs or container inspection output
+containing credentials.
 
 ## Credentials and initialization
 
@@ -73,6 +116,11 @@ account and grants send/consume access to `operation_request` and
 the unused H2 console with `SPRING_H2_CONSOLE_ENABLED=false`. Publish new application
 images containing this security configuration before using this Compose file;
 older images do not enforce the opt-in flag.
+
+The controller's embedded connection factory also uses these credentials; this
+requires the task 11 fix for Spring Boot 2.7's embedded mode. Task 11 also exempts
+the exact `/actuator/health` endpoint from the first-time bootstrap redirect.
+Publish images containing both fixes before deploying these readiness checks.
 
 For an existing installation, **changing `.env` does not rotate stored passwords**.
 PostgreSQL initialization only runs on an empty volume. Back up first, stop clients,
