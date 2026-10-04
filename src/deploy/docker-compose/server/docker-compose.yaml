@@ -1,6 +1,32 @@
 name: moj-server
 
 services:
+  proxy:
+    image: caddy:2.11.2-alpine
+    restart: unless-stopped
+    mem_limit: 256m
+    ports:
+      - "${PROXY_HTTP_BIND:-0.0.0.0:80}:80"
+      - "${PROXY_HTTPS_BIND:-0.0.0.0:443}:443"
+    environment:
+      MOJ_BASE_URL: "${MOJ_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
+      AUTH_BASE_URL: "${AUTH_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
+    volumes:
+      - type: bind
+        source: ./Caddyfile
+        target: /etc/caddy/Caddyfile
+        read_only: true
+        bind:
+          create_host_path: false
+      - "caddy_data:/data"
+      - "caddy_config:/config"
+    networks:
+      moj:
+        aliases:
+          - "${MOJ_PROXY_HOST:?Run prepare-urls.py}"
+          - "${AUTH_PROXY_HOST:?Run prepare-urls.py}"
+    # Start independently: controller startup fetches discovery through this proxy.
+
   postgresql:
     image: postgres:15
     cpus: 1
@@ -31,8 +57,6 @@ services:
     mem_reservation: 512m
     mem_limit: 1g
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8888:8080"
     command:
       - "start-dev"
       - "--import-realm"
@@ -45,6 +69,8 @@ services:
       KC_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/iam"
       KC_HEALTH_ENABLED: "true"
+      # Keycloak 21.1 uses proxy=edge for TLS termination and forwarded headers.
+      KC_PROXY: edge
       # Keycloak 21.1 hostname v1: full external origin, including scheme/port.
       KC_HOSTNAME_URL: "${KC_HOSTNAME_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
       KC_HOSTNAME_STRICT: "true"
@@ -77,8 +103,6 @@ services:
     mem_reservation: 1g
     mem_limit: 2g
     restart: unless-stopped
-    ports:
-      - "127.0.0.1:8080:8080"
     environment:
       OIDC_ISSUER_URI: "${OIDC_ISSUER_URI:?Run prepare-urls.py and load generated/urls.env after .env}"
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresql:5432/moj"
@@ -89,6 +113,7 @@ services:
       SPRING_ARTEMIS_PASSWORD: "${ARTEMIS_PASSWORD:?Set ARTEMIS_PASSWORD in .env}"
       SPRING_H2_CONSOLE_ENABLED: "false"
       MOJ_BROKER_AUTHENTICATION_ENABLED: "true"
+      SERVER_FORWARD_HEADERS_STRATEGY: native
     volumes:
       - "controller_data:/data"
       - "./healthchecks:/opt/moj-healthchecks:ro"
@@ -101,6 +126,9 @@ services:
     networks:
       - moj
     depends_on:
+      proxy:
+        condition: service_started
+        restart: true
       postgresql:
         condition: service_healthy
         restart: true
@@ -135,3 +163,5 @@ networks:
 volumes:
   postgresql_data: {}
   controller_data: {}
+  caddy_data: {}
+  caddy_config: {}

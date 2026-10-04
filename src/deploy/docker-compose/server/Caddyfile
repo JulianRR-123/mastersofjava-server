@@ -1,0 +1,22 @@
+# Caddy manages certificates and HTTP-to-HTTPS redirects for HTTPS origins.
+# Explicit http:// origins are supported for local restricted tests.
+(forwarded_headers) {
+	header_up -Forwarded
+	header_up -X-Forwarded-Port
+	header_up -X-Forwarded
+	# Caddy overwrites X-Forwarded-For/Host/Proto with trusted request values.
+}
+
+{$MOJ_BASE_URL} {
+	reverse_proxy controller:8080 {
+		import forwarded_headers
+	}
+}
+
+{$AUTH_BASE_URL} {
+	@internal path /health /health/* /metrics /metrics/*
+	respond @internal 404
+	reverse_proxy auth:8080 {
+		import forwarded_headers
+	}
+}

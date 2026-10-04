@@ -417,12 +417,33 @@ Use the [Keycloak production guide](https://www.keycloak.org/server/configuratio
 
 ### 16. Add HTTPS and close internal ports
 
-- [ ] Add a reverse proxy, such as Caddy or Nginx, with certificate renewal. Route the chosen MoJ and authentication URLs to `controller:8080` and `auth:8080` on the Compose network.
-- [ ] Support WebSocket upgrades and overwrite forwarded headers with trusted values. The application already sets `server.forward-headers-strategy: native`; verify generated redirects remain HTTPS.
-- [ ] Remove public host mappings for PostgreSQL, Artemis, controller, and Keycloak when using a containerized proxy. The worker needs no published ports. For a host-installed proxy, bind backend HTTP ports to loopback only.
+- [x] Add a reverse proxy, such as Caddy or Nginx, with certificate renewal. Route the chosen MoJ and authentication URLs to `controller:8080` and `auth:8080` on the Compose network.
+- [x] Support WebSocket upgrades and overwrite forwarded headers with trusted values. The application already sets `server.forward-headers-strategy: native`; verify generated redirects remain HTTPS.
+- [x] Remove public host mappings for PostgreSQL, Artemis, controller, and Keycloak when using a containerized proxy. The worker needs no published ports. For a host-installed proxy, bind backend HTTP ports to loopback only.
 - [ ] Open only the chosen public web ports (normally 80/443) in both the provider firewall and host configuration. Test externally that `5432`, `61616`, `8080`, and `8888` are unreachable unless deliberately used by the final IP-only HTTPS design. Verify actual reachability rather than relying solely on host firewall rules.
 
 **Done when:** HTTPS works from another network, certificates are trusted, and internal services are inaccessible publicly.
+
+**Repository implementation complete; server acceptance pending:** Server Compose
+now includes Caddy `2.11.2-alpine`, persistent certificate/configuration volumes,
+and only public TCP 80/443 bindings. The Caddyfile routes the configured origins
+to controller and Keycloak, supports WebSocket upgrades through Caddy's reverse
+proxy, and removes untrusted forwarding headers. Keycloak uses version 21.1's
+`KC_PROXY=edge`; controller native forwarding support is explicit. URL preparation
+renders hostname aliases on the proxy so containers reach the same authentication
+issuer as browsers without routing through the public host IP. Caddy starts
+independently to avoid a controller/discovery dependency cycle.
+
+The README covers DNS/firewall prerequisites, certificate persistence, proxy
+validation, URL changes, and local HTTP through `moj.localhost`/`auth.localhost`.
+Existing `.env` and generated files were not changed. Keycloak production mode
+remains task 15. Validation passed for public/local URL and realm rendering,
+Compose configuration, and Caddy's HTTPS configuration. Disposable Docker tests
+passed both HTTP routes, spoofed forwarding-header removal, blocking of Keycloak
+health/metrics paths, and issuer hostname routing from another container.
+Trusted public certificate issuance, HTTPS browser login/logout, live WebSocket
+traffic, and external port reachability still require server acceptance; the
+checklist above records repository configuration, not those live checks.
 
 ### 17. Run the public acceptance test
 

@@ -91,6 +91,8 @@ def resolve_urls(values, mode):
     urls["OIDC_ISSUER_URI"] = urls["AUTH_BASE_URL"] + "/realms/moj"
     # Keycloak 21.1 hostname v1 uses the full external URL, including its port.
     urls["KC_HOSTNAME_URL"] = urls["AUTH_BASE_URL"]
+    urls["MOJ_PROXY_HOST"] = origins[0].hostname
+    urls["AUTH_PROXY_HOST"] = origins[1].hostname
     return urls
 
 

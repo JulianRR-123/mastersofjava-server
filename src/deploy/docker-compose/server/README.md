@@ -4,6 +4,191 @@ This standalone configuration pulls the controller and worker from GHCR. It has
 no local build step and must be used on its own, without merging the all-in-one
 development file. Both application images use the same published SHA tag.
 
+## Quick start: run the current setup
+
+For local HTTP testing through the same proxy, use [Running locally](#running-locally) instead.
+
+These steps are for a new installation using the default HTTPS domains. You need
+Docker with Compose 2.17 or newer, Python 3, and published controller/worker images.
+Caddy handles HTTPS and certificate renewal. Keycloak still runs with `start-dev`;
+production authentication configuration remains task 15.
+For an existing installation, keep its `.env` and data and read
+[Moving an existing installation](#moving-an-existing-installation) first.
+
+1. **Open the server folder.** From the repository root:
+
+   ```sh
+   cd src/deploy/docker-compose/server
+   ```
+
+   If deploying on another machine, copy this entire folder there and run the
+   remaining commands from that copy. No Java or Maven installation is needed.
+
+2. **Create the credentials file once:**
+
+   ```sh
+   python3 generate-env.py
+   ```
+
+   This creates a private `.env` with random credentials. If `.env` already exists,
+   keep it; the script deliberately refuses to overwrite it.
+
+3. **Edit `.env`.** Set `GHCR_OWNER` to the owner of the published GHCR packages
+   and `MOJ_IMAGE_TAG` to their shared full `sha-<commit>` tag. Keep the generated
+   credentials and the stable `COMPOSE_PROJECT_NAME`. The default URLs are:
+
+   ```dotenv
+   MOJ_BASE_URL=https://moj.avaj.com
+   AUTH_BASE_URL=https://auth.avaj.com
+   ```
+
+   Use your own domains if needed. With both URLs set, `PUBLIC_IP` can stay empty.
+
+4. **Point both domains to the server and allow TCP ports 80 and 443.**
+   Set their DNS A/AAAA records to reachable server addresses. Free these ports
+   from any existing host proxy before starting. Caddy obtains and renews trusted
+   certificates automatically and redirects HTTP to HTTPS. No host proxy is needed.
+   The controller resolves the authentication hostname to Caddy on the Compose
+   network, using the same HTTPS issuer as the browser.
+
+5. **Generate the URL configuration and validate Compose:**
+
+   ```sh
+   python3 prepare-urls.py
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml config --quiet
+   ```
+
+   Preparation keeps the Keycloak realm and application issuer consistent with
+   `.env`. Run it again whenever you change either URL. Successful validation
+   produces no output.
+
+6. **Pull the images and start the services:**
+
+   ```sh
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml ps
+   ```
+
+   For private GHCR packages, run `docker login ghcr.io` with an account/token
+   that can read them before pulling. Wait for all services to become healthy.
+   If startup fails, inspect the affected service with
+   `docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml logs --tail=100 SERVICE`,
+   replacing `SERVICE` with `proxy`, `postgresql`, `auth`, `controller`, or `worker`.
+
+7. **Check authentication and open MoJ:**
+
+   ```sh
+   python3 verify-oidc.py --issuer https://auth.avaj.com/realms/moj
+   ```
+
+   Replace the domain if you changed it. Open `https://moj.avaj.com` (or your chosen
+   MoJ URL), complete the application's first-time setup, and test login/logout.
+   The Keycloak administration console is at `https://auth.avaj.com/admin/`;
+   its credentials are `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD` in `.env`.
+
+For later starts, repeat the `up` and `ps` commands in step 6. To stop services
+without removing their data, run:
+
+```sh
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml stop
+```
+
+Always pass both environment files to Compose. Do not use `down -v`: it deletes
+the persistent database and controller data. The sections below cover URL
+changes, existing realms, backups, and recovery in more detail.
+
+## Running locally
+
+Use the same stack with explicit HTTP origins and loopback proxy bindings.
+From the repository root:
+
+```sh
+cd src/deploy/docker-compose/server
+# Only for a new installation; keep an existing .env.
+python3 generate-env.py
+```
+
+Keep the generated credentials, set `GHCR_OWNER` and the shared published
+`MOJ_IMAGE_TAG`, and edit these entries in `.env`:
+
+```dotenv
+PUBLIC_IP=
+MOJ_BASE_URL=http://moj.localhost
+AUTH_BASE_URL=http://auth.localhost
+PROXY_HTTP_BIND=127.0.0.1:80
+PROXY_HTTPS_BIND=127.0.0.1:443
+```
+
+Make both names resolve to loopback on your computer. If your browser or OS does
+not resolve `.localhost` automatically, add this to `/etc/hosts` (or the Windows
+hosts file):
+
+```text
+127.0.0.1 moj.localhost auth.localhost
+```
+
+Docker network aliases resolve both names to Caddy inside the containers.
+Do not use `localhost` or the service name `auth` as the authentication hostname:
+those resolve to a container's own loopback or directly to Keycloak, bypassing Caddy.
+
+```sh
+python3 prepare-urls.py --mode restricted
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml config --quiet
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
+python3 verify-oidc.py --issuer http://auth.localhost/realms/moj
+```
+
+Open http://moj.localhost and complete first-time setup. Keycloak administration
+is at http://auth.localhost/admin/; use the administrator credentials in `.env`.
+Test login/logout and `/control` with a user in the `moj` realm's `admin` group.
+For private images, run `docker login ghcr.io` before pulling.
+Use `--mode restricted` whenever regenerating these HTTP URLs.
+
+An existing realm retains its old URLs: follow [Updating an existing realm](#updating-an-existing-realm)
+when switching between local HTTP and server HTTPS. Do not delete data volumes.
+When moving to the server, restore the HTTPS origins and `0.0.0.0:80` / `0.0.0.0:443`
+bindings, regenerate without `--mode restricted`, and recreate the stack.
+
+## Reverse proxy
+
+[Caddy automatic HTTPS](https://caddyserver.com/docs/automatic-https) provides
+certificates and renewal for the configured public domains. The committed
+`Caddyfile` routes MoJ to `controller:8080` and authentication to `auth:8080`.
+[Caddy reverse proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
+supports WebSocket upgrades and sets trusted `X-Forwarded-For`, `X-Forwarded-Host`,
+and `X-Forwarded-Proto` values. Client-supplied `Forwarded`, `X-Forwarded-Port`,
+and `X-Forwarded` headers are removed. Keycloak 21.1 uses `KC_PROXY=edge` for TLS
+termination; the controller uses its native forwarded-header support.
+Keycloak health/metrics endpoints are blocked at the proxy; its administration
+console remains available through the authentication domain for initial setup.
+Restrict administration access as part of task 15 before public acceptance.
+
+Only Caddy publishes host ports. PostgreSQL, Artemis, controller and Keycloak
+are accessible within the Compose network. Generated hostname aliases let the
+controller reach the public authentication origin internally without hairpin
+routing. Caddy starts independently of the controller to avoid a startup cycle;
+early proxy requests can return 502 until backends are ready. Certificate issuance
+also needs working external DNS and inbound 80/443; inspect `proxy` logs if discovery
+blocks controller startup. Caddy process startup alone does not prove HTTPS readiness.
+
+Caddy's `/data` and `/config` use named volumes. Preserve `/data` across updates
+so certificate account keys and certificates survive recreation. On URL changes,
+rerun preparation and `up -d --force-recreate` so proxy settings and network aliases
+refresh along with the application. Public HTTPS is intended for DNS names on 443;
+custom origin ports need matching additional proxy port publications. Local HTTP
+uses port 80 inside and outside Docker, ensuring browser and container URLs agree.
+
+Validate Caddy independently before starting:
+
+```sh
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml run --rm --no-deps proxy \
+  caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
+```
+
+## Environment preparation details
+
 From this directory, prepare the environment file:
 
 ```sh
@@ -29,21 +214,21 @@ docker compose --env-file .env --env-file generated/urls.env -f docker-compose.y
 packages, authenticate to GHCR before pulling with an account that has package
 read access. No Java or Maven installation is needed on the server.
 
-Keep the Python scripts, `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
+Keep `Caddyfile`, the Python scripts, `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
 to the server; their mounts are relative to the Compose file. `.env` is ignored
 by Git. Avoid sharing the full output of `docker compose config`, which includes
 resolved credentials.
 
-Only the HTTP ports are published, on loopback: controller port 8080 and Keycloak
-port 8888. PostgreSQL and Artemis are reachable only on the Compose network.
+Only Caddy publishes TCP ports 80/443 by default. Controller and Keycloak have
+no host port mappings. PostgreSQL and Artemis are reachable only on the Compose network.
 The worker connects to `controller:8080` and `controller:61616` internally.
 
 Named persistent storage, credentials, and readiness checks are configured.
 Full published-image application testing remains task 14.
 
 Compose consumes the generated URL settings and realm, as described below.
-Keycloak still uses `start-dev`; production authentication and HTTPS routing are
-completed in tasks 15–16. Until routing for the selected public origins exists,
+Keycloak still uses `start-dev`; production authentication remains task 15.
+Until DNS and certificate issuance for the selected public origins work,
 controller startup can fail while fetching OIDC discovery. Do not substitute an
 internal issuer to bypass that failure.
 
@@ -60,8 +245,8 @@ AUTH_BASE_URL=https://auth.avaj.com
 ```
 
 `PUBLIC_IP` is optional when both URLs are explicit. Set DNS records for both
-domains to the server's public IP. Certificates, HTTPS routing, and firewall
-configuration follow in tasks 15–16; preparation does not provision them.
+domains to the server's public IP. Caddy provisions certificates and HTTPS routing;
+configure the host/provider firewall to allow TCP 80/443. Preparation does not change DNS or firewalls.
 The corresponding issuer is `https://auth.avaj.com/realms/moj`.
 
 From this directory, render and review the exact URLs:
@@ -81,7 +266,7 @@ Outputs, ignored by Git and regenerated after every URL change, are:
 
 | File | Contents |
 | --- | --- |
-| `generated/urls.env` | Exact MoJ/authentication origins, `OIDC_ISSUER_URI=<AUTH_BASE_URL>/realms/moj`, and Keycloak 21.1's `KC_HOSTNAME_URL=<AUTH_BASE_URL>` |
+| `generated/urls.env` | Exact MoJ/authentication origins, `OIDC_ISSUER_URI=<AUTH_BASE_URL>/realms/moj`, Keycloak 21.1's `KC_HOSTNAME_URL=<AUTH_BASE_URL>`, and proxy hostname aliases |
 | `generated/realms/realm-mastersofjava.json` | The `moj` client with matching root/base URL, redirect URIs, web origin, and post-logout redirects |
 
 All client redirects are scoped to the chosen MoJ origin; no global wildcard is
@@ -116,8 +301,11 @@ python3 prepare-urls.py --mode restricted
 This derives `http://203.0.113.10:8080` and `http://203.0.113.10:8888`; the example
 IP must be replaced. Numeric IPv6 addresses are also supported. Explicit origins
 override the respective derived URL. Restrict any test HTTP exposure to your own
-administration IP and use disposable credentials. Current Compose bindings are
-still loopback-only; URL preparation does not open any ports.
+administration IP and use disposable credentials. The default proxy only publishes 80/443. This port-based test requires additional
+proxy mappings for 8080:8080 and 8888:8888; URL preparation does not open ports.
+For local tests prefer the named HTTP origins in [Running locally](#running-locally).
+Numeric IPs do not use Docker hostname aliases, so containers must reach those
+origins through host routing.
 
 If choosing numeric IPs for public HTTPS instead, set two explicit HTTPS origins
 and arrange certificates valid for that IP plus separate routing/ports. A domain
@@ -175,13 +363,11 @@ docker compose --env-file .env --env-file generated/urls.env -f docker-compose.y
 If controller startup is blocked on discovery, use `run --rm --no-deps
 --entrypoint java controller /opt/moj-healthchecks/FetchOidc.java` in place of
 `exec -T controller java ...`; this checks from the same service network/settings.
-If the server cannot route to its own public IP, configure split DNS so
-`auth.avaj.com` resolves internally to the HTTPS proxy, or arrange hairpin routing.
-The proxy must serve the same hostname with a trusted certificate. For a
-containerized proxy, a network alias for the public hostname on that proxy can
-provide internal resolution. Do not point the HTTPS hostname directly at
-Keycloak's HTTP backend or change the issuer to `http://auth:8080`. The obsolete
-`host.docker.internal` host-gateway mappings have been removed.
+The generated authentication hostname is a network alias on Caddy, so the controller
+connects to the proxy internally with the same public hostname and TLS trust.
+Check proxy logs, generated aliases and certificate issuance if this fails.
+Do not point the HTTPS hostname directly at Keycloak's HTTP backend or change the
+issuer to `http://auth:8080`.
 
 Finally, open MoJ in a browser, log in, open `/control` with an administrator,
 and log out. Verify both returns stay on the selected MoJ origin and Keycloak
@@ -287,6 +473,8 @@ different set of volumes. With the default name, the volumes are:
 | --- | --- | --- |
 | `moj-server_postgresql_data` | PostgreSQL `/var/lib/postgresql/data` | Both `iam` and `moj` databases, including users and competition records |
 | `moj-server_controller_data` | Controller `/data` | Assignments, submitted files/session data, libraries, sounds, and Javadoc |
+| `moj-server_caddy_data` | Caddy `/data` | TLS certificates, private keys, and ACME account data |
+| `moj-server_caddy_config` | Caddy `/config` | Persisted proxy configuration |
 
 PostgreSQL remains on version 15. Its initialization scripts run only on an empty
 volume. Do not point a different PostgreSQL major version at this data directory.
