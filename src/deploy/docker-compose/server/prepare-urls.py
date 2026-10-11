@@ -93,7 +93,7 @@ def resolve_urls(values, mode):
     urls["KC_HOSTNAME"] = urls["AUTH_BASE_URL"]
     urls["MOJ_PROXY_HOST"] = origins[0].hostname
     urls["AUTH_PROXY_HOST"] = origins[1].hostname
-    # Private Caddy listener reached only through the host loopback SSH tunnel.
+    # Separate administration origin protected by the deployment firewall.
     admin_host = origins[1].hostname
     if ":" in admin_host:
         admin_host = f"[{admin_host}]"

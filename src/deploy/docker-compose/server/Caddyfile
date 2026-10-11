@@ -28,8 +28,8 @@
 	}
 }
 
-# The host publishes this listener on 127.0.0.1:8443 only. Tunnel the browser's
-# normal authentication origin here; keep public hostname/issuer URLs unchanged.
+# Administration has its own origin on 8443. Restrict access in the external
+# firewall; keep participant hostname/issuer URLs unchanged.
 {$AUTH_ADMIN_PROXY_URL} {
 	@internal path /health /health/* /metrics /metrics/*
 	respond @internal 404

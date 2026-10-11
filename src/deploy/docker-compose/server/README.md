@@ -12,7 +12,7 @@ These steps are for a new installation using the default HTTPS domains. You need
 Docker with Compose 2.17 or newer, Python 3, and published controller/worker images.
 Caddy handles HTTPS and certificate renewal. Keycloak runs in production mode
 with `start`; participant accounts are created by organizers. Keycloak administration
-is private and reached through an SSH tunnel.
+uses port 8443, protected by administrator IP restrictions in the external firewall.
 For an existing installation, keep its `.env` and data and read
 [Moving an existing installation](#moving-an-existing-installation) first.
 
@@ -41,6 +41,7 @@ For an existing installation, keep its `.env` and data and read
    ```dotenv
    MOJ_BASE_URL=https://moj.avaj.com
    AUTH_BASE_URL=https://auth.avaj.com
+   AUTH_ADMIN_BIND=0.0.0.0:8443
    ```
 
    Use your own domains if needed. With both URLs set, `PUBLIC_IP` can stay empty.
@@ -51,6 +52,11 @@ For an existing installation, keep its `.env` and data and read
    certificates automatically and redirects HTTP to HTTPS. No host proxy is needed.
    The controller resolves the authentication hostname to Caddy on the Compose
    network, using the same HTTPS issuer as the browser.
+
+   Allow TCP **8443 only from trusted administrator IPs** in the provider or
+   network firewall, including IPv6 if enabled. Verify that unapproved external
+   IPs cannot connect; Docker-published ports can bypass ordinary host firewall
+   rules. Port 8443 provides direct access to the Keycloak admin console.
 
 5. **Generate the URL configuration and validate Compose:**
 
@@ -78,7 +84,36 @@ For an existing installation, keep its `.env` and data and read
    `docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml logs --tail=100 SERVICE`,
    replacing `SERVICE` with `proxy`, `postgresql`, `auth`, `controller`, or `worker`.
 
-7. **Check authentication and open MoJ:**
+7. **Configure Keycloak administration once, after services are healthy:**
+
+   On a fresh database, use the generated bootstrap credentials:
+
+   ```sh
+   python3 configure-admin.py --bootstrap
+   ```
+
+   For an existing installation, back up the IAM database first and use your
+   current master-realm administrator credentials instead:
+
+   ```sh
+   python3 configure-admin.py
+   ```
+
+   This updates the master realm's saved login URL to the HTTPS administration
+   origin on 8443 and enables its normal SSL policy. Compose alone does not
+   update that database setting. Repeat this step only when the authentication
+   hostname or scheme changes, including when moving a local HTTP database to
+   the server; it is not required on every start.
+
+   From an allowed administrator IP, open **https://auth.avaj.com:8443/admin/**
+   (replace the hostname if needed). Sign in, select the **moj** realm, and
+   create organizer/participant accounts as needed. On a fresh installation,
+   create a permanent administrator and remove the temporary bootstrap account.
+   No SSH tunnel or browser command-line flags are required. See
+   [Keycloak administration on port 8443](#keycloak-administration-on-port-8443)
+   for details.
+
+8. **Check authentication and open MoJ:**
 
    ```sh
    python3 verify-oidc.py --issuer https://auth.avaj.com/realms/moj
@@ -86,9 +121,6 @@ For an existing installation, keep its `.env` and data and read
 
    Replace the domain if you changed it. Open `https://moj.avaj.com` (or your chosen
    MoJ URL), complete the application's first-time setup, and test login/logout.
-   Use [Private Keycloak administration](#private-keycloak-administration) to access
-   `https://auth.avaj.com/admin/` through an SSH tunnel. On a fresh database, use
-   the bootstrap credentials from `.env`, then create a permanent administrator.
 
 For later starts, repeat the `up` and `ps` commands in step 6. To stop services
 without removing their data, run:
@@ -121,6 +153,7 @@ MOJ_BASE_URL=http://moj.localhost
 AUTH_BASE_URL=http://auth.localhost
 PROXY_HTTP_BIND=127.0.0.1:80
 PROXY_HTTPS_BIND=127.0.0.1:443
+AUTH_ADMIN_BIND=127.0.0.1:8443
 ```
 
 Make both names resolve to loopback on your computer. If your browser or OS does
@@ -144,10 +177,44 @@ docker compose --env-file .env --env-file generated/urls.env -f docker-compose.y
 python3 verify-oidc.py --issuer http://auth.localhost/realms/moj
 ```
 
-Open http://moj.localhost and complete first-time setup. The public authentication
-listener blocks administration even in local HTTP mode. Use the private tunnel
-procedure below from a separate workstation, or Keycloak's `kcadm.sh` inside the
-`auth` container for local administration.
+Open http://moj.localhost and complete first-time setup.
+
+To access the Keycloak admin console, configure the master realm after Keycloak
+is ready. On a new installation, use the bootstrap credentials from the container:
+
+```sh
+python3 configure-admin.py --bootstrap
+```
+
+For an existing installation, back up the IAM database first, then run the helper
+with your current administrator credentials (the password prompt is hidden):
+
+```sh
+python3 configure-admin.py
+```
+
+The helper sets the master realm's frontend URL to the administration origin on
+8443 and allows HTTP for local master-realm login. The participant issuer stays
+at `http://auth.localhost/realms/moj`. Repeat this step whenever the authentication
+hostname or scheme changes.
+
+Open **http://auth.localhost:8443/admin/** in your normal browser, sign in with
+your Keycloak administrator credentials, and select the **moj** realm. No SSH
+tunnel or browser command-line flags are needed. The local loopback binding above
+supports direct access; Compose otherwise defaults `AUTH_ADMIN_BIND` to
+`0.0.0.0:8443`. Administration remains blocked on the public authentication URL
+without port 8443. See [Keycloak administration on port 8443](#keycloak-administration-on-port-8443)
+for public-server firewall requirements.
+
+If applying these settings to a stack that is already running, regenerate the
+URLs and recreate `auth` and `proxy` before running the helper:
+
+```sh
+python3 prepare-urls.py --mode restricted
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --no-deps --force-recreate --wait --wait-timeout 600 auth proxy
+python3 configure-admin.py
+```
+
 Test login/logout and `/control` with a user in the `moj` realm's `admin` group.
 For private images, run `docker login ghcr.io` before pulling.
 Use `--mode restricted` whenever regenerating these HTTP URLs.
@@ -155,7 +222,10 @@ Use `--mode restricted` whenever regenerating these HTTP URLs.
 An existing realm retains its old URLs: follow [Updating an existing realm](#updating-an-existing-realm)
 when switching between local HTTP and server HTTPS. Do not delete data volumes.
 When moving to the server, restore the HTTPS origins and `0.0.0.0:80` / `0.0.0.0:443`
-bindings, regenerate without `--mode restricted`, and recreate the stack.
+bindings. Set `AUTH_ADMIN_BIND=0.0.0.0:8443` if using direct remote administration
+and restrict port 8443 to trusted administrator IPs in the external firewall.
+Regenerate without `--mode restricted`, recreate the stack, and rerun
+`configure-admin.py` to restore the master realm's HTTPS URL and SSL policy.
 
 ## Reverse proxy
 
@@ -170,7 +240,9 @@ and `X-Forwarded` headers are removed. Keycloak 26.8.0 uses
 The public authentication listener permits only the `moj` realm, static resources
 and discovery paths. The admin console/API, `master` realm and management paths
 return 404. Administration uses a separate listener published on
-`127.0.0.1:8443` and reached through SSH; it keeps health/metrics blocked.
+`AUTH_ADMIN_BIND` (default `0.0.0.0:8443`) and protected by the external firewall;
+it keeps health/metrics blocked. Keycloak uses `KC_HOSTNAME_ADMIN` for console
+links, and the saved master realm uses the same administration origin for login.
 
 Only Caddy publishes host ports. PostgreSQL, Artemis, controller and Keycloak
 are accessible within the Compose network. Generated hostname aliases let the
@@ -347,7 +419,7 @@ python3 prepare-urls.py --mode restricted
 This derives `http://203.0.113.10:8080` and `http://203.0.113.10:8888`; the example
 IP must be replaced. Numeric IPv6 addresses are also supported. Explicit origins
 override the respective derived URL. Restrict any test HTTP exposure to your own
-administration IP and use disposable credentials. The proxy publishes public 80/443 and loopback-only administration on 8443. This port-based test requires additional
+administration IP and use disposable credentials. The proxy publishes public 80/443 and administration on 8443; restrict 8443 to administrator IPs in the external firewall. This port-based test requires additional
 proxy mappings for 8080:8080 and 8888:8888; URL preparation does not open ports.
 For local tests prefer the named HTTP origins in [Running locally](#running-locally).
 Numeric IPs do not use Docker hostname aliases, so containers must reach those
@@ -366,8 +438,8 @@ Back up the IAM database and record the current realm/client URL fields before
 a deliberate change during a maintenance window.
 
 1. Render the new URLs, then recreate `auth` with both environment files. Open its
-   administration console through the private SSH tunnel described below and sign
-   in with the current administrator credentials.
+   administration console on port 8443 after running `configure-admin.py` as
+   described below, and sign in with the current administrator credentials.
 2. Select realm `moj`. In **Realm settings → General**, set **Frontend URL** to
    the exact `AUTH_BASE_URL` shown by preparation and save. This replaces any old
    realm-level hostname override.
@@ -537,57 +609,62 @@ records completed application/proxy patches and local acceptance; residual OS
 findings and final release/public checks remain. Production startup and the application migration are
 implemented; public-domain acceptance still needs the completed domain setup.
 
-## Private Keycloak administration
+## Keycloak administration on port 8443
 
-Only the public `moj` realm's participant endpoints, resources and discovery are
-proxied through `AUTH_BASE_URL`. Requests for `/admin`, the admin API and
-`/realms/master` return 404. Keycloak's HTTP and management ports stay unpublished.
-Caddy serves a second authentication listener on container port 8443, published
-**only** as `127.0.0.1:8443` on the server. Never change this binding to
-`0.0.0.0`, open it in the provider firewall, or expose it through another proxy.
-This follows [Keycloak's exposed-path recommendations](https://www.keycloak.org/server/reverseproxy).
+The public authentication listener permits only participant endpoints for the
+`moj` realm, resources and discovery. `/admin`, the admin API and `/realms/master`
+return 404 there. Keycloak's own ports 8080 and 9000 stay unpublished.
 
-Rerun `prepare-urls.py` to generate `AUTH_ADMIN_PROXY_URL`, validate Compose and
-recreate `proxy` using both environment files. The private listener uses the same
-hostname and certificate as public authentication. Keep `KC_HOSTNAME` and the
-realm's frontend URL at the public origin; a separate admin hostname is not needed.
-The browser reaches that same origin through SSH, including master-realm login,
-console assets and API calls. Setting a different browser port alone would send
-some redirects back to the blocked public listener.
+The administration listener uses the authentication hostname and scheme on port
+8443. Compose publishes `${AUTH_ADMIN_BIND:-0.0.0.0:8443}:8443`. On a public
+server, allow TCP 8443 **only from trusted administrator IPs** in the provider or
+network firewall, including IPv6 if enabled. Docker-published ports can bypass
+ordinary host firewall rules, so verify access from an untrusted external network.
+For local development, set `AUTH_ADMIN_BIND=127.0.0.1:8443` in `.env`; direct
+browser access works with this loopback binding too.
 
-On a separate administrator workstation, for the default HTTPS authentication
-origin (port 443):
+Back up the IAM database before updating an existing installation.
+Keycloak's `KC_HOSTNAME_ADMIN` points to the generated `AUTH_ADMIN_PROXY_URL`.
+The master realm also needs that origin as its saved frontend URL so console
+login/logout remains on 8443. Configure this once on a new or existing database,
+and repeat whenever the authentication hostname or scheme changes:
 
-1. Temporarily add `127.0.0.1 auth.avaj.com` to the workstation's hosts file. Use
-   your actual authentication hostname. Leave the MoJ hostname unchanged.
-2. Forward the origin's port to the server's private listener:
+```sh
+cd src/deploy/docker-compose/server
+python3 prepare-urls.py --mode restricted  # local HTTP; omit --mode restricted for public HTTPS
 
-   ```sh
-   ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:443:127.0.0.1:8443 deployment-user@SERVER_IP
-   ```
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml config --quiet
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --no-deps --force-recreate auth proxy
 
-   Substitute the deployment SSH user and server IP. Binding local port 443 may
-   require administrator privileges on your OS; use your normal SSH identity
-   when starting an elevated session. The local port must be free. For an
-   explicit authentication origin port, forward that port instead of 443.
-3. Keep SSH running and open `https://auth.avaj.com/admin/`. The certificate must
-   remain trusted and match the configured hostname. Sign in with a permanent
-   Keycloak administrator; use bootstrap credentials only for initial setup.
-4. When finished, close SSH and remove the temporary hosts-file entry. Restore
-   normal DNS resolution so participant authentication works without the tunnel.
+python3 configure-admin.py
+```
 
-For restricted HTTP tests, forward local origin port 80 (or its explicit port)
-to server port 8443 and browse the exact configured HTTP origin. The private
-listener follows the authentication origin's scheme. Public production uses HTTPS.
-Port 8443 is reserved for the private listener and cannot be either public origin's port.
-Use a separate workstation where the local origin port is free.
+Wait for Keycloak to be ready before running `configure-admin.py`. It prompts for
+your current master-realm administrator credentials and preserves other master
+realm settings except the frontend URL and SSL policy. On a fresh installation, use `python3 configure-admin.py --bootstrap`
+to use the container's initial bootstrap credentials instead. The helper sets the master realm frontend URL and uses `sslRequired=none` for
+restricted local HTTP or `external` for public HTTPS; the `moj` realm and
+participant issuer stay at `AUTH_BASE_URL`. Credentials are not printed or stored on the host, and its
+temporary in-container CLI session file is removed afterwards. Do not delete data
+volumes to apply this change.
 
-Check from another machine **without** the tunnel: `/admin/`,
-`/admin/realms/moj`, and `/realms/master/.well-known/openid-configuration` must
-return 404, while `/realms/moj/.well-known/openid-configuration` works. With the
-tunnel, test administrator login and account creation. Confirm the host binds
-8443 to loopback and external access to 8443 fails. These live network and browser
-checks remain pending until the server/domain is available.
+Then open:
+
+- Local setup with `AUTH_BASE_URL=http://auth.localhost`:
+  **http://auth.localhost:8443/admin/**.
+- Public setup with `AUTH_BASE_URL=https://auth.avaj.com`:
+  **https://auth.avaj.com:8443/admin/**, from an allowed administrator IP.
+
+Use your actual authentication hostname. Add the documented local hosts entry if
+needed. Production uses the same trusted hostname certificate as public
+authentication. Sign in with a permanent administrator; bootstrap credentials are
+for initial setup. No browser command-line flags or SSH tunnel are required.
+
+Verify that console login, logout and admin API requests use 8443. Check that
+public `/admin/` and master-realm requests still return 404, participant discovery
+still returns the public issuer, health/metrics remain blocked on 8443, and the
+external firewall rejects 8443 from unapproved IPs. External firewall acceptance
+must be checked on the actual public server.
 
 ## Organizer-managed participant accounts
 
@@ -615,7 +692,7 @@ are rejected, and an organizer-created participant can log in but cannot access
 `/control`. The temporary-password flow lets existing users change their password;
 it does not create accounts. See the
 [Keycloak administration guide](https://www.keycloak.org/docs/latest/server_admin/index.html).
-Use [Private Keycloak administration](#private-keycloak-administration) to perform these actions.
+Use [Keycloak administration on port 8443](#keycloak-administration-on-port-8443) to perform these actions.
 
 ## Keycloak production startup
 

@@ -61,13 +61,20 @@ public class UserService implements ApplicationListener<ApplicationEvent> {
                     LOG.info("Created new user {}", name);
                 }
 
-                user.setGivenName((String) attributes.get("given_name"));
-                user.setFamilyName((String) attributes.get("family_name"));
-                user.setEmail((String) attributes.get("email"));
+                user.setGivenName(profileValue(attributes, "given_name", user.getGivenName()));
+                user.setFamilyName(profileValue(attributes, "family_name", user.getFamilyName()));
+                user.setEmail(profileValue(attributes, "email", user.getEmail()));
                 return userRepository.save(user);
             }
         }
         throw new IllegalArgumentException("Principal not an Authentication, unable to create/update the user.");
+    }
+
+    private static String profileValue(Map<String, Object> attributes, String claim, String previous) {
+        String value = (String) attributes.get(claim);
+        // Profile claims may be absent even when authentication succeeds. Keep
+        // saved values where possible and satisfy the schema without inventing names/email.
+        return value != null ? value : previous != null ? previous : "";
     }
 
     public User findUser(Principal principal) {

@@ -503,6 +503,18 @@ login/logout with participant denial of `/control`. Administration-console acces
 restrictions were implemented in the separate step below.
 No live deployment or existing realm was changed.
 
+**Administration access update (2026-10-11):** The bind address is now configurable
+with `AUTH_ADMIN_BIND` (default `0.0.0.0:8443`), with administrator IP restrictions
+enforced by the external firewall. `KC_HOSTNAME_ADMIN` and the master realm
+frontend URL provide direct browser access on 8443. Use `configure-admin.py` after
+recreating auth/proxy; local development can retain a loopback binding. Public
+admin/master-realm denial remains in place. The earlier tunnel implementation
+is recorded below for historical context. Disposable HTTP checks passed direct
+console access, master-realm PKCE login/token exchange, admin API access and
+logout on 8443, while public admin/master denial, management denial and the
+participant issuer were preserved. The HTTP client simulated trusted localhost
+browser cookie handling; live browser and external firewall checks remain.
+
 **Private administration implemented and locally verified (2026-10-10):**
 The public Caddy authentication listener now permits only `moj` realm endpoints,
 resources and discovery. Administration UI/API, the master realm and management
@@ -587,8 +599,7 @@ replacement. The task remains open for those security gates and public acceptanc
 
 **Repository implementation complete; server acceptance pending:** Server Compose
 now includes Caddy `2.11.2-alpine`, persistent certificate/configuration volumes,
-and public TCP 80/443 bindings; task 15 adds loopback-only private administration
-on 8443. The Caddyfile routes the configured origins
+and public TCP 80/443 bindings; task 15 adds administration on 8443 protected by the external firewall. The Caddyfile routes the configured origins
 to controller and Keycloak, supports WebSocket upgrades through Caddy's reverse
 proxy, and removes untrusted forwarding headers. Keycloak now uses hostname v2 and
 `KC_PROXY_HEADERS=xforwarded`; controller native forwarding and origin-port support are explicit. URL preparation

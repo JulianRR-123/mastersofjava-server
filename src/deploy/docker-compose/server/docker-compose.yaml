@@ -12,8 +12,8 @@ services:
     ports:
       - "${PROXY_HTTP_BIND:-0.0.0.0:80}:80"
       - "${PROXY_HTTPS_BIND:-0.0.0.0:443}:443"
-      # Private administration: SSH tunnel only; never bind to all interfaces.
-      - "127.0.0.1:8443:8443"
+      # Restrict 8443 to administrator IPs in the provider/network firewall.
+      - "${AUTH_ADMIN_BIND:-0.0.0.0:8443}:8443"
     environment:
       MOJ_BASE_URL: "${MOJ_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
       AUTH_BASE_URL: "${AUTH_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
@@ -84,6 +84,7 @@ services:
       KC_HTTP_MANAGEMENT_SCHEME: http
       # Hostname v2: both browser and backchannel use the same external origin.
       KC_HOSTNAME: "${KC_HOSTNAME:?Run prepare-urls.py and load generated/urls.env after .env}"
+      KC_HOSTNAME_ADMIN: "${AUTH_ADMIN_PROXY_URL:?Run prepare-urls.py}"
       KC_HOSTNAME_STRICT: "true"
       KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "false"
     volumes:
