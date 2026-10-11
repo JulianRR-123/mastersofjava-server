@@ -1,0 +1,57 @@
+[
+  {
+    "name": "controller",
+    "reference": "moj-task15-patched-controller:20261011",
+    "id": "sha256:7b910aa16fcd8637563d3542f1d7e05318ba0c2a9330e37a4ae113dc4446ff10",
+    "repoDigests": [
+      "moj-task15-patched-controller@sha256:7b910aa16fcd8637563d3542f1d7e05318ba0c2a9330e37a4ae113dc4446ff10"
+    ],
+    "created": "2026-10-11T10:34:11Z",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "name": "worker",
+    "reference": "moj-task15-patched-worker:20261011",
+    "id": "sha256:3249afbd40814303bc74818fe4954a6ef21cf9a98587b58783924ef277142ae6",
+    "repoDigests": [
+      "moj-task15-patched-worker@sha256:3249afbd40814303bc74818fe4954a6ef21cf9a98587b58783924ef277142ae6"
+    ],
+    "created": "2026-10-11T10:34:11Z",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "name": "caddy",
+    "reference": "moj-caddy:2.11.7-security1",
+    "id": "sha256:2e86ddcc890ffde761fabf03d6a5b2815ff8e092b1a2c4bb81b9e03d6770ec76",
+    "repoDigests": [
+      "moj-caddy@sha256:2e86ddcc890ffde761fabf03d6a5b2815ff8e092b1a2c4bb81b9e03d6770ec76"
+    ],
+    "created": "2026-10-11T12:44:53.605863329+02:00",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "name": "keycloak",
+    "reference": "quay.io/keycloak/keycloak:26.8.0",
+    "id": "sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741",
+    "repoDigests": [
+      "quay.io/keycloak/keycloak@sha256:27b3230fbabb8c9ff3c66c864cf09dcd8a41aca82e5100679d109ef0eeb05741"
+    ],
+    "created": "2026-10-10T10:56:47.650434314Z",
+    "os": "linux",
+    "architecture": "amd64"
+  },
+  {
+    "name": "postgres",
+    "reference": "postgres:15",
+    "id": "sha256:c961aa287d8698297cb26cdfadfbe9fd2cbaf77e53cfffe9636e8d8a1e4d842c",
+    "repoDigests": [
+      "postgres@sha256:c961aa287d8698297cb26cdfadfbe9fd2cbaf77e53cfffe9636e8d8a1e4d842c"
+    ],
+    "created": "2026-10-06T01:33:53.39627869Z",
+    "os": "linux",
+    "architecture": "amd64"
+  }
+]

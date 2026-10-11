@@ -26,7 +26,7 @@ public class ClasspathService {
         if (paths != null && !paths.isEmpty()) {
             classPath.addAll(paths);
         }
-        classPath.add(resolveLibrary("junit-4.12.jar"));
+        classPath.add(resolveLibrary("junit-4.13.2.jar"));
         classPath.add(resolveLibrary("hamcrest-all-1.3.jar"));
         classPath.add(resolveLibrary("asciiart-core-1.1.0.jar"));
 

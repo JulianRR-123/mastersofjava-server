@@ -1,0 +1,14 @@
+[
+  {
+    "id": "MOJ-T15-001",
+    "severity": "High (project assessment, not a public CVSS score)",
+    "status": "open",
+    "riskAccepted": false,
+    "component": "worker assignment test sandbox",
+    "rootCause": "Default bundled policy permits all file reads; assignment subprocess shares container/PID environment boundary with worker",
+    "reproduction": "Fresh network-disabled worker image, harmless marker only; ReadProbe with the exact bundled Security Manager policy reads /proc/1/environ",
+    "realSecretsRead": false,
+    "evidence": "worker-policy-probe.txt",
+    "nextAction": "Restrict assignment reads and isolate broker credentials/cross-team resources; add negative /proc and cross-workspace tests plus existing assignment acceptance"
+  }
+]

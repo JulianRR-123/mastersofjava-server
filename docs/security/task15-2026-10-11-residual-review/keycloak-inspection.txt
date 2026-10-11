@@ -1,0 +1,11 @@
+uid=1000(keycloak) gid=0(root) groups=0(root)
+/usr/bin/grep
+/usr/lib64/libpcre2-8.so.0
+/usr/lib64/libpcre2-8.so.0.11.0
+/usr/lib64/libpcre2-posix.so.3
+/usr/lib64/libpcre2-posix.so.3.0.2
+README.md
+lrwxrwxrwx 1 root root     20 Jul 31  2024 /usr/lib64/libpcre2-8.so.0 -> libpcre2-8.so.0.11.0
+-rwxr-xr-x 1 root root 636848 Jul 31  2024 /usr/lib64/libpcre2-8.so.0.11.0
+lrwxrwxrwx 1 root root     23 Jul 31  2024 /usr/lib64/libpcre2-posix.so.3 -> libpcre2-posix.so.3.0.2
+-rwxr-xr-x 1 root root  15320 Jul 31  2024 /usr/lib64/libpcre2-posix.so.3.0.2

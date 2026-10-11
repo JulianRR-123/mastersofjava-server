@@ -1,0 +1,16 @@
+PASS verified HTTPS discovery with exact public issuer/endpoints
+PASS administrator application login, bootstrap and control access
+PASS participant application login and control denial
+PASS real signed bearer tokens: administrator success, participant denial
+PASS spoofed forwarding headers cannot change login origin/HTTPS port
+PASS public administration/master/management routes blocked, including spoofed headers
+PASS private console HTML, master PKCE login and admin API; same token denied on public listener
+PASS authenticated WSS subscriptions and live assignment-start message
+PASS separate worker compile with successful WSS feedback
+PASS separate worker test with successful WSS feedback
+PASS separate worker submit with successful WSS feedback
+PASS successful submission stored and rankings rendered
+PASS administrator application/OIDC logout returns to configured origin
+PASS participant application/OIDC logout returns to configured origin
+All acceptance checks passed
+Recreation preserved all nine table hashes/counts and saved users/roles/rankings.

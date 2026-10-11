@@ -16,7 +16,7 @@
 */
 package nl.moj.server.runtime.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.*;
 

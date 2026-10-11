@@ -2,7 +2,7 @@ package nl.moj.server.util;
 
 import java.util.function.Supplier;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 

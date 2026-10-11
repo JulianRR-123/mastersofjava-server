@@ -1,0 +1,6 @@
+LANG=en_US.UTF-8 ./mvnw -B -ntp clean verify
+Tests run: 86, Failures: 0, Errors: 0, Skipped: 2
+BUILD SUCCESS
+Repository Docker Compose config --quiet: passed
+Both local Jib image builds: passed
+Patched Caddy Docker build: passed

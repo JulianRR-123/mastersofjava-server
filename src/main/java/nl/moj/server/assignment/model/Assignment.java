@@ -19,7 +19,7 @@ package nl.moj.server.assignment.model;
 import java.time.Duration;
 import java.util.UUID;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.*;
 

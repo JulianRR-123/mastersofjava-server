@@ -1,0 +1,4 @@
+Production Keycloak with PostgreSQL, imported realm, no custom providers
+Verified HTTPS authorization-code login/token exchange for both disposable roles passed
+PCRE2 absent from JVM library mappings before and after these flows
+This is sampled runtime evidence, not proof for all execution paths

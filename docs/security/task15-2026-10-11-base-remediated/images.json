@@ -1,0 +1,35 @@
+[
+  {
+    "name": "java-base",
+    "reference": "moj-java-base:21-noble-security1",
+    "id": "sha256:8e0003e4508829cbdba56135e285bf6cbec6b36b0f1ddf7ab010438f933ccd2f",
+    "created": "2026-10-11T12:51:15.095386007+02:00",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "moj-java-base@sha256:8e0003e4508829cbdba56135e285bf6cbec6b36b0f1ddf7ab010438f933ccd2f"
+    ]
+  },
+  {
+    "name": "controller",
+    "reference": "moj-task15-basepatched-controller:20261011",
+    "id": "sha256:a51ad48c9598805bff6f7b8b32dcc0df9ecfce03ffb48267c4a256bc220c2e30",
+    "created": "2026-10-11T10:51:46Z",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "moj-task15-basepatched-controller@sha256:a51ad48c9598805bff6f7b8b32dcc0df9ecfce03ffb48267c4a256bc220c2e30"
+    ]
+  },
+  {
+    "name": "worker",
+    "reference": "moj-task15-basepatched-worker:20261011",
+    "id": "sha256:087cdce545ea35cfa1648645046f41ba28e80005bba4afad14915a524fb1eafb",
+    "created": "2026-10-11T10:51:46Z",
+    "architecture": "amd64",
+    "os": "linux",
+    "repoDigests": [
+      "moj-task15-basepatched-worker@sha256:087cdce545ea35cfa1648645046f41ba28e80005bba4afad14915a524fb1eafb"
+    ]
+  }
+]

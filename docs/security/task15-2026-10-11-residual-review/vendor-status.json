@@ -1,0 +1,5611 @@
+[
+  {
+    "name": "controller-CVE-2016-20013",
+    "url": "https://ubuntu.com/security/CVE-2016-20013",
+    "snapshotSHA256": "537034799da620436a1c8d3326bf354a557654937c2d9b3f678a247eaf42b6a7",
+    "checkedAt": "2026-10-11T11:03:29.681404+00:00",
+    "packageStates": [
+      {
+        "source": "dietlibc",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "sssd",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "syslinux",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "syslinux-legacy",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "zabbix",
+        "release": "noble",
+        "status": "Not in release"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2016-2781",
+    "url": "https://ubuntu.com/security/CVE-2016-2781",
+    "snapshotSHA256": "00f033fee217e3b91b19f0ccb96b8eef8fb17e46c0717a0653a00e38a4547de5",
+    "checkedAt": "2026-10-11T11:03:29.681755+00:00",
+    "packageStates": [
+      {
+        "source": "coreutils",
+        "release": "noble",
+        "status": "Ignored"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2021-31879",
+    "url": "https://ubuntu.com/security/CVE-2021-31879",
+    "snapshotSHA256": "d0d87c354b662b288c51894489dce28aede2d56b7612242a1672ae4a4c64e5ec",
+    "checkedAt": "2026-10-11T11:03:29.682288+00:00",
+    "packageStates": [
+      {
+        "source": "wget",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2022-3219",
+    "url": "https://ubuntu.com/security/CVE-2022-3219",
+    "snapshotSHA256": "be39e181af1d6c2738a2179eb6d91840886a819a4a3c5160897a4cb0cfc5ad46",
+    "checkedAt": "2026-10-11T11:03:29.682632+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "noble",
+        "status": "Ignored"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2024-10041",
+    "url": "https://ubuntu.com/security/CVE-2024-10041",
+    "snapshotSHA256": "c84f7c6f0100ec3989c44f74e0db7a5dd5293b646f971dbce5fe8137f883d0ae",
+    "checkedAt": "2026-10-11T11:03:29.683035+00:00",
+    "packageStates": [
+      {
+        "source": "pam",
+        "release": "noble",
+        "status": "Ignored"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2024-10524",
+    "url": "https://ubuntu.com/security/CVE-2024-10524",
+    "snapshotSHA256": "a9b284f49bf746b2435996d744499600f2607f645cf9830b9167674da993f8a5",
+    "checkedAt": "2026-10-11T11:03:29.683326+00:00",
+    "packageStates": [
+      {
+        "source": "wget",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2024-56433",
+    "url": "https://ubuntu.com/security/CVE-2024-56433",
+    "snapshotSHA256": "df7b324a4c4320f221bdad898cb98908602ad50d69dcdc3558145538db819c54",
+    "checkedAt": "2026-10-11T11:03:29.683697+00:00",
+    "packageStates": [
+      {
+        "source": "shadow",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-1150",
+    "url": "https://ubuntu.com/security/CVE-2025-1150",
+    "snapshotSHA256": "e99b2353870992eca115735ad124f219d9706fe2a497a0c2c5d10bada6a7bbae",
+    "checkedAt": "2026-10-11T11:03:29.685025+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-1151",
+    "url": "https://ubuntu.com/security/CVE-2025-1151",
+    "snapshotSHA256": "3c8e872a2040b38c3a5470d391560ddaa7b33cbbd7f89eccf74169b73c68f926",
+    "checkedAt": "2026-10-11T11:03:29.685958+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-1152",
+    "url": "https://ubuntu.com/security/CVE-2025-1152",
+    "snapshotSHA256": "8825606f72c18cc56046ec2e34f4bed2e7d550780d963690614475db63e3eabd",
+    "checkedAt": "2026-10-11T11:03:29.686335+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66382",
+    "url": "https://ubuntu.com/security/CVE-2025-66382",
+    "snapshotSHA256": "54cc767c19a1dfb25b73e3938052190f488424241649554f43d251a66eb8b739",
+    "checkedAt": "2026-10-11T11:03:29.686783+00:00",
+    "packageStates": [
+      {
+        "source": "expat",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      },
+      {
+        "source": "xmlrpc-c",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vnc4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "wbxml2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "swish-e",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "insighttoolkit4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cadaver",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "gdcm",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ayttm",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cableswig",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "coin3",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "matanza",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "tdom",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vtk",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "smart",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "libxmltok",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "apache2",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "apr-util",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "cmake",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "firefox",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ghostscript",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "texlive-bin",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "thunderbird",
+        "release": "noble",
+        "status": "Not affected"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66863",
+    "url": "https://ubuntu.com/security/CVE-2025-66863",
+    "snapshotSHA256": "a76045a78c5be146b5fc096e082d72ef2f8dd1d294365a748f6f54a48a85f07d",
+    "checkedAt": "2026-10-11T11:03:29.688185+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69644",
+    "url": "https://ubuntu.com/security/CVE-2025-69644",
+    "snapshotSHA256": "17608307989615ddb6e2c9a0496a4150c7e814fa381d98dc8b21e663e9acd89b",
+    "checkedAt": "2026-10-11T11:03:29.708006+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69645",
+    "url": "https://ubuntu.com/security/CVE-2025-69645",
+    "snapshotSHA256": "6ae58104c1a55e59d6535b87b7565461ad006333912f9ff008774ec0c4a1d3ba",
+    "checkedAt": "2026-10-11T11:03:29.710176+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69647",
+    "url": "https://ubuntu.com/security/CVE-2025-69647",
+    "snapshotSHA256": "78732f89e8c5f9c89c147a73bfefe02ee5bdc57ed2a15dd4019b485ee517eaa6",
+    "checkedAt": "2026-10-11T11:03:29.716412+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69648",
+    "url": "https://ubuntu.com/security/CVE-2025-69648",
+    "snapshotSHA256": "1e87ee7ce2181bf44b35cbb13b7ec3e9a4025b63962983d3536331eda7e1917d",
+    "checkedAt": "2026-10-11T11:03:29.716828+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69652",
+    "url": "https://ubuntu.com/security/CVE-2025-69652",
+    "snapshotSHA256": "07ca45ab69bdb0c26674fbded57820aa6376750664361426efd121fcc0ebaabf",
+    "checkedAt": "2026-10-11T11:03:30.242132+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-102633",
+    "url": "https://ubuntu.com/security/CVE-2026-102633",
+    "snapshotSHA256": "db1a0872e562129e872b474a43e3192a1dd11c2381ef03b426885380ef1a46c7",
+    "checkedAt": "2026-10-11T11:03:31.008456+00:00",
+    "packageStates": [
+      {
+        "source": "expat",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "apache2",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "apr-util",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "cmake",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ghostscript",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "texlive-bin",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "xmlrpc-c",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vnc4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "wbxml2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "swish-e",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "insighttoolkit4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cadaver",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "gdcm",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ayttm",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cableswig",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "coin3",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "matanza",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "tdom",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vtk",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "smart",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "firefox",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "thunderbird",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "libxmltok",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-105712",
+    "url": "https://ubuntu.com/security/CVE-2026-105712",
+    "snapshotSHA256": "dd4dc3444c1eb52a398649ed3f3f8a27b5cd3328a74d4a97855b9b68db1d642b",
+    "checkedAt": "2026-10-11T11:03:31.099992+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-107161",
+    "url": "https://ubuntu.com/security/CVE-2026-107161",
+    "snapshotSHA256": "83edaf70f3757ff4b2d9952d0a689e00eb5312ee59b419980820a9e4fd5db4b9",
+    "checkedAt": "2026-10-11T11:03:31.352452+00:00",
+    "packageStates": [
+      {
+        "source": "cyrus-sasl2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-15003",
+    "url": "https://ubuntu.com/security/CVE-2026-15003",
+    "snapshotSHA256": "d035c6f9ec55399f27008f91bbf53eb0b1dff4e0b60f991733e6101a664b37cb",
+    "checkedAt": "2026-10-11T11:03:31.352883+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-18477",
+    "url": "https://ubuntu.com/security/CVE-2026-18477",
+    "snapshotSHA256": "0a434f02fb2c0581abfe3dbf64305ab62c9eaf4dcbc3e4302c927ab50d41cf00",
+    "checkedAt": "2026-10-11T11:03:31.520196+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-19548",
+    "url": "https://ubuntu.com/security/CVE-2026-19548",
+    "snapshotSHA256": "37a248c64429702b51ce42115c68598a65485d1f3c59024b1e71cfd9ad14fd1a",
+    "checkedAt": "2026-10-11T11:03:37.882573+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-40228",
+    "url": "https://ubuntu.com/security/CVE-2026-40228",
+    "snapshotSHA256": "43fb5f99dddacc0a6925d36ce399fe043523318054d4355e6bb2209aa0e48c6e",
+    "checkedAt": "2026-10-11T11:03:37.975539+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-4647",
+    "url": "https://ubuntu.com/security/CVE-2026-4647",
+    "snapshotSHA256": "bf5408e858be4c371546739e0bd73b8bcda38cef2b072ff669795af79f917032",
+    "checkedAt": "2026-10-11T11:03:37.976117+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-54369",
+    "url": "https://ubuntu.com/security/CVE-2026-54369",
+    "snapshotSHA256": "49e1630809f438582d8a37b18fa49e23c7d87733fa96d2eef772997868e22110",
+    "checkedAt": "2026-10-11T11:03:37.976556+00:00",
+    "packageStates": [
+      {
+        "source": "acl",
+        "release": "noble",
+        "status": "Ignored backport too intrusive"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-54370",
+    "url": "https://ubuntu.com/security/CVE-2026-54370",
+    "snapshotSHA256": "f5e2ba217093b212f89920c24a6c78f75d8a8a5f8f8c7271a172a47c6d6e85a3",
+    "checkedAt": "2026-10-11T11:03:38.018547+00:00",
+    "packageStates": [
+      {
+        "source": "acl",
+        "release": "noble",
+        "status": "Ignored backport too intrusive"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-6845",
+    "url": "https://ubuntu.com/security/CVE-2026-6845",
+    "snapshotSHA256": "aba8c00e0e482aef26c855d0614ca7b8bb7ac7ce1ef98451df2d266ded3a49b4",
+    "checkedAt": "2026-10-11T11:03:38.053550+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-76642",
+    "url": "https://ubuntu.com/security/CVE-2026-76642",
+    "snapshotSHA256": "7e433e26e1428bc09e5d87d169a4c2565d433d50dbf239c10e515cd0cbdef110",
+    "checkedAt": "2026-10-11T11:03:38.057507+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-77214",
+    "url": "https://ubuntu.com/security/CVE-2026-77214",
+    "snapshotSHA256": "c701cfb75a8214e452c2af0302fad1c9300c6740873276aaad32b59652be1be8",
+    "checkedAt": "2026-10-11T11:03:38.061558+00:00",
+    "packageStates": [
+      {
+        "source": "expat",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "apache2",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "apr-util",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "cmake",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ghostscript",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "texlive-bin",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "xmlrpc-c",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vnc4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "wbxml2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "swish-e",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "insighttoolkit4",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cadaver",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "gdcm",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "ayttm",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "cableswig",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "coin3",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "matanza",
+        "release": "noble",
+        "status": "Ignored"
+      },
+      {
+        "source": "tdom",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "vtk",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "smart",
+        "release": "noble",
+        "status": "Not in release"
+      },
+      {
+        "source": "firefox",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "thunderbird",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "libxmltok",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-78408",
+    "url": "https://ubuntu.com/security/CVE-2026-78408",
+    "snapshotSHA256": "0f860b53234a130d13f4eafd1e5ec43132b6ad75081a790b7e075d7402dc56e9",
+    "checkedAt": "2026-10-11T11:03:38.062346+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-78409",
+    "url": "https://ubuntu.com/security/CVE-2026-78409",
+    "snapshotSHA256": "ef7d1e68a697e14de2193c125e798bff454903a3eba5eefe35599537a7609c7a",
+    "checkedAt": "2026-10-11T11:03:38.122543+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-78410",
+    "url": "https://ubuntu.com/security/CVE-2026-78410",
+    "snapshotSHA256": "149fc4cb035341183c654263fb20d8db2540ca8217e2639a174ac618f9d323b2",
+    "checkedAt": "2026-10-11T11:03:38.123256+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-82560",
+    "url": "https://ubuntu.com/security/CVE-2026-82560",
+    "snapshotSHA256": "68bf3bce4166263018cffa8a5fe8383e4786e2e098d7ecac491978f89a41f6cf",
+    "checkedAt": "2026-10-11T11:03:38.123727+00:00",
+    "packageStates": [
+      {
+        "source": "perl",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-85091",
+    "url": "https://ubuntu.com/security/CVE-2026-85091",
+    "snapshotSHA256": "91fe336ecc935a6725ebbf432b9f0e12eba6cd3320945214c64f28b71ccb55c6",
+    "checkedAt": "2026-10-11T11:03:38.124080+00:00",
+    "packageStates": [
+      {
+        "source": "zlib",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      },
+      {
+        "source": "rsync",
+        "release": "noble",
+        "status": "Not affected"
+      },
+      {
+        "source": "klibc",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      },
+      {
+        "source": "zsync",
+        "release": "noble",
+        "status": "Vulnerable, fix deferred"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-86145",
+    "url": "https://ubuntu.com/security/CVE-2026-86145",
+    "snapshotSHA256": "b94881a69f0e1beff2748f6042eb9d1497e8332a943ff89398bd603cd40abf21",
+    "checkedAt": "2026-10-11T11:03:38.124454+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-8674",
+    "url": "https://ubuntu.com/security/CVE-2026-8674",
+    "snapshotSHA256": "fbbacf5e90c1751c4a7191c62f74ce968e245952df09e916685cfe6921f51e2a",
+    "checkedAt": "2026-10-11T11:03:38.124770+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "Not in release"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-86805",
+    "url": "https://ubuntu.com/security/CVE-2026-86805",
+    "snapshotSHA256": "e6d4e261b08db7a54b348b53d904a836f3ebe6ee6d8b83c32e29a851308410a3",
+    "checkedAt": "2026-10-11T11:03:38.125081+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "Needs evaluation"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "Not in release"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89092",
+    "url": "https://ubuntu.com/security/CVE-2026-89092",
+    "snapshotSHA256": "c08591f195805943efcce4b91f112aa1dc336794798f9e056333c893946f8878",
+    "checkedAt": "2026-10-11T11:03:38.125436+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "Vulnerable"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "Not in release"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89156",
+    "url": "https://ubuntu.com/security/CVE-2026-89156",
+    "snapshotSHA256": "f2542260dcb4bcc62b65290b3454286a6f8dcea1ddf9825d43de93626cd896d4",
+    "checkedAt": "2026-10-11T11:03:38.125822+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89158",
+    "url": "https://ubuntu.com/security/CVE-2026-89158",
+    "snapshotSHA256": "7226967311c971600b7fe10d30024a2c5ea7b9af53c50323ca85376a9aafb7f1",
+    "checkedAt": "2026-10-11T11:03:38.354594+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89160",
+    "url": "https://ubuntu.com/security/CVE-2026-89160",
+    "snapshotSHA256": "b74033ca5d70b7864a24f006fba64c32f73e6632e9c725c1f70b77be75a6ddf1",
+    "checkedAt": "2026-10-11T11:03:38.355253+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89161",
+    "url": "https://ubuntu.com/security/CVE-2026-89161",
+    "snapshotSHA256": "fa91ba7ae97e7eaa6337f8daef01fcc63a5249968100a9ccdec182d9207f52a9",
+    "checkedAt": "2026-10-11T11:03:38.355792+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "Vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90801",
+    "url": "https://ubuntu.com/security/CVE-2026-90801",
+    "snapshotSHA256": "0df17f8d1fd42ce784e125f8fc8286f2409d4732bf7cf8942546acdca4b22072",
+    "checkedAt": "2026-10-11T11:03:38.419700+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90803",
+    "url": "https://ubuntu.com/security/CVE-2026-90803",
+    "snapshotSHA256": "115f1ce328aee62a6a50794e5e035e85321a9e7b31767f3c37e72627d65db547",
+    "checkedAt": "2026-10-11T11:03:38.494535+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90829",
+    "url": "https://ubuntu.com/security/CVE-2026-90829",
+    "snapshotSHA256": "6712d2fbfe02fa2d9370ee78c289ba64790f6041c04f9ca00489f806a8f44bb6",
+    "checkedAt": "2026-10-11T11:03:38.807037+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90830",
+    "url": "https://ubuntu.com/security/CVE-2026-90830",
+    "snapshotSHA256": "6c6ba5dd081b971a46c513e1441e86de4beacd34b8d17d1562f4aa6e24ed238f",
+    "checkedAt": "2026-10-11T11:03:38.807520+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-91779",
+    "url": "https://ubuntu.com/security/CVE-2026-91779",
+    "snapshotSHA256": "ae92d654ae600c2b17fb8d02c688105bbc7281a6a324fa77829a4fa653c7fb0e",
+    "checkedAt": "2026-10-11T11:03:38.896260+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-91781",
+    "url": "https://ubuntu.com/security/CVE-2026-91781",
+    "snapshotSHA256": "3bcfb6d5529f33712c105d9864c4f8aed26cce9055be1ad4d6504a6442eb63d1",
+    "checkedAt": "2026-10-11T11:03:39.055694+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "Needs evaluation"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2005-2541",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2005-2541",
+    "snapshotSHA256": "c9ceb3a77644021c667a4afb2476a67d3ca5f62bb48445604b44292960e01bf3",
+    "checkedAt": "2026-10-11T11:03:40.463638+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "trixie",
+        "version": "1.35+dfsg-3.1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2007-5686",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2007-5686",
+    "snapshotSHA256": "e83d49b8ea7f12cf22a0612399cf99f9f2448f1cbad3ae4fce69b1440ec34947",
+    "checkedAt": "2026-10-11T11:03:40.464411+00:00",
+    "packageStates": [
+      {
+        "source": "shadow",
+        "release": "trixie",
+        "version": "1:4.17.4-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2010-4756",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2010-4756",
+    "snapshotSHA256": "1533aa64c5b15064840929759355263b7de877ee56a438ea7a38a115ecf9d9e3",
+    "checkedAt": "2026-10-11T11:03:40.464930+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2011-3374",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2011-3374",
+    "snapshotSHA256": "9aef1c5706aadc31b353833511036481b22fcd2579fe2763c53c6a1cacbbe460",
+    "checkedAt": "2026-10-11T11:03:40.465406+00:00",
+    "packageStates": [
+      {
+        "source": "apt",
+        "release": "trixie",
+        "version": "3.0.3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2011-3389",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2011-3389",
+    "snapshotSHA256": "86cd222c815be5a5cd6de5faf73fdfc63b4fc010c04b38f203a6a9047a5584ff",
+    "checkedAt": "2026-10-11T11:03:40.465810+00:00",
+    "packageStates": [
+      {
+        "source": "bouncycastle",
+        "release": "trixie",
+        "version": "1.80-3",
+        "status": "fixed"
+      },
+      {
+        "source": "curl",
+        "release": "trixie",
+        "version": "8.14.1-2+deb13u5",
+        "status": "fixed"
+      },
+      {
+        "source": "erlang",
+        "release": "trixie (security), trixie",
+        "version": "1:27.3.4.1+dfsg-1+deb13u3",
+        "status": "fixed"
+      },
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      },
+      {
+        "source": "haskell-tls",
+        "release": "trixie",
+        "version": "1.8.0-1",
+        "status": "vulnerable"
+      },
+      {
+        "source": "lighttpd",
+        "release": "trixie",
+        "version": "1.4.79-2",
+        "status": "fixed"
+      },
+      {
+        "source": "nss",
+        "release": "trixie (security), trixie",
+        "version": "2:3.110-1+deb13u4",
+        "status": "fixed"
+      },
+      {
+        "source": "pound",
+        "release": "trixie",
+        "version": "4.16-3",
+        "status": "fixed"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2011-4116",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2011-4116",
+    "snapshotSHA256": "ff6fd03ed28b5788deb54aff39bc54e27abe492ba8524375a39fa15eb6a7d5a8",
+    "checkedAt": "2026-10-11T11:03:40.466242+00:00",
+    "packageStates": [
+      {
+        "source": "perl",
+        "release": "trixie",
+        "version": "5.40.1-6+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2013-4392",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2013-4392",
+    "snapshotSHA256": "ad12988150e2c180858bbca8ac12f7c8c22133964cb939e2254a9ea18082ae50",
+    "checkedAt": "2026-10-11T11:03:40.466609+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2015-3276",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2015-3276",
+    "snapshotSHA256": "bcd1b97a01c3823c5e49ab797949d8c4dcd5cabf6797b5a1463f06c655573fb4",
+    "checkedAt": "2026-10-11T11:03:40.466999+00:00",
+    "packageStates": [
+      {
+        "source": "openldap",
+        "release": "trixie",
+        "version": "2.6.10+dfsg-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2015-9019",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2015-9019",
+    "snapshotSHA256": "69b38bc12e2666a50e5927632c48cbe001596f21acb0b498389baabc5de789fe",
+    "checkedAt": "2026-10-11T11:03:40.467405+00:00",
+    "packageStates": [
+      {
+        "source": "libxslt",
+        "release": "trixie",
+        "version": "1.1.35-1.2+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxslt",
+        "release": "trixie (security)",
+        "version": "1.1.35-1.2+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2017-14159",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2017-14159",
+    "snapshotSHA256": "e2617077fe1f01535479c618382733746a5d7ebb6587e32619c64fd06deaffb8",
+    "checkedAt": "2026-10-11T11:03:40.467800+00:00",
+    "packageStates": [
+      {
+        "source": "openldap",
+        "release": "trixie",
+        "version": "2.6.10+dfsg-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2017-17740",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2017-17740",
+    "snapshotSHA256": "33da73fffa85bc65dbfa9758fca6c5b42314ac9f8f9a7422a4649cbe61a4b327",
+    "checkedAt": "2026-10-11T11:03:40.468204+00:00",
+    "packageStates": [
+      {
+        "source": "openldap",
+        "release": "trixie",
+        "version": "2.6.10+dfsg-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2017-18018",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2017-18018",
+    "snapshotSHA256": "53d3f9ec8f5e37e1ddca2beb332adf35b12bc36edb93fc970aa6288bb984eb00",
+    "checkedAt": "2026-10-11T11:03:40.468604+00:00",
+    "packageStates": [
+      {
+        "source": "coreutils",
+        "release": "trixie",
+        "version": "9.7-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2018-20796",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2018-20796",
+    "snapshotSHA256": "e6432d5fc861355dacd40700ae7169b572f03a69c17791bf5bb70543511c76e9",
+    "checkedAt": "2026-10-11T11:03:40.469015+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2018-5709",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2018-5709",
+    "snapshotSHA256": "ca47acafaecdc9b9fc6f3f810acc72b21afc068793c68362d2c526b30d2e9cd7",
+    "checkedAt": "2026-10-11T11:03:40.469453+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2018-6829",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2018-6829",
+    "snapshotSHA256": "cc9a912bbcd485ed662c17c4610e92f2b2fbec93bb07c592b86486c066c91f5e",
+    "checkedAt": "2026-10-11T11:03:40.469875+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg1",
+        "release": "forky, sid, trixie",
+        "version": "1.4.23-3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libgcrypt20",
+        "release": "trixie (security), trixie",
+        "version": "1.11.0-7+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2019-1010022",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010022",
+    "snapshotSHA256": "cbef0ea746e9555c4d04761bf8ef09f236c787e9fc9033113695d351d480ab1d",
+    "checkedAt": "2026-10-11T11:03:40.470297+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2019-1010023",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010023",
+    "snapshotSHA256": "316608e29cf6e9690c7cb3c8424fd54d9ac31173423d112c1bcbda4ca881faba",
+    "checkedAt": "2026-10-11T11:03:40.470723+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2019-1010024",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010024",
+    "snapshotSHA256": "c59a28082119a9ded2f8562007694cd70e5357e727064de5eea447e49a75b4c0",
+    "checkedAt": "2026-10-11T11:03:40.471158+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2019-1010025",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2019-1010025",
+    "snapshotSHA256": "48754f59ff21707ba10211ef7ade27c43c12dd422dbb1acab80155c321ae00a7",
+    "checkedAt": "2026-10-11T11:03:40.471597+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2019-9192",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2019-9192",
+    "snapshotSHA256": "31d6c3fae656f6efab2173c5b95dfe8d843ebc6e37110cd9f5de3347fb957dc7",
+    "checkedAt": "2026-10-11T11:03:40.472015+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2020-15719",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2020-15719",
+    "snapshotSHA256": "829fc7a2425ece27c6becddc525fb3ba27bea2fe2386dedead2b754f7fa1c0a0",
+    "checkedAt": "2026-10-11T11:03:40.472436+00:00",
+    "packageStates": [
+      {
+        "source": "openldap",
+        "release": "trixie",
+        "version": "2.6.10+dfsg-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2021-45346",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2021-45346",
+    "snapshotSHA256": "8013738ba497b0ef5fb0b774ac9323d5459eebb640ee33215c51cd065ca4cd95",
+    "checkedAt": "2026-10-11T11:03:40.472867+00:00",
+    "packageStates": [
+      {
+        "source": "sqlite3",
+        "release": "trixie",
+        "version": "3.46.1-7+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2022-0563",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2022-0563",
+    "snapshotSHA256": "00feb7f18e310259c9a494a0d52fc3a4586c39c59422ca0ea36279acfe0aa131",
+    "checkedAt": "2026-10-11T11:03:40.473300+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2022-3219",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2022-3219",
+    "snapshotSHA256": "0f017d767b30098f9bbf74dd923962c1492412315ba57c5ec28d29eeffce1345",
+    "checkedAt": "2026-10-11T11:03:40.473735+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "trixie",
+        "version": "2.4.7-21+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2023-31437",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2023-31437",
+    "snapshotSHA256": "dc441be2ef297bda19262d2831e9eae6fcb30aa5aadb8cbd1edd05523db2daa6",
+    "checkedAt": "2026-10-11T11:03:40.474156+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2023-31438",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2023-31438",
+    "snapshotSHA256": "37105e763b6f20e1f27fa8a4ec9d0e38fdccdfe2bba8aa5756c05b4f96eb2899",
+    "checkedAt": "2026-10-11T11:03:40.474585+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2023-31439",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2023-31439",
+    "snapshotSHA256": "22e01ea3b9d1958c8d2a3569d47f01f282b714aa39965e1b25f06be750519a3e",
+    "checkedAt": "2026-10-11T11:03:40.475015+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2024-2236",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2024-2236",
+    "snapshotSHA256": "c1b0fc638ac600010731eefd7180fb13d234309dac2897f6f13959cad8c2b337",
+    "checkedAt": "2026-10-11T11:03:40.475460+00:00",
+    "packageStates": [
+      {
+        "source": "libgcrypt20",
+        "release": "trixie (security), trixie",
+        "version": "1.11.0-7+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2024-26458",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2024-26458",
+    "snapshotSHA256": "5505909c02a2108998e967b0ed25156bb5a5e10510452a9f7cb91cefeab716ea",
+    "checkedAt": "2026-10-11T11:03:40.475849+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2024-26461",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2024-26461",
+    "snapshotSHA256": "fbab2daefcd5320c2807caa5f470f537ad8db4d8197f4654238ba48f8f1cb8cf",
+    "checkedAt": "2026-10-11T11:03:40.476277+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2024-56433",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2024-56433",
+    "snapshotSHA256": "2e8fa48ca6588a376967f5dc3b938b74d75eba81af6681cbcd08eb9875cebef4",
+    "checkedAt": "2026-10-11T11:03:40.476732+00:00",
+    "packageStates": [
+      {
+        "source": "shadow",
+        "release": "trixie",
+        "version": "1:4.17.4-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2024-7883",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2024-7883",
+    "snapshotSHA256": "1715156a6a40ab3319c51da27b67f27ed200c54343ec48b9d50a21fa36539510",
+    "checkedAt": "2026-10-11T11:03:40.477160+00:00",
+    "packageStates": [
+      {
+        "source": "llvm-toolchain-17",
+        "release": "trixie",
+        "version": "1:17.0.6-22",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-18",
+        "release": "trixie",
+        "version": "1:18.1.8-18",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-19",
+        "release": "trixie",
+        "version": "1:19.1.7-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-10911",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-10911",
+    "snapshotSHA256": "221b2f2d3b118202cb16231854c04766e325e2190e3d6deca98f458eaa6be53f",
+    "checkedAt": "2026-10-11T11:03:40.477601+00:00",
+    "packageStates": [
+      {
+        "source": "libxslt",
+        "release": "trixie",
+        "version": "1.1.35-1.2+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxslt",
+        "release": "trixie (security)",
+        "version": "1.1.35-1.2+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-11731",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-11731",
+    "snapshotSHA256": "935f2193bb9f1a96d95ab49ae407f503a91b3cfb0846dd2816abd3e0e7906c0e",
+    "checkedAt": "2026-10-11T11:03:40.478023+00:00",
+    "packageStates": [
+      {
+        "source": "libxslt",
+        "release": "trixie",
+        "version": "1.1.35-1.2+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxslt",
+        "release": "trixie (security)",
+        "version": "1.1.35-1.2+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-5278",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-5278",
+    "snapshotSHA256": "e89db87d050000901752c5b67556822ee1cbd2e60be54fbca6fac8008fe95d9a",
+    "checkedAt": "2026-10-11T11:03:40.478473+00:00",
+    "packageStates": [
+      {
+        "source": "coreutils",
+        "release": "trixie",
+        "version": "9.7-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-6141",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-6141",
+    "snapshotSHA256": "d44dc6cc2ebd927c3a56d0ccc9b98c5e6fe637c40e8bb862116d5713e05470d9",
+    "checkedAt": "2026-10-11T11:03:40.478911+00:00",
+    "packageStates": [
+      {
+        "source": "ncurses",
+        "release": "trixie",
+        "version": "6.5+20250216-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-68972",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-68972",
+    "snapshotSHA256": "2dbea338162f61f46179ef632628b4ba166c6a8684d628974f3fd1d9eb412579",
+    "checkedAt": "2026-10-11T11:03:40.479319+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "trixie",
+        "version": "2.4.7-21+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-69720",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-69720",
+    "snapshotSHA256": "3542be519daaef8f60a0fd662f4a6129a238f59ef9b86155869d49cfd2b3af78",
+    "checkedAt": "2026-10-11T11:03:40.479771+00:00",
+    "packageStates": [
+      {
+        "source": "ncurses",
+        "release": "trixie",
+        "version": "6.5+20250216-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2025-70873",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2025-70873",
+    "snapshotSHA256": "a755476974ee116a8a2232053b19f46ef9a95b953bf62459b60ac16b5e87d002",
+    "checkedAt": "2026-10-11T11:03:40.480217+00:00",
+    "packageStates": [
+      {
+        "source": "sqlite3",
+        "release": "trixie",
+        "version": "3.46.1-7+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-102010",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-102010",
+    "snapshotSHA256": "487b1fc0a98f116094b86cd4546988fb4e968ff71748b92a921625855398556f",
+    "checkedAt": "2026-10-11T11:03:40.480661+00:00",
+    "packageStates": [
+      {
+        "source": "gcc-12",
+        "release": "trixie",
+        "version": "12.4.0-5",
+        "status": "vulnerable"
+      },
+      {
+        "source": "gcc-13",
+        "release": "trixie",
+        "version": "13.3.0-16",
+        "status": "vulnerable"
+      },
+      {
+        "source": "gcc-14",
+        "release": "trixie",
+        "version": "14.2.0-19",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-102473",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-102473",
+    "snapshotSHA256": "013fdfc57a2ff122a56c38dfe1f456d772f7eaefc3969bc5847267e1f4edd4fb",
+    "checkedAt": "2026-10-11T11:03:40.481099+00:00",
+    "packageStates": [
+      {
+        "source": "dash",
+        "release": "forky, sid, trixie",
+        "version": "0.5.12-12",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-102474",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-102474",
+    "snapshotSHA256": "e4076cd8f7e5a6f02ef5850c7ccc0e77fce09ee208cb0f1002d1a0cf13d88133",
+    "checkedAt": "2026-10-11T11:03:40.481501+00:00",
+    "packageStates": [
+      {
+        "source": "dash",
+        "release": "forky, sid, trixie",
+        "version": "0.5.12-12",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-105712",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-105712",
+    "snapshotSHA256": "9ddbb64e682763e54a810e1b1fda401c4124f753e36143fc5c29abfcff1dfb42",
+    "checkedAt": "2026-10-11T11:03:40.481779+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "trixie",
+        "version": "2.4.7-21+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-107161",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-107161",
+    "snapshotSHA256": "8008bbaca0f24f630c11502394fee40a8ce4937805e303a575a4d39cd0bc2029",
+    "checkedAt": "2026-10-11T11:03:40.482048+00:00",
+    "packageStates": [
+      {
+        "source": "cyrus-sasl2",
+        "release": "trixie",
+        "version": "2.1.28+dfsg1-9",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-107708",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-107708",
+    "snapshotSHA256": "add1a7cb1b30acd5f969399def59eee702ee1cbfd0db53905fb9f672324111c0",
+    "checkedAt": "2026-10-11T11:03:40.482317+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-107778",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-107778",
+    "snapshotSHA256": "30b627fa40f39ed9c1b04c3af1087dac641dfd4d28002818e062705dd68bd51f",
+    "checkedAt": "2026-10-11T11:03:40.482594+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-11850",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-11850",
+    "snapshotSHA256": "b89d5a7ae4d3e223d1361996baa8f0ff14eec494c496213f748cd5e806fe460c",
+    "checkedAt": "2026-10-11T11:03:40.482855+00:00",
+    "packageStates": [
+      {
+        "source": "krb5",
+        "release": "trixie (security), trixie",
+        "version": "1.21.3-5+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-11979",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-11979",
+    "snapshotSHA256": "9743d55b3399026e42981db807000a159458f648a9490596d7d7b9dd5e59a0ba",
+    "checkedAt": "2026-10-11T11:03:40.483114+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-13573",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-13573",
+    "snapshotSHA256": "c97ad53e9f32002eb86eaf9f540b92dd964c13e68f16782edf7206c1a0b7d0b1",
+    "checkedAt": "2026-10-11T11:03:40.483371+00:00",
+    "packageStates": [
+      {
+        "source": "llvm-toolchain-18",
+        "release": "trixie",
+        "version": "1:18.1.8-18",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-19",
+        "release": "trixie",
+        "version": "1:19.1.7-3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-22",
+        "release": "trixie",
+        "version": "1:22.1.8-1~deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-13574",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-13574",
+    "snapshotSHA256": "e28543d51fda4cc6318e6b6bafabd62af39d0a10ac8513f280bbc5e67e09f93c",
+    "checkedAt": "2026-10-11T11:03:40.483639+00:00",
+    "packageStates": [
+      {
+        "source": "llvm-toolchain-18",
+        "release": "trixie",
+        "version": "1:18.1.8-18",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-19",
+        "release": "trixie",
+        "version": "1:19.1.7-3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "llvm-toolchain-22",
+        "release": "trixie",
+        "version": "1:22.1.8-1~deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-13757",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-13757",
+    "snapshotSHA256": "a1af3f8a021f17ca4b1cb90e4efe94047d0d718b5b22ba0e4cc78984de1d19f3",
+    "checkedAt": "2026-10-11T11:03:40.483899+00:00",
+    "packageStates": [
+      {
+        "source": "p11-kit",
+        "release": "trixie",
+        "version": "0.25.5-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-15059",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-15059",
+    "snapshotSHA256": "068d20f908b33130ea153bbbf14fe3a08337dd1e9f48fc01c132104060fa5c70",
+    "checkedAt": "2026-10-11T11:03:40.484160+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-15534",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-15534",
+    "snapshotSHA256": "df6d9633b379c08701a64d541096100d47ad3c04141720f817ad811c023016e6",
+    "checkedAt": "2026-10-11T11:03:40.484425+00:00",
+    "packageStates": [
+      {
+        "source": "perl",
+        "release": "trixie",
+        "version": "5.40.1-6+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-16742",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-16742",
+    "snapshotSHA256": "156518a7b5df5f0a6b2a0c1f9732f13300b57528bbbb58644c34acfa05d7dfb7",
+    "checkedAt": "2026-10-11T11:03:40.484684+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-18374",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-18374",
+    "snapshotSHA256": "a00ae4be86617e03a5eca95bd14869a2baf5ea5ae196356c682f1de2c7117c9f",
+    "checkedAt": "2026-10-11T11:03:40.484942+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-18477",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-18477",
+    "snapshotSHA256": "d16fcffe5ded396c21c47a61e0838a0037dcac7cce84b88a6286156173bc6605",
+    "checkedAt": "2026-10-11T11:03:40.485198+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "trixie",
+        "version": "1.35+dfsg-3.1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-18508",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-18508",
+    "snapshotSHA256": "1963e9ecda170539d2faa85f5627c95ebca2a79260af292a02689066549c41ec",
+    "checkedAt": "2026-10-11T11:03:40.485475+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "trixie",
+        "version": "1.35+dfsg-3.1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-18938",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-18938",
+    "snapshotSHA256": "83a0495289dec1e768d5088967844d260a3a7aaaca81be9a6c3e754f260da262",
+    "checkedAt": "2026-10-11T11:03:40.485736+00:00",
+    "packageStates": [
+      {
+        "source": "p11-kit",
+        "release": "trixie",
+        "version": "0.25.5-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-19499",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-19499",
+    "snapshotSHA256": "5ae203e2503db74b024563d3a6cbac974337438d5f3db69b93cbdd0ec38aecd7",
+    "checkedAt": "2026-10-11T11:03:40.485996+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-19542",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-19542",
+    "snapshotSHA256": "dbcdf805c206777ed25f95e2fea9952a174b245e5dd69d212393e2f8f8a5af87",
+    "checkedAt": "2026-10-11T11:03:40.486316+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-22185",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-22185",
+    "snapshotSHA256": "2c9b6d4ccc3f6b3047d82e27a4a06bd3af61d650fd80aed6f4aa941390889277",
+    "checkedAt": "2026-10-11T11:03:40.486620+00:00",
+    "packageStates": [
+      {
+        "source": "lmdb",
+        "release": "trixie",
+        "version": "0.9.31-1",
+        "status": "vulnerable"
+      },
+      {
+        "source": "openldap",
+        "release": "trixie",
+        "version": "2.6.10+dfsg-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-24882",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-24882",
+    "snapshotSHA256": "b061a0353c4c57297f8217911a9293568905dfbed1d38134cc22e45d3f3a4abe",
+    "checkedAt": "2026-10-11T11:03:40.486886+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "trixie",
+        "version": "2.4.7-21+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-27171",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-27171",
+    "snapshotSHA256": "b4ea3a807f0bb35621efbb982160130bbfc0983c72c2619e740d0781bdc6c9f1",
+    "checkedAt": "2026-10-11T11:03:40.487148+00:00",
+    "packageStates": [
+      {
+        "source": "zlib",
+        "release": "trixie",
+        "version": "1:1.3.dfsg+really1.3.1-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-3184",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-3184",
+    "snapshotSHA256": "aedb732936701a73d66105ed0683774b54cf4c90d437dace4a7ac37a7674b0a0",
+    "checkedAt": "2026-10-11T11:03:40.487415+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-40228",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-40228",
+    "snapshotSHA256": "481b0a51ba540210e4e57148e7d29d1c27f9a86bc69b230811a9a0ff0b34afdb",
+    "checkedAt": "2026-10-11T11:03:40.487673+00:00",
+    "packageStates": [
+      {
+        "source": "systemd",
+        "release": "trixie",
+        "version": "257.13-1~deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-42250",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-42250",
+    "snapshotSHA256": "498b572f4d30aaefd631fc9d4e313b45e223149d1a21b5ff9056771bb7c96fdb",
+    "checkedAt": "2026-10-11T11:03:40.487927+00:00",
+    "packageStates": [
+      {
+        "source": "bzip2",
+        "release": "forky, sid, trixie",
+        "version": "1.0.8-6",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-50812",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-50812",
+    "snapshotSHA256": "cdb5b4675f45adfb8bf1de3ac0388ac052368ec2cf75ebed80a0f60413f10016",
+    "checkedAt": "2026-10-11T11:03:40.488184+00:00",
+    "packageStates": [
+      {
+        "source": "sqlite3",
+        "release": "trixie",
+        "version": "3.46.1-7+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-50813",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-50813",
+    "snapshotSHA256": "245ae024f8e37e95aa504643607253bc2b67f848abb05e829030c17df147f57c",
+    "checkedAt": "2026-10-11T11:03:40.488448+00:00",
+    "packageStates": [
+      {
+        "source": "sqlite3",
+        "release": "trixie",
+        "version": "3.46.1-7+deb13u2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-53910",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-53910",
+    "snapshotSHA256": "009545bf64b158c2248f736c6ea2fb67f566d09904891681f94a324012161425",
+    "checkedAt": "2026-10-11T11:03:40.488705+00:00",
+    "packageStates": [
+      {
+        "source": "diffutils",
+        "release": "trixie",
+        "version": "1:3.10-4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-5435",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-5435",
+    "snapshotSHA256": "2361f3d31bc16c0ed30e5f79e4398e73155b117f7c2097c4208f9d756cdd0959",
+    "checkedAt": "2026-10-11T11:03:40.488960+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-54369",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-54369",
+    "snapshotSHA256": "4677cdb2b848eca7bc76f57dd54e5d01e309f438bba58d892550db432fbde5ca",
+    "checkedAt": "2026-10-11T11:03:40.489212+00:00",
+    "packageStates": [
+      {
+        "source": "acl",
+        "release": "trixie",
+        "version": "2.3.2-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-54370",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-54370",
+    "snapshotSHA256": "36c932e9051decbe74a402bbe4df1e60f52a17c39cab2785b83901467b36758e",
+    "checkedAt": "2026-10-11T11:03:40.489477+00:00",
+    "packageStates": [
+      {
+        "source": "acl",
+        "release": "trixie",
+        "version": "2.3.2-2",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-54371",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-54371",
+    "snapshotSHA256": "8ef9888ae918a3a3ed6a43c64ad3b1cae6aea82c4bae6c7c6af873af17d8a265",
+    "checkedAt": "2026-10-11T11:03:40.489736+00:00",
+    "packageStates": [
+      {
+        "source": "attr",
+        "release": "trixie",
+        "version": "1:2.5.2-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-54411",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-54411",
+    "snapshotSHA256": "aeb51ee7335304f014968bdb5440ba98503a24a34c93b6b67c890b9741cd11a2",
+    "checkedAt": "2026-10-11T11:03:40.489990+00:00",
+    "packageStates": [
+      {
+        "source": "pam",
+        "release": "trixie",
+        "version": "1.7.0-5",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-56391",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-56391",
+    "snapshotSHA256": "a5dbae87b0cb9b4f3299fc4770b07c5acdde363bb3d1ec6ddfa7276984177cfb",
+    "checkedAt": "2026-10-11T11:03:40.490244+00:00",
+    "packageStates": [
+      {
+        "source": "coreutils",
+        "release": "trixie",
+        "version": "9.7-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-56392",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-56392",
+    "snapshotSHA256": "83fc93306b7439f6ccf00c267dac24cc42303d39e84f5a2987c2b6a8a14ff9a2",
+    "checkedAt": "2026-10-11T11:03:40.490508+00:00",
+    "packageStates": [
+      {
+        "source": "coreutils",
+        "release": "trixie",
+        "version": "9.7-3",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-5704",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-5704",
+    "snapshotSHA256": "b76f23da391f4a3f1a50f792baafc0c2c0ec0af97e1185df013f7fd530455957",
+    "checkedAt": "2026-10-11T11:03:40.490763+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "trixie",
+        "version": "1.35+dfsg-3.1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-57062",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-57062",
+    "snapshotSHA256": "bf1e656d043bea72861e04075e2ee7f37fdc1633c2bfc8143ca2c428eacb98dd",
+    "checkedAt": "2026-10-11T11:03:40.491019+00:00",
+    "packageStates": [
+      {
+        "source": "gnupg2",
+        "release": "trixie",
+        "version": "2.4.7-21+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-6238",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-6238",
+    "snapshotSHA256": "b2e9c31388df4262186d0645acff6fc7994b53511e4a04f4d4468e5bca7f6343",
+    "checkedAt": "2026-10-11T11:03:40.491275+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-6368",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-6368",
+    "snapshotSHA256": "a8c3722420dc1aefb9b9953e3be13e4784264c49b9bee8975739a0370c66b0dd",
+    "checkedAt": "2026-10-11T11:03:40.491565+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-6653",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-6653",
+    "snapshotSHA256": "e2c617f15c21210bf4b14e3dfba7349a56e335e2cc0cec5a9e5365de711389e7",
+    "checkedAt": "2026-10-11T11:03:40.491860+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-67693",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-67693",
+    "snapshotSHA256": "8daf2a5225db617ffe9c5a72a0ecd5b99e167ca55949748b90a9879468c8fe2f",
+    "checkedAt": "2026-10-11T11:03:40.492118+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-6791",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-6791",
+    "snapshotSHA256": "b90c441e5a74f8025eb132fbc1156d06771123f95cbc48cc5aaa1174cd34a096",
+    "checkedAt": "2026-10-11T11:03:40.492373+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-74860",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-74860",
+    "snapshotSHA256": "a80a16c47eb20f15cc86ac053379cd571ad9c36e7497e42497100eaa3e71250f",
+    "checkedAt": "2026-10-11T11:03:40.492638+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-76642",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-76642",
+    "snapshotSHA256": "243d0dcce2b7e8a9446611151a404ced874c0c45f912bca021c03061334d197b",
+    "checkedAt": "2026-10-11T11:03:40.492893+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-76781",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-76781",
+    "snapshotSHA256": "af7d5d3cf2d838b330d9ce3262019c164c5932cc0d242ba5a0ea240ef4656ffb",
+    "checkedAt": "2026-10-11T11:03:40.493146+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-77117",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-77117",
+    "snapshotSHA256": "ed3ff25f7f5c15f2f957eb6beb981723cf305f53a86bdccff8a7d9cbe4a93004",
+    "checkedAt": "2026-10-11T11:03:40.493407+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-78408",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-78408",
+    "snapshotSHA256": "176ee66ad84e9fdad225f5e0a60fe5cd7bf8a5aa54bd0fd63d07beb795aba5d3",
+    "checkedAt": "2026-10-11T11:03:40.493664+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-78409",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-78409",
+    "snapshotSHA256": "55bb3527e79127500681d1309f174a4e010dd14b8de0e8c20dac634deb59f67b",
+    "checkedAt": "2026-10-11T11:03:40.493916+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-78410",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-78410",
+    "snapshotSHA256": "370b52136365d440004d915421bd2b2529393511c802bdc04f3e3a873241621b",
+    "checkedAt": "2026-10-11T11:03:40.494169+00:00",
+    "packageStates": [
+      {
+        "source": "util-linux",
+        "release": "trixie (security), trixie",
+        "version": "2.41.5-0+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-80489",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-80489",
+    "snapshotSHA256": "c639e01a744829ce5bdb9a22e2eeebdbc33626ea2cb93c454b310626c9362032",
+    "checkedAt": "2026-10-11T11:03:40.494430+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-82560",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-82560",
+    "snapshotSHA256": "b143fb7f152ce34bbaa86ef1d0424b51f41422ec9664e1af3829c8bfb7daf953",
+    "checkedAt": "2026-10-11T11:03:40.494686+00:00",
+    "packageStates": [
+      {
+        "source": "perl",
+        "release": "trixie",
+        "version": "5.40.1-6+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-85091",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-85091",
+    "snapshotSHA256": "fcc8219f50ad516fbc2b5a6b065ab27f1fbc1f85665f17ec9a6cee425654f146",
+    "checkedAt": "2026-10-11T11:03:40.494939+00:00",
+    "packageStates": [
+      {
+        "source": "zlib",
+        "release": "trixie",
+        "version": "1:1.3.dfsg+really1.3.1-1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86137",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86137",
+    "snapshotSHA256": "38d7a3cd8e92d992867db60fa5925df68200291291dcf1c042fd2f913dba5917",
+    "checkedAt": "2026-10-11T11:03:40.495189+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86138",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86138",
+    "snapshotSHA256": "c86d07e496ea97c2804988c4eae5bf897b2b34992ea4f9dbef3f3ade063d4d6e",
+    "checkedAt": "2026-10-11T11:03:40.495448+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86139",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86139",
+    "snapshotSHA256": "96aef4e01c0fb97663ff4ec0d62b0b8d424dfea21f46d9b0e2fa39ec7f2578f9",
+    "checkedAt": "2026-10-11T11:03:40.495701+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86140",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86140",
+    "snapshotSHA256": "8759571590f26cf4204a2aaa4431f8fda4280a59299ba951a909af51e8bd7834",
+    "checkedAt": "2026-10-11T11:03:40.495951+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86141",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86141",
+    "snapshotSHA256": "9a46a7f17d198722254ae167b56740e71d342a306ff62464691d2f72553a4da6",
+    "checkedAt": "2026-10-11T11:03:40.496202+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86142",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86142",
+    "snapshotSHA256": "2b9554ece094dd3e1b5a81b15d4d304b184a26977cff1ad7c55f71a8c685bbf3",
+    "checkedAt": "2026-10-11T11:03:40.496457+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86143",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86143",
+    "snapshotSHA256": "3493d4fc46e33bd9917872a2fd2b09bb788333f293077d3807b33cc125bde710",
+    "checkedAt": "2026-10-11T11:03:40.496710+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86144",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86144",
+    "snapshotSHA256": "cf9c6bfedbc6d70d05a2e4a4fe9fe5f13caf7852176d072a578b62f6352bf548",
+    "checkedAt": "2026-10-11T11:03:40.496959+00:00",
+    "packageStates": [
+      {
+        "source": "libxml2",
+        "release": "trixie",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u3",
+        "status": "vulnerable"
+      },
+      {
+        "source": "libxml2",
+        "release": "trixie (security)",
+        "version": "2.12.7+dfsg+really2.9.14-2.1+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-8674",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-8674",
+    "snapshotSHA256": "254763c444adc3aad987289503312aecd31d3e8ef8aa952e3f171a91cdac29d0",
+    "checkedAt": "2026-10-11T11:03:40.497210+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-86805",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-86805",
+    "snapshotSHA256": "dc3e479b2edf14d97823b10c1012e791e1473d61fb0be659e16e868c773a2127",
+    "checkedAt": "2026-10-11T11:03:40.497466+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-88647",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-88647",
+    "snapshotSHA256": "fe84c03687ef3935f4474698d07ef7ad9c2f9750a59fe56f84e780c00f05a582",
+    "checkedAt": "2026-10-11T11:03:40.497716+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-88648",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-88648",
+    "snapshotSHA256": "9c350f9697943181c7b1d47e91d720e469e48632b76c41d89c753e5ff4bcea0f",
+    "checkedAt": "2026-10-11T11:03:40.498017+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-89092",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-89092",
+    "snapshotSHA256": "31eb3351ac16b6b226841b8faf481de52043d50e94d7d65db3aba87325d31099",
+    "checkedAt": "2026-10-11T11:03:40.498289+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-95184",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-95184",
+    "snapshotSHA256": "808f1c5f296e3bc2a9e315e19740bc06df085d724c6e246db7e2677c701c60ca",
+    "checkedAt": "2026-10-11T11:03:40.498554+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-95209",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-95209",
+    "snapshotSHA256": "6594c50e2ea324ab7e58fe0482ccbaffc0d75f3ec03ff74b9fb930742076e7c7",
+    "checkedAt": "2026-10-11T11:03:40.498811+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-95210",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-95210",
+    "snapshotSHA256": "e09f39824f17a6f39992d7b39fb48375ebda8c2c0143fda116f42485cfaf8c19",
+    "checkedAt": "2026-10-11T11:03:40.499063+00:00",
+    "packageStates": [
+      {
+        "source": "gnutls28",
+        "release": "trixie (security), trixie",
+        "version": "3.8.9-3+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-9538",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-9538",
+    "snapshotSHA256": "7ef5d867262210dcfd0f600ea409fd1aa470b38d8d2464d6ba885ab275a7fd57",
+    "checkedAt": "2026-10-11T11:03:40.499315+00:00",
+    "packageStates": [
+      {
+        "source": "perl",
+        "release": "trixie",
+        "version": "5.40.1-6+deb13u1",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-95619",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-95619",
+    "snapshotSHA256": "9b4828c1d50de75e5a0030818b451ac0d94b033b3bb99947855beeea0c1f4d2f",
+    "checkedAt": "2026-10-11T11:03:40.499578+00:00",
+    "packageStates": [
+      {
+        "source": "gcc-12",
+        "release": "trixie",
+        "version": "12.4.0-5",
+        "status": "vulnerable"
+      },
+      {
+        "source": "gcc-13",
+        "release": "trixie",
+        "version": "13.3.0-16",
+        "status": "vulnerable"
+      },
+      {
+        "source": "gcc-14",
+        "release": "trixie",
+        "version": "14.2.0-19",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-95818",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-95818",
+    "snapshotSHA256": "88a593e9a655640e719f6f7bf985252e4569ec85acab41e5150498fb6c52f271",
+    "checkedAt": "2026-10-11T11:03:40.499830+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "postgres-CVE-2026-97399",
+    "url": "https://security-tracker.debian.org/tracker/CVE-2026-97399",
+    "snapshotSHA256": "3fc856316476a66d6279a005beb47d499a7b486b870a6c072424b4a32b20a5b6",
+    "checkedAt": "2026-10-11T11:03:40.500080+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "trixie",
+        "version": "2.41-12+deb13u4",
+        "status": "vulnerable"
+      }
+    ]
+  },
+  {
+    "name": "keycloak-CVE-2020-12413",
+    "url": "https://access.redhat.com/security/cve/cve-2020-12413",
+    "snapshotSHA256": "95dce9218c3abfd71d247c719b535df1dba1a94bff10f88b3dee8ec1128511a7",
+    "checkedAt": "2026-10-11T11:03:40.500331+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2021-46195",
+    "url": "https://access.redhat.com/security/cve/cve-2021-46195",
+    "snapshotSHA256": "f216f22ef954303229152b6175a6036e6c4ca45881cd8e34266ebb03c14b5932",
+    "checkedAt": "2026-10-11T11:03:40.500789+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2022-27943",
+    "url": "https://access.redhat.com/security/cve/cve-2022-27943",
+    "snapshotSHA256": "d07bf23d4ad6224acc1a7d926b85a3209780eeaf82b579d3c38b543a6b9e8959",
+    "checkedAt": "2026-10-11T11:03:40.501172+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2022-41409",
+    "url": "https://access.redhat.com/security/cve/cve-2022-41409",
+    "snapshotSHA256": "0548c4e6649f3556df57257e9880d49be5744c655e13c2f4121dcbd30284cea0",
+    "checkedAt": "2026-10-11T11:03:40.501586+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2023-50495",
+    "url": "https://access.redhat.com/security/cve/cve-2023-50495",
+    "snapshotSHA256": "f4a35280428db35afa2b935d97f13fb5c0ba73dc7f7cc704e8d4513e5f48ca6a",
+    "checkedAt": "2026-10-11T11:03:40.501976+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2024-0232",
+    "url": "https://access.redhat.com/security/cve/cve-2024-0232",
+    "snapshotSHA256": "a03c8b470d8cfad4e4d30187463945f2d80996bac07a185b9b458b1a4869b007",
+    "checkedAt": "2026-10-11T11:03:40.502356+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2024-7531",
+    "url": "https://access.redhat.com/security/cve/cve-2024-7531",
+    "snapshotSHA256": "1a6cef3bf8d47d8d860a6797fa35b0110cf4c4472ab712447312a8cdfdac8134",
+    "checkedAt": "2026-10-11T11:03:40.502739+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2025-28164",
+    "url": "https://access.redhat.com/security/cve/cve-2025-28164",
+    "snapshotSHA256": "deb930047be85cb0a4e37b170f781d062642583e9991bebc674d8fd3ff20bfa8",
+    "checkedAt": "2026-10-11T11:03:40.503116+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2025-64505",
+    "url": "https://access.redhat.com/security/cve/cve-2025-64505",
+    "snapshotSHA256": "14834f82786c196455a43049e51f7f70467b16f54de9adbfd2407caba9a5ac71",
+    "checkedAt": "2026-10-11T11:03:40.503521+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2025-64506",
+    "url": "https://access.redhat.com/security/cve/cve-2025-64506",
+    "snapshotSHA256": "0037bf9e7e49e1bf220c08bf9d70ddbcafbd02ad41aaa890cd280ab74f1f4932",
+    "checkedAt": "2026-10-11T11:03:40.503903+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2025-70873",
+    "url": "https://access.redhat.com/security/cve/cve-2025-70873",
+    "snapshotSHA256": "c483b365ecf291949c25ca39ab2d9426fd23fc26ba611c6de4af7e9b312f2f3c",
+    "checkedAt": "2026-10-11T11:03:40.504365+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-102010",
+    "url": "https://access.redhat.com/security/cve/cve-2026-102010",
+    "snapshotSHA256": "794d1327976ee57ba3b7690ed230ff6c46ca85892357270b1dffa0cdaef4fff1",
+    "checkedAt": "2026-10-11T11:03:40.504768+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-103111",
+    "url": "https://access.redhat.com/security/cve/cve-2026-103111",
+    "snapshotSHA256": "c6fc2b3b938e08dd29c9d240aebc8bf94f8877c5a2548ec411d5dcfdc96d9f45",
+    "checkedAt": "2026-10-11T11:03:40.505143+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-22693",
+    "url": "https://access.redhat.com/security/cve/cve-2026-22693",
+    "snapshotSHA256": "8abd187cb7bf3bc7a10537b3e8b13860012830bafb165a6888772b0a3ec6b798",
+    "checkedAt": "2026-10-11T11:03:40.505536+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-27171",
+    "url": "https://access.redhat.com/security/cve/cve-2026-27171",
+    "snapshotSHA256": "772d32d30000f0618a82216bda0106d74f27082df72a3c8049878aadabf95f12",
+    "checkedAt": "2026-10-11T11:03:40.505929+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-34757",
+    "url": "https://access.redhat.com/security/cve/cve-2026-34757",
+    "snapshotSHA256": "2f5e2b0c3cbd8a8a75465afb43658b9de4868e8e84f4046996c1d5b36bfb07d3",
+    "checkedAt": "2026-10-11T11:03:40.506406+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-40930",
+    "url": "https://access.redhat.com/security/cve/cve-2026-40930",
+    "snapshotSHA256": "8cf4a72ecd00d7534ef55efcc5dd34991e693079179f9d07f4684ea93e3c1e27",
+    "checkedAt": "2026-10-11T11:03:40.506805+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-49919",
+    "url": "https://access.redhat.com/security/cve/cve-2026-49919",
+    "snapshotSHA256": "9f95cf20edc8d78ee2471771793f7d9ece08876953db8e43d4e6da45aa40e3e7",
+    "checkedAt": "2026-10-11T11:03:40.507199+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-50812",
+    "url": "https://access.redhat.com/security/cve/cve-2026-50812",
+    "snapshotSHA256": "e19a5dffa056947d90d1d6a1833d8a5bc65bfe5bd02a14685c6495b32cab4f31",
+    "checkedAt": "2026-10-11T11:03:40.507615+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-56391",
+    "url": "https://access.redhat.com/security/cve/cve-2026-56391",
+    "snapshotSHA256": "634c9008c5ae80a21f4e52d3cd7c3918699c772d20a82111df705c4197be00f3",
+    "checkedAt": "2026-10-11T11:03:40.507999+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-5958",
+    "url": "https://access.redhat.com/security/cve/cve-2026-5958",
+    "snapshotSHA256": "e0c0c90b43bfa0405f4147a409fbe585f6a8d32f61c7e79a51b77d2a94d20d92",
+    "checkedAt": "2026-10-11T11:03:40.508376+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-86145",
+    "url": "https://access.redhat.com/security/cve/cve-2026-86145",
+    "snapshotSHA256": "cce4be704ff202f199d752cc20936d6f47286c2c8b049a19932ffc7495c85a1a",
+    "checkedAt": "2026-10-11T11:03:40.508755+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-8674",
+    "url": "https://access.redhat.com/security/cve/cve-2026-8674",
+    "snapshotSHA256": "69caf0e6677284542b4e0d827e25fcdbb6dd740d8621bfa334f164d3e5afad01",
+    "checkedAt": "2026-10-11T11:03:40.509231+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-86805",
+    "url": "https://access.redhat.com/security/cve/cve-2026-86805",
+    "snapshotSHA256": "6adb906b5b60c285a023f2b331d6713ef0f716cf8cc0cc668430e94b9b689518",
+    "checkedAt": "2026-10-11T11:03:40.509779+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89092",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89092",
+    "snapshotSHA256": "d900c070cbfa309df174737169252b540ae4946b5d01e0b91013d4f55f80f004",
+    "checkedAt": "2026-10-11T11:03:40.510262+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89156",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89156",
+    "snapshotSHA256": "7a91cbba988d4529c82b6a2e69d6aaef6cd6de95795648caa9082767427c8616",
+    "checkedAt": "2026-10-11T11:03:40.510720+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89157",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89157",
+    "snapshotSHA256": "88a843eebce5037f54597088133d315e0a6b3f6423cb9ed17323a4c214286b0d",
+    "checkedAt": "2026-10-11T11:03:40.511125+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89158",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89158",
+    "snapshotSHA256": "79964ad7365a1a0aa95e5f846b420e740dc3cc2c3bb50743def039dbbcac9f86",
+    "checkedAt": "2026-10-11T11:03:40.511591+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89160",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89160",
+    "snapshotSHA256": "5127deb99a2e8f4133dca09d5e06fc402b257c358f1f401dab97871597b8a4cd",
+    "checkedAt": "2026-10-11T11:03:40.512048+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-89161",
+    "url": "https://access.redhat.com/security/cve/cve-2026-89161",
+    "snapshotSHA256": "7b702c013f32b89fda30c2db5c3e8e67f3abfe309559becb9e1837c2eec49eae",
+    "checkedAt": "2026-10-11T11:03:40.512461+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-95512",
+    "url": "https://access.redhat.com/security/cve/cve-2026-95512",
+    "snapshotSHA256": "91c7221241a398a81c8f79e85c9e1e221fd789357a13806d7f25cc4ab76f2fe1",
+    "checkedAt": "2026-10-11T11:03:40.512845+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-95619",
+    "url": "https://access.redhat.com/security/cve/cve-2026-95619",
+    "snapshotSHA256": "55ca38bab1f72ea97cc9637bd3a0e1edb303452b8a6b73dea2231a9df4ddc6cd",
+    "checkedAt": "2026-10-11T11:03:40.513303+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-95818",
+    "url": "https://access.redhat.com/security/cve/cve-2026-95818",
+    "snapshotSHA256": "778b7e243c2596eaa8f387b9dd12f463f32b83476c802aeef067f364cce13ca3",
+    "checkedAt": "2026-10-11T11:03:40.513759+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "keycloak-CVE-2026-97399",
+    "url": "https://access.redhat.com/security/cve/cve-2026-97399",
+    "snapshotSHA256": "2d43a3780b8b9b5e15aade215b5bd15322ad58e3807f8dc8e2a6e97c78135047",
+    "checkedAt": "2026-10-11T11:03:40.514195+00:00",
+    "packageStates": []
+  },
+  {
+    "name": "caddy-CVE-2025-60876",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2025-60876",
+    "snapshotSHA256": "3ead1d5e0b952890aa8541c5e893489ccd28a70e2dcd12173e0482dcade87be0",
+    "checkedAt": "2026-10-11T11:03:40.514624+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "caddy-CVE-2026-58055",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-58055",
+    "snapshotSHA256": "65f18ee89ead7105495536f536d06a547fed2755b31bf66b572c8fa262412d8d",
+    "checkedAt": "2026-10-11T11:03:40.514935+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "nghttp2",
+        "product": "nghttp2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0",
+            "status": "affected",
+            "versionType": "semver",
+            "lessThanOrEqual": "1.69.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2025-69720",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2025-69720",
+    "snapshotSHA256": "4b0ef3df3951bf4d698c833cf264889f9d176f3ae603de16b632bf7119be4bac",
+    "checkedAt": "2026-10-11T11:03:40.515221+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "ncurses",
+        "vendor": "GNU",
+        "versions": [
+          {
+            "lessThan": "6.5-20251213",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-102010",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-102010",
+    "snapshotSHA256": "dd64a1f598923a11095609c7cbc8cd942c7ab933bc77de4127fc922981df9102",
+    "checkedAt": "2026-10-11T11:03:40.515519+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "gcc13-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "13.5.0-0.2.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "gcc-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "16.2.1-3.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-15-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-16",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-16-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-295",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-296",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-32",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-34",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-32",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-34",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-44",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-14-gcc",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-15-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rteval-loads",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-14-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-15-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-16",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc-toolset-16-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-8",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-9",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-103111",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-103111",
+    "snapshotSHA256": "c65f4ade6d1d00c1434c13e71546c06bb6572d8684c4baea6e5b9e0187e54377",
+    "checkedAt": "2026-10-11T11:03:40.515838+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "PCRE2",
+        "vendor": "PCRE",
+        "versions": [
+          {
+            "lessThan": "10.49",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-107161",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-107161",
+    "snapshotSHA256": "7ca176e4c2214d1afc6194158df3330c533f69ae0d4c70940aec9ba6271b3458",
+    "checkedAt": "2026-10-11T11:03:40.516132+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "unknown",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "cyrus-sasl",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-8",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-9",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-107778",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-107778",
+    "snapshotSHA256": "0d42f7e4ac4225037bc1eeae01180c15373a4192cc975532695c0640ed95e330",
+    "checkedAt": "2026-10-11T11:03:40.516545+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "MIT",
+        "product": "krb5",
+        "collectionURL": "https://github.com/krb5/krb5",
+        "packageURL": "pkg:github/krb5/krb5",
+        "repo": "https://github.com/krb5/krb5",
+        "defaultStatus": "unaffected",
+        "versions": [
+          {
+            "version": "0",
+            "lessThanOrEqual": "1.22.2",
+            "status": "affected",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-19499",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-19499",
+    "snapshotSHA256": "188af9906a8f6085acf2ab05bf15b6f4409e78ed55d67498761a1d20418ba882",
+    "checkedAt": "2026-10-11T11:03:40.516994+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "The GNU C Library",
+        "product": "glibc",
+        "versions": [
+          {
+            "status": "affected",
+            "version": "2.38",
+            "lessThanOrEqual": "2.44",
+            "versionType": "custom"
+          }
+        ],
+        "defaultStatus": "unaffected"
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-24882",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-24882",
+    "snapshotSHA256": "5ffa21c73761d6ad634027132d864dafbfa45ac5c947d8eb66f75feb003136fd",
+    "checkedAt": "2026-10-11T11:03:40.517399+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "GnuPG",
+        "vendor": "GnuPG",
+        "versions": [
+          {
+            "lessThan": "2.5.17",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-5435",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-5435",
+    "snapshotSHA256": "4d24c48ce05ca30da0493b1406e2278ac4d5a0d73735632f6abea7134a130d51",
+    "checkedAt": "2026-10-11T11:03:40.517676+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "The GNU C Library",
+        "product": "glibc",
+        "versions": [
+          {
+            "status": "affected",
+            "version": "2.2",
+            "lessThanOrEqual": "*",
+            "versionType": "custom"
+          }
+        ],
+        "defaultStatus": "unaffected"
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-54369",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-54369",
+    "snapshotSHA256": "8b1576e65aa9f19fdbcb20d406637b425a0c4c01c6de8669669fbd5fbb5d5c0e",
+    "checkedAt": "2026-10-11T11:03:40.517937+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "affected",
+        "vendor": "acl project",
+        "product": "acl",
+        "repo": "https://savannah.nongnu.org/projects/acl/",
+        "versions": [
+          {
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver",
+            "lessThan": "2.4.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-54370",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-54370",
+    "snapshotSHA256": "c9309dd490362a0a90a17d144a92614142c1ba1c5b9062e47ab015d8ced9e21c",
+    "checkedAt": "2026-10-11T11:03:40.518223+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "affected",
+        "vendor": "acl project",
+        "product": "acl",
+        "repo": "https://savannah.nongnu.org/projects/acl/",
+        "versions": [
+          {
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver",
+            "lessThan": "2.4.0"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-6653",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-6653",
+    "snapshotSHA256": "74113e1b3fe6ef9f28c05e83d459bbd9187bf0e27dd89a164569d5caccc67848",
+    "checkedAt": "2026-10-11T11:03:40.518771+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "GNOME",
+        "product": "libxml2",
+        "packageName": "libxml2",
+        "repo": "https://gitlab.gnome.org/GNOME/libxml2",
+        "versions": [
+          {
+            "status": "affected",
+            "version": "2.9.11",
+            "lessThan": "2.11.0",
+            "versionType": "semver"
+          }
+        ],
+        "defaultStatus": "unaffected"
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-67693",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-67693",
+    "snapshotSHA256": "10b1a89a2e46f37bbba60c26a2dae753220ef819bc2bac2bc65d404cdafdee76",
+    "checkedAt": "2026-10-11T11:03:40.519044+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-74860",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-74860",
+    "snapshotSHA256": "913c4c8442d58b76cb9074d1f5f3b2d48d5a24bc791cbbc54301ef138b3e45db",
+    "checkedAt": "2026-10-11T11:03:40.519311+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0:2.12.5-10.el10_2.4",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10.2"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0:2.9.7-21.el8_10.9",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:enterprise_linux:8::appstream",
+          "cpe:/o:redhat:enterprise_linux:8::baseos"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0:2.9.7-21.el8_10.9",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:enterprise_linux:8::appstream",
+          "cpe:/o:redhat:enterprise_linux:8::baseos"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0:2.9.13-14.el9_8.5",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "cpe:/o:redhat:enterprise_linux:9::baseos"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "0:2.9.13-14.el9_8.5",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:enterprise_linux:9::appstream",
+          "cpe:/o:redhat:enterprise_linux:9::baseos"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Cert Manager support for Red Hat OpenShift release 1.20",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "cert-manager/jetstack-cert-manager-rhel9",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "1790589912",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:cert_manager:1.20::el9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Cert Manager support for Red Hat OpenShift release 1.20",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "cert-manager/cert-manager-istio-csr-rhel9",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "1790589914",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:cert_manager:1.20::el9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Cert Manager support for Red Hat OpenShift release 1.20",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "cert-manager/cert-manager-operator-rhel9",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "1790589855",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:cert_manager:1.20::el9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Cost Management On-Premise 1",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "costmanagement/costmanagement-ui-rhel10",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "1791460851",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:cost_management_on_premise:1::el10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "libxml2-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "2.15.4-0.1.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "podman",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "unknown",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "libxml2",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "container-tools:rhel8/podman",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "podman",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "swift-lang",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-8",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-9",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "podman",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-76642",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-76642",
+    "snapshotSHA256": "02d0d8899f98e0c1cf03f16ba97ebf3871f96175ca5ab28cd04664985f6e330d",
+    "checkedAt": "2026-10-11T11:03:40.519596+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "util-linux",
+        "product": "util-linux",
+        "defaultStatus": "unaffected",
+        "packageURL": "pkg:github/util-linux/util-linux",
+        "versions": [
+          {
+            "version": "2.39",
+            "lessThan": "2.41.6",
+            "status": "affected",
+            "versionType": "custom"
+          },
+          {
+            "version": "2.42",
+            "lessThan": "2.42.3",
+            "status": "affected",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-78408",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-78408",
+    "snapshotSHA256": "f4a16d12da93243352b89ca6f9a535c708d1cbe5cdbd8c5a3947adde361d9387",
+    "checkedAt": "2026-10-11T11:03:40.519859+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "util-linux-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "2.42.2-3.4.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-runtime",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-sdk",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhcos",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-78409",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-78409",
+    "snapshotSHA256": "4d2a8e9844b155530c581bbf5eb29feb291de656c93266b085624b5c69efa74a",
+    "checkedAt": "2026-10-11T11:03:40.520119+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "util-linux-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "2.42.2-3.4.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-runtime",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-sdk",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhcos",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-78410",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-78410",
+    "snapshotSHA256": "3d73f6963884132663df251f8c2067a92652acbf3b79f57a4ecb2fc88032e8ef",
+    "checkedAt": "2026-10-11T11:03:40.520380+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "util-linux-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "2.42.2-3.4.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-runtime",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhel8/flatpak-sdk",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "util-linux",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rhcos",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-82560",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-82560",
+    "snapshotSHA256": "51c7b19ee1531bef49b836bea4bcdfeb957081fc68fe9bfd6b9eda0895538c6b",
+    "checkedAt": "2026-10-11T11:03:40.520650+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "collectionURL": "https://cpan.org/modules",
+        "defaultStatus": "unaffected",
+        "modules": [
+          "Pod::Text"
+        ],
+        "packageName": "podlators",
+        "packageURL": "pkg:cpan/podlators",
+        "programFiles": [
+          "lib/Pod/Text.pm",
+          "lib/Pod/Text/Color.pm",
+          "lib/Pod/Text/Overstrike.pm",
+          "lib/Pod/Text/Termcap.pm"
+        ],
+        "programRoutines": [
+          {
+            "name": "Pod::Text::wrap"
+          },
+          {
+            "name": "Pod::Text::Color::wrap"
+          },
+          {
+            "name": "Pod::Text::Overstrike::wrap"
+          },
+          {
+            "name": "Pod::Text::Termcap::wrap"
+          }
+        ],
+        "repo": "https://github.com/rra/podlators",
+        "versions": [
+          {
+            "lessThan": "6.1.1",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      },
+      {
+        "collectionURL": "https://cpan.org/modules",
+        "defaultStatus": "unaffected",
+        "modules": [
+          "Pod::Text"
+        ],
+        "packageName": "perl",
+        "packageURL": "pkg:cpan/perl",
+        "programFiles": [
+          "cpan/podlators/lib/Pod/Text.pm",
+          "cpan/podlators/lib/Pod/Text/Color.pm",
+          "cpan/podlators/lib/Pod/Text/Overstrike.pm",
+          "cpan/podlators/lib/Pod/Text/Termcap.pm"
+        ],
+        "programRoutines": [
+          {
+            "name": "Pod::Text::wrap"
+          },
+          {
+            "name": "Pod::Text::Color::wrap"
+          },
+          {
+            "name": "Pod::Text::Overstrike::wrap"
+          },
+          {
+            "name": "Pod::Text::Termcap::wrap"
+          }
+        ],
+        "repo": "https://github.com/Perl/perl5",
+        "versions": [
+          {
+            "lessThanOrEqual": "5.45.2",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-85091",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-85091",
+    "snapshotSHA256": "0adb307ba9909c39ffc69b6da54f2f2cb97927c207a2fcc7077fd389c6520cf6",
+    "checkedAt": "2026-10-11T11:03:40.520909+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "zlib",
+        "product": "zlib",
+        "defaultStatus": "unaffected",
+        "packageURL": "pkg:github/madler/zlib",
+        "versions": [
+          {
+            "version": "1.3.1.2",
+            "lessThanOrEqual": "1.3.2",
+            "status": "affected",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86138",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86138",
+    "snapshotSHA256": "862cc762cc40d2b0bf54acbc0b0d52b62e3e47b71ab344404034af8b7ad09e87",
+    "checkedAt": "2026-10-11T11:03:40.521169+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86139",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86139",
+    "snapshotSHA256": "4042b6bf4265066f3c9ae89eba1b48ccb7d345fac888669da992885aada90bcb",
+    "checkedAt": "2026-10-11T11:03:40.521439+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86140",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86140",
+    "snapshotSHA256": "06f103128bfe8550affdd5648c21447edda379c948f3ac98081d6d74314cfd6d",
+    "checkedAt": "2026-10-11T11:03:40.521697+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86142",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86142",
+    "snapshotSHA256": "ed1cd620565275f558b2e50ce5d43e708fc41a58ca6777cd370f92415cfedd2e",
+    "checkedAt": "2026-10-11T11:03:40.521955+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86143",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86143",
+    "snapshotSHA256": "f295f8227e0459a8e1e25d2f3f280bccf1b6ce11b0a71b81c4b1e15eccd79b0a",
+    "checkedAt": "2026-10-11T11:03:40.522232+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86144",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86144",
+    "snapshotSHA256": "43ab908dd33c3ae6502623420eb1cd49438db4c7cd7cf19d38c5dd252bceeeb3",
+    "checkedAt": "2026-10-11T11:03:40.522532+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "libxml2",
+        "vendor": "xmlsoft",
+        "versions": [
+          {
+            "lessThan": "2.15.4",
+            "status": "affected",
+            "version": "0",
+            "versionType": "semver"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-86145",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-86145",
+    "snapshotSHA256": "897dace9efcdbae531cc4b1f9da294b6be2b46bd121c8e513f2553c24f943efb",
+    "checkedAt": "2026-10-11T11:03:40.522797+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "PCRE2",
+        "vendor": "PCRE",
+        "versions": [
+          {
+            "lessThan": "10.48",
+            "status": "affected",
+            "version": "10.32",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-88647",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-88647",
+    "snapshotSHA256": "029d2ce41b92fac4700e3e31cca4de697a5dd1d53b6f42b930f0c4aaac56d8f9",
+    "checkedAt": "2026-10-11T11:03:40.523056+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-89161",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-89161",
+    "snapshotSHA256": "0096a87ef7196aa9d8a6463845f2946c56cc957e344b73c3eedd8c77fbad4e79",
+    "checkedAt": "2026-10-11T11:03:40.523315+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "defaultStatus": "unaffected",
+        "product": "PCRE2",
+        "vendor": "PCRE",
+        "versions": [
+          {
+            "lessThan": "10.48",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-95184",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-95184",
+    "snapshotSHA256": "fc3a18fb28f64190c8834e5c11728f161006350d6c577eb26bc0de098c74db34",
+    "checkedAt": "2026-10-11T11:03:40.523588+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-95209",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-95209",
+    "snapshotSHA256": "341b5b3476fba7557197fa623ce1c503484e8ff11955fcde660a9fc24dee7595",
+    "checkedAt": "2026-10-11T11:03:40.523844+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-95210",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-95210",
+    "snapshotSHA256": "d6d2bede03e5fc76924b63d53dbc4abc0a24a91b6a88e2d9e91645563e3a54f0",
+    "checkedAt": "2026-10-11T11:03:40.524100+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "n/a",
+        "product": "n/a",
+        "versions": [
+          {
+            "version": "n/a",
+            "status": "affected"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-9538",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-9538",
+    "snapshotSHA256": "1d3229ba3ceff6751812223c35b405652574afcf62bf306d88c03a319348e437",
+    "checkedAt": "2026-10-11T11:03:40.524355+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "collectionURL": "https://cpan.org/modules",
+        "defaultStatus": "unaffected",
+        "packageName": "Archive-Tar",
+        "product": "Archive::Tar",
+        "programFiles": [
+          "lib/Archive/Tar.pm"
+        ],
+        "programRoutines": [
+          {
+            "name": "Archive::Tar::_read_tar"
+          }
+        ],
+        "repo": "https://github.com/jib/archive-tar-new",
+        "vendor": "BINGOS",
+        "versions": [
+          {
+            "lessThan": "3.10",
+            "status": "affected",
+            "version": "0",
+            "versionType": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "cna-CVE-2026-95619",
+    "url": "https://cveawg.mitre.org/api/cve/CVE-2026-95619",
+    "snapshotSHA256": "72c252a680457cee7ffc94cfedb18b672b079def4551987a3b8aea3f46f886c3",
+    "checkedAt": "2026-10-11T11:03:40.524620+00:00",
+    "packageStates": [],
+    "affected": [
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "gcc-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "16.2.1-2.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Hardened Images",
+        "collectionURL": "https://catalog.redhat.com/software/containers/",
+        "packageName": "gcc13-main",
+        "defaultStatus": "affected",
+        "versions": [
+          {
+            "version": "13.5.0-0.1.hum1",
+            "lessThan": "*",
+            "versionType": "rpm",
+            "status": "unaffected"
+          }
+        ],
+        "cpes": [
+          "cpe:/a:redhat:hummingbird:1"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 10",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:10"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-295",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-296",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-32",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-34",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 6",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:6"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-32",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-34",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "compat-gcc-44",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 7",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "unaffected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:7"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 8",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "rteval-loads",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:8"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat Enterprise Linux 9",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "mingw-gcc",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/o:redhat:enterprise_linux:9"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-8",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      },
+      {
+        "vendor": "Red Hat",
+        "product": "Red Hat OpenShift Container Platform 4",
+        "collectionURL": "https://access.redhat.com/downloads/content/package-browser/",
+        "packageName": "openshift/ose-rhel-coreos-9",
+        "defaultStatus": "affected",
+        "cpes": [
+          "cpe:/a:redhat:openshift:4"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "redhat-api-CVE-2026-86145",
+    "url": "https://access.redhat.com/hydra/rest/securitydata/cve/CVE-2026-86145.json",
+    "snapshotSHA256": "72912cb4a6e3278475151334d0e6ed52d8cf628de8f413fc2abb8d7e3617cbbb",
+    "checkedAt": "2026-10-11T11:08:38.186724+00:00",
+    "packageStates": [
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Not affected",
+        "package_name": "bootc",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:10.11/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:11.8/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Will not fix",
+        "package_name": "mingw-pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      }
+    ],
+    "affectedReleases": [
+      {
+        "product_name": "Red Hat Hardened Images",
+        "release_date": "2026-09-15T00:00:00Z",
+        "advisory": "RHSA-2026:67534",
+        "cpe": "cpe:/a:redhat:hummingbird:1",
+        "package": "pcre2-main-10.48-0.1.hum1"
+      }
+    ]
+  },
+  {
+    "name": "redhat-api-CVE-2026-103111",
+    "url": "https://access.redhat.com/hydra/rest/securitydata/cve/CVE-2026-103111.json",
+    "snapshotSHA256": "941cb08945c2859021691164b401140043665fc7db9ff79dabbe34ea65b84d1b",
+    "checkedAt": "2026-10-11T11:08:38.124051+00:00",
+    "packageStates": [
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:10.11/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:11.8/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mingw-pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      }
+    ],
+    "affectedReleases": [
+      {
+        "product_name": "Red Hat Hardened Images",
+        "release_date": "2026-10-02T00:00:00Z",
+        "advisory": "RHSA-2026:74972",
+        "cpe": "cpe:/a:redhat:hummingbird:1",
+        "package": "pcre2-main-10.49-0.1.hum1"
+      }
+    ]
+  },
+  {
+    "name": "redhat-api-CVE-2026-89161",
+    "url": "https://access.redhat.com/hydra/rest/securitydata/cve/CVE-2026-89161.json",
+    "snapshotSHA256": "ae3043229869aa01032c227b32662a32d3d5d711678133e7a94f4fb2620bd511",
+    "checkedAt": "2026-10-11T11:08:38.241829+00:00",
+    "packageStates": [
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "bootc",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:10.11/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mariadb:11.8/mariadb",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "mingw-pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      },
+      {
+        "product_name": "Red Hat Enterprise Linux 9",
+        "fix_state": "Affected",
+        "package_name": "pcre2",
+        "cpe": "cpe:/o:redhat:enterprise_linux:9"
+      }
+    ],
+    "affectedReleases": [
+      {
+        "product_name": "Red Hat Hardened Images",
+        "release_date": "2026-09-15T00:00:00Z",
+        "advisory": "RHSA-2026:67534",
+        "cpe": "cpe:/a:redhat:hummingbird:1",
+        "package": "pcre2-main-10.48-0.1.hum1"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2017-13716",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2017-13716",
+    "snapshotSHA256": "a00acadb89338590f6c71a11460e6a22e5eb87938f36fa783fa92ed1126b6070",
+    "checkedAt": "2026-10-11T11:06:52.150833+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "deferred"
+      },
+      {
+        "source": "libiberty",
+        "release": "noble",
+        "status": "deferred"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66861",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-66861",
+    "snapshotSHA256": "e3c0f3e20f1b0132850c7f3a07add63b4496b6252e9af8d182592ced51de0572",
+    "checkedAt": "2026-10-11T11:06:52.151942+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66862",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-66862",
+    "snapshotSHA256": "fee83304b81d0b5a346e60131c8fd65d00153008bddcc2db6b3514af69a164ea",
+    "checkedAt": "2026-10-11T11:06:52.152303+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66864",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-66864",
+    "snapshotSHA256": "26e3f1787abed0ecb2284e2fdaca99d4fe5291f9ea25e089c50580d76909df04",
+    "checkedAt": "2026-10-11T11:06:52.152649+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66865",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-66865",
+    "snapshotSHA256": "2d4e01f11fd5a3d31215f76c116fdef2e7cdd606a1515a4f738a9d9983afbf89",
+    "checkedAt": "2026-10-11T11:06:52.152949+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-66866",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-66866",
+    "snapshotSHA256": "cbfe0a6e9f41e6a50caaf76da39934d995900fff3228ddbaa6d663934fc56934",
+    "checkedAt": "2026-10-11T11:06:52.153277+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69646",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-69646",
+    "snapshotSHA256": "8021b9855941d0fecbf4b473622ec23308184335899abbcbf85613101d4320f1",
+    "checkedAt": "2026-10-11T11:06:54.959694+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needed"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-69651",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2025-69651",
+    "snapshotSHA256": "6130b1760c019ea41dcb0f4b4d6ea73350a2810dc45cf83683ea163edf788d3c",
+    "checkedAt": "2026-10-11T11:06:55.276500+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needed"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-102473",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-102473",
+    "snapshotSHA256": "5ffb85f23ae03fd90e84aaf4a55f6fcecd6052f58c1ff63e91f76c293473a88a",
+    "checkedAt": "2026-10-11T11:06:55.414797+00:00",
+    "packageStates": [
+      {
+        "source": "dash",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-102474",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-102474",
+    "snapshotSHA256": "f71edc35d3a2180a6c7460d0bee6dedfde35dc32f1b0dfc2e1092a04058b7282",
+    "checkedAt": "2026-10-11T11:06:55.438028+00:00",
+    "packageStates": [
+      {
+        "source": "dash",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-103111",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-103111",
+    "snapshotSHA256": "019c2d6e22807189b1ff6eb8efd73f31b41b9a6eabd36ac4dc6c4325fbc25825",
+    "checkedAt": "2026-10-11T11:06:55.478707+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-16599",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-16599",
+    "snapshotSHA256": "4e72c3b2d6eb443f5e650f88c9c15de49bed0212d32fc894266b1cce22c2e06d",
+    "checkedAt": "2026-10-11T11:06:55.561758+00:00",
+    "packageStates": [
+      {
+        "source": "wget",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-18374",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-18374",
+    "snapshotSHA256": "3548401794e71c21f5e6c65b8bc93031c74f6e49744ed343e7271b8fb0414550",
+    "checkedAt": "2026-10-11T11:06:55.608843+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "needed"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "DNE"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-18508",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-18508",
+    "snapshotSHA256": "5eb06b53f4e6dea3e8afdfc243d9d59b3c49d904ee7529a60720c70d96122c4c",
+    "checkedAt": "2026-10-11T11:06:55.611146+00:00",
+    "packageStates": [
+      {
+        "source": "tar",
+        "release": "noble",
+        "status": "needed"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-3441",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-3441",
+    "snapshotSHA256": "9cb451ce4d59ad2295f2c5a52cf871d9016657996e4f1c9635978f3b04cae695",
+    "checkedAt": "2026-10-11T11:06:57.865343+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-3442",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-3442",
+    "snapshotSHA256": "2265ed52b85eec80a4a90b1b71a5a832d2374e3b3aaba2064fc5fc0807121d91",
+    "checkedAt": "2026-10-11T11:06:58.192801+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-6844",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-6844",
+    "snapshotSHA256": "60c018712c6f37843bc965630615dde1adb345787ada4477c69aa850c785836f",
+    "checkedAt": "2026-10-11T11:06:58.211929+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-6846",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-6846",
+    "snapshotSHA256": "2b21d9883e63d206db0047b25a0e3a975a4994efa680e3c547f516871cbbed84",
+    "checkedAt": "2026-10-11T11:06:58.425223+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89157",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-89157",
+    "snapshotSHA256": "a985bf3e6d322deb324ee359010a0cc04c3dc9b61ee91722438cbf5345e37778",
+    "checkedAt": "2026-10-11T11:06:58.457939+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-89162",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-89162",
+    "snapshotSHA256": "ae635854893fdfdb81ae6d51f96aa38230031c47600bc240b4c7244bc4d8e06e",
+    "checkedAt": "2026-10-11T11:06:58.489195+00:00",
+    "packageStates": [
+      {
+        "source": "pcre2",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90802",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-90802",
+    "snapshotSHA256": "5223b351b11cd466a6ab6d095b064bada6609859d9535ae90b26bb8dffe40838",
+    "checkedAt": "2026-10-11T11:06:58.843038+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90804",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-90804",
+    "snapshotSHA256": "1c1c5d1efb3d97889543336cb1e1e50fda3aeaaf0e49c107fd88e2c087e1fbd3",
+    "checkedAt": "2026-10-11T11:06:58.903470+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90828",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-90828",
+    "snapshotSHA256": "4002cae9a11b20f2fc7a62618cc37827c2ba6fa5aafc78ff3c5e3b8687511efd",
+    "checkedAt": "2026-10-11T11:07:00.863696+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-90831",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-90831",
+    "snapshotSHA256": "b567a702547d2311cf8ae9757f656e45f1b9cbd992c4c5ca5dc00f11640e7dec",
+    "checkedAt": "2026-10-11T11:07:01.379701+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-91780",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-91780",
+    "snapshotSHA256": "6fdb138c319b7e5a6c529fc5e0d110a23ccb8c1205beb276f7d78f78e92c6fbc",
+    "checkedAt": "2026-10-11T11:07:01.503052+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-91782",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-91782",
+    "snapshotSHA256": "5fea2d182867f293c86050e31479717b61845ccfd3b9e79433876da71f2c77a8",
+    "checkedAt": "2026-10-11T11:07:01.522714+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-93990",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-93990",
+    "snapshotSHA256": "c380a6e73db7c79ed9336d7c9be891969d01ea374154639cc9df8c1d0430b6b0",
+    "checkedAt": "2026-10-11T11:07:01.583668+00:00",
+    "packageStates": [
+      {
+        "source": "expat",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "apache2",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "apr-util",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "cmake",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "ghostscript",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "texlive-bin",
+        "release": "noble",
+        "status": "not-affected (code-not-compiled)"
+      },
+      {
+        "source": "xmlrpc-c",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "vnc4",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "wbxml2",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "swish-e",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "insighttoolkit4",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "cadaver",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "gdcm",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "ayttm",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "cableswig",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "coin3",
+        "release": "noble",
+        "status": "not-affected (uses system expat)"
+      },
+      {
+        "source": "matanza",
+        "release": "noble",
+        "status": "ignored"
+      },
+      {
+        "source": "tdom",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "vtk",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "smart",
+        "release": "noble",
+        "status": "DNE"
+      },
+      {
+        "source": "firefox",
+        "release": "noble",
+        "status": "not-affected (code not present)"
+      },
+      {
+        "source": "thunderbird",
+        "release": "noble",
+        "status": "not-affected (code not present)"
+      },
+      {
+        "source": "libxmltok",
+        "release": "noble",
+        "status": "needs-triage"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-95818",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-95818",
+    "snapshotSHA256": "8bb12af1fa11641e774188bd449253c957f4e6dae7ce2d3f1ab94eece770e3ec",
+    "checkedAt": "2026-10-11T11:07:01.710479+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "DNE"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2026-97399",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/CVE-2026-97399",
+    "snapshotSHA256": "cc16146cd769115abd16bb501102b23cc3c7256c9cedbc5246f0af91753d3480",
+    "checkedAt": "2026-10-11T11:07:02.119633+00:00",
+    "packageStates": [
+      {
+        "source": "glibc",
+        "release": "noble",
+        "status": "needs-triage"
+      },
+      {
+        "source": "eglibc",
+        "release": "noble",
+        "status": "DNE"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-1149",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/retired/CVE-2025-1149",
+    "snapshotSHA256": "7504f9a9d011949edaf307175621119c9ce064772033583c4079d5388cf3a644",
+    "checkedAt": "2026-10-11T11:08:38.288860+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "ignored (risk of regression)"
+      }
+    ]
+  },
+  {
+    "name": "controller-CVE-2025-11495",
+    "url": "https://git.launchpad.net/ubuntu-cve-tracker/plain/retired/CVE-2025-11495",
+    "snapshotSHA256": "6d19b3d2aa866908a44658af7255c23f7b4bc0fbd26417b82cbbb10a7b9df68d",
+    "checkedAt": "2026-10-11T11:08:38.291734+00:00",
+    "packageStates": [
+      {
+        "source": "binutils",
+        "release": "noble",
+        "status": "ignored (changes too intrusive)"
+      }
+    ]
+  }
+]

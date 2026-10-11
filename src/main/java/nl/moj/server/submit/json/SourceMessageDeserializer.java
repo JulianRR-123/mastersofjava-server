@@ -16,30 +16,27 @@
 */
 package nl.moj.server.submit.json;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-
 import nl.moj.server.submit.model.SourceMessage;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
+import tools.jackson.databind.node.ArrayNode;
 
-public class SourceMessageDeserializer extends JsonDeserializer<SourceMessage> {
+public class SourceMessageDeserializer extends ValueDeserializer<SourceMessage> {
 
     public SourceMessageDeserializer() {
     }
 
     @Override
-    public SourceMessage deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
-        JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    public SourceMessage deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) {
+        JsonNode node = deserializationContext.readTree(jsonParser);
         Map<String, String> sources = new HashMap<>();
         if (node.get("sources") != null && node.get("sources").isArray()) {
             ArrayNode sourceArray = (ArrayNode) node.get("sources");

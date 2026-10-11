@@ -25,13 +25,13 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
-import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
+import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.moj.common.assignment.descriptor.AssignmentDescriptor;
@@ -185,7 +185,7 @@ public class SubmitService {
     }
 
     @Transactional
-    @NewSpan
+    @Observed
     public SubmitAttempt registerSubmitAttempt(SubmitRequest submitRequest) throws SubmitAttemptRegisterException {
         log.info("Registering submit attempt for assignment {} by team {}.", submitRequest.getAssignment().getUuid(),
                 submitRequest.getTeam().getUuid());

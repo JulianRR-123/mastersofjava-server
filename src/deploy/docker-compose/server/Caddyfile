@@ -2,7 +2,6 @@
 # Explicit http:// origins are supported for local restricted tests.
 (forwarded_headers) {
 	header_up -Forwarded
-	header_up -X-Forwarded-Port
 	header_up -X-Forwarded
 	# Caddy overwrites X-Forwarded-For/Host/Proto with trusted request values.
 }
@@ -10,13 +9,32 @@
 {$MOJ_BASE_URL} {
 	reverse_proxy controller:8080 {
 		import forwarded_headers
+		# Use the configured origin's port, including 443 when omitted from the URL.
+		header_up X-Forwarded-Port {$MOJ_PROXY_PORT}
 	}
 }
 
+# Public participant endpoints only. The admin API and master realm are private.
 {$AUTH_BASE_URL} {
+	@participant path /realms/moj /realms/moj/* /resources /resources/* /.well-known /.well-known/*
+	handle @participant {
+		reverse_proxy auth:8080 {
+			import forwarded_headers
+			header_up -X-Forwarded-Port
+		}
+	}
+	handle {
+		respond 404
+	}
+}
+
+# The host publishes this listener on 127.0.0.1:8443 only. Tunnel the browser's
+# normal authentication origin here; keep public hostname/issuer URLs unchanged.
+{$AUTH_ADMIN_PROXY_URL} {
 	@internal path /health /health/* /metrics /metrics/*
 	respond @internal 404
 	reverse_proxy auth:8080 {
 		import forwarded_headers
+		header_up -X-Forwarded-Port
 	}
 }

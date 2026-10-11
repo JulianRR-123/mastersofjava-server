@@ -1,0 +1,10 @@
+Native patched Java-base build: passed
+Native controller/worker Jib docker-build executions: passed
+Multi-platform Java-base build (amd64/arm64): passed
+Controller/worker Jib registry-build executions to disposable loopback registry: passed
+Both output manifests contain amd64 and arm64: passed
+Native and emulated ARM Java/compiler/package checks: passed
+HTTPS/OIDC/role/private administration/WSS compile-test-submit acceptance: passed
+Container recreation and nine-table persistence checks: passed
+Application JAR unchanged from full clean verify (86 tests, 0 failures/errors, 2 skips); verified by SHA256
+No public registry publishing or deployment performed

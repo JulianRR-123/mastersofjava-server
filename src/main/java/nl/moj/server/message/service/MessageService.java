@@ -25,14 +25,14 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.Span;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import io.micrometer.tracing.Span;
+import io.micrometer.tracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import nl.moj.server.competition.repository.CompetitionSessionRepository;
 import nl.moj.server.compiler.model.CompileAttempt;
@@ -222,7 +222,7 @@ public class MessageService {
 
     public void sendGroupStop(String taskname, String sessionId) {
         log.info("Sending stop: t={}, s={}", taskname, sessionId);
-        template.convertAndSend(DEST_STOP, Map.of("taskName", taskname));
+        template.convertAndSend(DEST_STOP, (Object) Map.of("taskName", taskname));
         template.convertAndSend(DEST_COMPETITION,
                 StopAssignmentMessage.builder().sessionId(sessionId).assignment(taskname).build());
     }

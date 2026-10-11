@@ -19,12 +19,11 @@ package nl.moj.server.submit.model;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.moj.server.submit.json.SourceMessageDeserializer;
+import tools.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(using = SourceMessageDeserializer.class)
 @Data

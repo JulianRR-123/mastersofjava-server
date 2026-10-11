@@ -3,12 +3,12 @@ package nl.moj.worker;
 import java.time.Instant;
 import java.util.Objects;
 
-import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+import io.micrometer.observation.annotation.Observed;
+import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nl.moj.common.messages.JMSCompileRequest;
@@ -34,7 +34,7 @@ public class OperationListener {
     private final Tracer tracer;
 
     @JmsListener(destination = REQUEST_DESTINATION)
-    @NewSpan
+    @Observed
     public void receiveOperationRequest(JMSRequest request) {
         log.info("On-Thread: {}-{}", workerService.getWorkerIdentification(), Thread.currentThread().getName());
         if (request instanceof JMSCompileRequest r) {

@@ -407,11 +407,172 @@ following tasks; no real environment, realm, DNS, or server was changed here.
 ### 15. Configure production authentication
 
 - [ ] Review the pinned Keycloak `21.1` image and application/base-image dependencies for security updates. Test necessary upgrades separately against the realm import and login flow, with backups before database migrations.
-- [ ] Treat Spring Boot `2.7.18` as a Java 21 migration stepping stone. Plan and test a separate upgrade to a maintained Spring Boot release, or establish supported maintenance coverage before public deployment. Spring Boot 2.x has reached [the end of open-source support](https://spring.io/blog/2023/11/23/spring-boot-2-7-18-available-now/); a major upgrade also needs review of Spring Cloud, security configuration, and Java EE/Jakarta imports.
-- [ ] Replace `start-dev` with a production configuration and set hostname, TLS/proxy, and administrator bootstrap settings for the exact chosen Keycloak version. Current documentation may use different flags from version 21.1.
-- [ ] Choose whether self-registration is allowed for your event, and restrict access to the Keycloak administration console.
+- [x] Upgrade the Java 21 application from Spring Boot `2.7.18` to maintained Spring Boot `4.1.1` and test it separately before public deployment. Spring Boot 2.x has reached [the end of open-source support](https://spring.io/blog/2023/11/23/spring-boot-2-7-18-available-now/); a major upgrade also needs review of Spring Cloud, security configuration, and Java EE/Jakarta imports.
+- [x] Replace `start-dev` with a production configuration and set hostname, TLS/proxy, and administrator bootstrap settings for the exact chosen Keycloak version. Use flags supported by the selected release; legacy 21.1 flags no longer apply.
+- [x] Choose whether self-registration is allowed for your event, and restrict access to the Keycloak administration console.
 
 Use the [Keycloak production guide](https://www.keycloak.org/server/configuration-production) and [reverse-proxy guide](https://www.keycloak.org/server/reverseproxy), checking compatibility with the pinned release.
+
+**Initial step 1 review (2026-10-10):**
+The [production dependency review](PRODUCTION-DEPENDENCY-REVIEW.md) records the
+repository inventory, official security/support sources, Keycloak migration
+changes, and isolated validation requirements. Keycloak `26.8.0` is the initial
+upgrade candidate; its hostname/proxy/bootstrap/health settings require changes
+together with the image. Application findings include the unsupported Boot/Tika
+lines and affected Tomcat, PostgreSQL JDBC, and Commons IO versions. The Java 21
+Temurin base remains suitable, with rebuild/digest/runtime verification required.
+At this review stage, no versions or deployed data were changed. The first item remains unchecked until
+necessary upgrades and final scans pass; the Boot migration was scheduled as a separate step (see below).
+Task 14 remains pending while domain/server setup is deferred.
+
+**Keycloak upgrade implemented and locally verified (2026-10-10):** Server
+Compose now pins `26.8.0`, uses hostname v2 and `xforwarded` proxy headers, maps
+existing deployment administrator variables to bootstrap options, and checks
+management readiness on private port 9000 plus realm discovery on 8080. Rerun
+URL preparation to generate `KC_HOSTNAME` before using this configuration.
+The server README documents bootstrap-account handling and database migration
+backup/rollback requirements.
+
+Isolated verified-HTTPS tests passed fresh production startup/import, discovery,
+login-form/code-exchange/logout, and participant/administrator MoJ roles in both
+ID/access tokens. A backed-up and restored 21.1 database migrated to production
+26.8.0 with saved users, role mappings, registration settings and client URLs
+preserved. Discovery also passed from the published controller image's Java 21
+runtime on the disposable network with the test CA trusted. Readiness negative
+checks, URL rendering, Compose rendering, shell syntax and patch checks passed.
+The committed development startup mode also recovered the upgraded saved database
+and passed the same HTTPS protocol checks.
+See the review for the tested digest and validation limits. Production startup
+was implemented in the separate step recorded below. Final
+vulnerability scans and real-domain browser acceptance remain pending; the first checklist item is therefore still open.
+
+**Spring Boot upgrade implemented and locally verified (2026-10-10):** Boot
+`4.1.1` replaces `2.7.18` on Java 21. The migration replaces Cloud Sleuth with
+Micrometer tracing, moves Java EE/JMS imports to Jakarta, uses Jackson 3 and
+current Spring Security APIs, and updates the worker configuration and WebJar
+resolver. Existing prefixed method roles and URL role restrictions are covered
+by regression tests. Caddy/Tomcat now preserve the configured origin port in
+login/logout redirects; regenerate URL settings after upgrading.
+
+The final formatting-enabled `./mvnw clean verify` passed: 86 tests, no failures
+or errors, and two existing disabled tests. Both local Jib images built and
+reported Java/runtime compiler 21.0.12.1. Isolated PostgreSQL 15 tests passed fresh
+initialization, backup/restore of populated previous-version data, unchanged
+Flyway history, and recovery after container recreation. Verified HTTPS tests
+passed real application login/logout, admin access, participant denial, real
+bearer-token validation, forwarding-header spoof rejection, authenticated WSS
+live updates, and compile/test/submit through the separate upgraded worker with
+saved results and rankings. Disposable resources and credentials were removed.
+
+The review records versions, base digest and acceptance limits. No images were
+published and no live deployment was changed. Publish a new matching controller/
+worker SHA-tagged pair before deploying. Final scans and public-domain browser
+acceptance remain pending. Production Keycloak startup is recorded below.
+
+**Production Keycloak startup implemented and locally verified (2026-10-10):**
+Server Compose now uses `start --import-realm --http-enabled=true` with PostgreSQL,
+the exact strict hostname, trusted Caddy forwarding and the existing bootstrap
+administrator settings. Backend HTTP and management port 9000 remain private;
+Caddy terminates HTTPS. The upstream image applies its database/health build
+options at startup, so `--optimized` is not used. The server README explains
+startup, saved-realm behavior and temporary administrator handling.
+
+A disposable deployment tested the repository's actual startup command and
+reported `Profile prod activated`. Verified HTTPS discovery, application login/
+logout, administrator access, participant denial, signed bearer-token validation,
+and forwarding-header spoof rejection passed. Keycloak recreation retained the
+saved accounts, roles, registration settings and client URLs; existing realm
+import was skipped and the same checks passed again. Disposable resources and
+credentials were removed. No live deployment or registry images were changed.
+Public-domain browser acceptance remains pending until DNS/server setup is ready.
+The following steps record the organizer-managed registration policy and private
+administration console access.
+
+**Organizer-managed registration policy implemented (2026-10-10):**
+The organizer will create participant accounts. The server realm template now sets
+`registrationAllowed: false`; local development realm templates are unchanged.
+The server README documents disabling **Realm settings → Login → User
+registration** in an existing `moj` realm, because startup imports do not overwrite
+saved realms, and creating participants with temporary passwords and the default
+`user` group. Elevated MoJ groups are reserved for organizers.
+
+Disposable production Keycloak tests passed: no registration link, direct
+registration GET/POST and `prompt=create` rejected, organizer-created users given
+the participant group, mandatory first-login password change, and application
+login/logout with participant denial of `/control`. Administration-console access
+restrictions were implemented in the separate step below.
+No live deployment or existing realm was changed.
+
+**Private administration implemented and locally verified (2026-10-10):**
+The public Caddy authentication listener now permits only `moj` realm endpoints,
+resources and discovery. Administration UI/API, the master realm and management
+paths return 404. A separate authentication listener is published exclusively on
+`127.0.0.1:8443`; URL preparation generates its HTTP/HTTPS origin and rejects
+public origin port collisions. The browser uses its normal authentication origin
+through an SSH tunnel, preserving hostname, issuer and redirects. The server
+README documents the workstation hosts entry, same-origin port forwarding,
+permanent administrator handling and restoring DNS after closing the tunnel.
+
+Disposable verified-HTTPS tests passed public denial with spoofed headers and
+encoded/traversal probes, private console HTML/assets, actual master-realm
+administrator form login with PKCE and authenticated admin API access. The same
+admin token could not reach the public API. Public participant OIDC and actual
+application login/logout, administrator access and participant denial passed.
+HTTP redirects still selected the public origin. These are automated HTTP and
+simulated tunnel checks; real SSH/browser, trusted public certificates and external
+port-reachability acceptance remain pending with the domain/server. Disposable
+resources and credentials were removed; no live deployment was changed. Task 15's
+final dependency/vulnerability scans remain open.
+
+**Vulnerability scanning completed; remediation pending (2026-10-11):**
+Grype 0.120.1 with today's validated database scanned the packaged application,
+freshly built local controller/worker images, and refreshed Keycloak/PostgreSQL/
+Caddy images. Syft inventories verified package coverage. The
+[scan report](TASK15-VULNERABILITY-SCAN.md) records exact image identities,
+all matches, proposed fixes, applicability limits and retained evidence.
+The application has 12 matches (3 critical, 5 high, 4 medium), all with listed
+fixes; the public Caddy image has 153 high/critical matches, 144 with listed fixes.
+These are package/advisory matches, not confirmed exploitable paths. Keycloak,
+PostgreSQL and the Java base also have OS findings requiring vendor triage.
+The first checklist item remains open until compatible patches, regression
+checks, residual-finding triage and final release rescans pass. No dependency
+versions, running services or deployed data were changed, and nothing was published.
+
+**Security patches and local acceptance completed (2026-10-11):**
+Tomcat 11.0.26, aligned Jackson 3.1.7, Commons Configuration 2.15.1 and bundled
+JUnit 4.13.2 replace the versions flagged by the scan. The packaged JAR now has
+zero advisory matches. Full formatting-enabled Maven verification passed:
+86 tests, no failures/errors, two existing skips. Both Java 21 images rebuilt.
+
+The latest upstream Caddy 2.11.7 image still lacked October Go/HTTP2 fixes, so
+server Compose now builds `moj-caddy:2.11.7-security1` from released Caddy source
+using Go 1.26.9, locked x/net 0.60.0 and updated Alpine packages. Follow the
+server README's proxy build and `pull --ignore-buildable` commands. Caddy now has
+four medium matches with no listed fixes and zero high/critical matches; both
+application images also have zero high/critical matches.
+
+Disposable verified-HTTPS checks passed app login/logout, role restrictions,
+real bearer tokens, forwarding-header spoof rejection, public admin denial,
+private PKCE admin access, WSS updates and separate-worker compile/test/submit.
+Container recreation preserved nine core table hashes/counts, saved users/roles
+and rankings. The [remediation report](TASK15-SECURITY-REMEDIATION.md) retains
+exact tested identities, final scans, inventories and validation evidence.
+The subsequent [base-image remediation](TASK15-BASE-IMAGE-REMEDIATION.md)
+applies the two available Ubuntu fixes and makes the derived base part of both
+local and CI image builds. Other residual Keycloak/PostgreSQL/base OS findings remain for remediation/triage;
+the first checklist item and final-domain acceptance remain open. No deployed
+services or data were changed and no images were published.
+
+**Residual review recorded (2026-10-11):** The
+[vendor/exposure review](TASK15-RESIDUAL-SECURITY-REVIEW.md) accounts for all 1,203
+retained matches and identifies narrower component-specific conditions. No
+finding was suppressed or accepted. A harmless-marker test also reproduced
+MOJ-T15-001: the worker's bundled all-files-read policy allows assignment code
+to read its parent process environment. Fix and test credential/file isolation
+before deployment; then address PostgreSQL libxml2/helper remediation and
+adjudicate remaining vendor findings. An official PostgreSQL 15 Alpine candidate
+was scanned for comparison, but it retains high findings and is not an approved
+replacement. The task remains open for those security gates and public acceptance.
 
 **Done when:** Keycloak starts in production mode and the login/logout test still passes with the final public URLs.
 
@@ -426,10 +587,11 @@ Use the [Keycloak production guide](https://www.keycloak.org/server/configuratio
 
 **Repository implementation complete; server acceptance pending:** Server Compose
 now includes Caddy `2.11.2-alpine`, persistent certificate/configuration volumes,
-and only public TCP 80/443 bindings. The Caddyfile routes the configured origins
+and public TCP 80/443 bindings; task 15 adds loopback-only private administration
+on 8443. The Caddyfile routes the configured origins
 to controller and Keycloak, supports WebSocket upgrades through Caddy's reverse
-proxy, and removes untrusted forwarding headers. Keycloak uses version 21.1's
-`KC_PROXY=edge`; controller native forwarding support is explicit. URL preparation
+proxy, and removes untrusted forwarding headers. Keycloak now uses hostname v2 and
+`KC_PROXY_HEADERS=xforwarded`; controller native forwarding and origin-port support are explicit. URL preparation
 renders hostname aliases on the proxy so containers reach the same authentication
 issuer as browsers without routing through the public host IP. Caddy starts
 independently to avoid a controller/discovery dependency cycle.
@@ -437,7 +599,7 @@ independently to avoid a controller/discovery dependency cycle.
 The README covers DNS/firewall prerequisites, certificate persistence, proxy
 validation, URL changes, and local HTTP through `moj.localhost`/`auth.localhost`.
 Existing `.env` and generated files were not changed. Keycloak production mode
-remains task 15. Validation passed for public/local URL and realm rendering,
+is now implemented under task 15; public acceptance remains pending. Validation passed for public/local URL and realm rendering,
 Compose configuration, and Caddy's HTTPS configuration. Disposable Docker tests
 passed both HTTP routes, spoofed forwarding-header removal, blocking of Keycloak
 health/metrics paths, and issuer hostname routing from another container.

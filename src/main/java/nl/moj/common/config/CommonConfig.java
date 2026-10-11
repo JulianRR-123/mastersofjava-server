@@ -3,43 +3,43 @@ package nl.moj.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.jms.support.converter.JacksonJsonMessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.micrometer.observation.ObservationRegistry;
+import io.micrometer.observation.aop.ObservedAspect;
+import tools.jackson.databind.MapperFeature;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
 @Configuration
 @EnableJms
 public class CommonConfig {
     @Bean(name = "objectMapper")
-    public ObjectMapper jsonObjectMapper() {
+    public JsonMapper jsonObjectMapper() {
         return JsonMapper.builder()
-                .addModule(new JavaTimeModule())
-                .addModule(new Jdk8Module())
                 .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS).build();
     }
 
     @Bean(name = "yamlObjectMapper")
-    public ObjectMapper yamlObjectMapper() {
+    public YAMLMapper yamlObjectMapper() {
         return YAMLMapper.builder()
                 .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS)
-                .addModule(new JavaTimeModule())
-                .addModule(new Jdk8Module())
                 .build();
     }
 
     @Bean
     public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        JacksonJsonMessageConverter converter = new JacksonJsonMessageConverter(jsonObjectMapper());
         converter.setTargetType(MessageType.TEXT);
         converter.setTypeIdPropertyName("_type");
-        converter.setObjectMapper(jsonObjectMapper());
+        converter.setTrustedPackages("nl.moj.common.messages");
         return converter;
+    }
+
+    @Bean
+    public ObservedAspect observedAspect(ObservationRegistry registry) {
+        return new ObservedAspect(registry);
     }
 }

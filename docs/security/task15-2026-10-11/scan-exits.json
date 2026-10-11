@@ -1,0 +1,8 @@
+{
+  "application-jar": 0,
+  "keycloak": 0,
+  "postgres": 0,
+  "caddy": 0,
+  "controller": 0,
+  "worker": 0
+}

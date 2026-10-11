@@ -4,6 +4,11 @@ gen/
 target/
 mojserver.log*
 .cache
+
+# Python bytecode caches
+__pycache__/
+*.py[cod]
+
 # Eclipse project files
 .classpath
 .project

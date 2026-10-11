@@ -19,7 +19,7 @@ package nl.moj.server.rankings.service;
 import java.util.*;
 import java.util.stream.Stream;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 

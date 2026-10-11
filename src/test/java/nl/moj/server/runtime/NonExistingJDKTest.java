@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import nl.moj.server.competition.model.CompetitionAssignment;
 import nl.moj.server.competition.service.CompetitionServiceException;
@@ -33,7 +33,7 @@ public class NonExistingJDKTest extends BaseRuntimeTest {
     @Autowired
     private CompetitionRuntime competitionRuntime;
 
-    @MockBean
+    @MockitoBean
     private MessageService messageService;
 
     // TODO should be fixed once workers report capabilities.

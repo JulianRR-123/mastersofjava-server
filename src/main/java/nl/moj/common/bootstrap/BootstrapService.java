@@ -42,7 +42,7 @@ public class BootstrapService {
     private static String[] LIBS = {
             "asciiart-core-1.1.0.jar",
             "hamcrest-all-1.3.jar",
-            "junit-4.12.jar",
+            "junit-4.13.2.jar",
             "securityPolicyForUnitTests.policy"
     };
 

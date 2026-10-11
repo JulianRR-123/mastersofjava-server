@@ -2,7 +2,7 @@ package nl.moj.server.config;
 
 import java.util.Set;
 
-import javax.jms.ConnectionFactory;
+import jakarta.jms.ConnectionFactory;
 
 import org.apache.activemq.artemis.core.config.impl.SecurityConfiguration;
 import org.apache.activemq.artemis.core.security.Role;
@@ -10,8 +10,8 @@ import org.apache.activemq.artemis.core.server.embedded.EmbeddedActiveMQ;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 import org.apache.activemq.artemis.spi.core.security.ActiveMQSecurityManagerImpl;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.boot.artemis.autoconfigure.ArtemisProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.jms.artemis.ArtemisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class ArtemisSecurityConfiguration {
         return new BeanPostProcessor() {
             @Override
             public Object postProcessBeforeInitialization(Object bean, String beanName) {
-                // Boot 2.7 only applies Artemis credentials in native mode.
+                // Ensure embedded connections use the same credentials as remote workers.
                 // Its embedded factory can be wrapped by a caching factory.
                 if (bean instanceof ConnectionFactory connectionFactory) {
                     if (connectionFactory instanceof SingleConnectionFactory wrapper) {

@@ -1,0 +1,6 @@
+{
+  "src/deploy/docker-compose/server/docker-compose.yaml": "eb96056417ae5ed4deb857d648a0cdb6171027029d474aeccb8eb63ef5092a70",
+  "src/deploy/docker-compose/server/Caddyfile": "8738cc70c18c364506f01e14c27654f3f2cae56e2b522ec7264b0f7cc973b061",
+  "src/main/resources/bootstrap/libs/securityPolicyForUnitTests.policy": "ac51783face812bdbe872d6cd5a2526c5afc8f51cbf199540c95fa4777acfb8f",
+  "src/main/java/nl/moj/worker/java/test/TestRunnerService.java": "4d52974681fe9bb61ec9ed7ac0bff890bcdfea3b6e2abbc921fd0e7f88283c87"
+}

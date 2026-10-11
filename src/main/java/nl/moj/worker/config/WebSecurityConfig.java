@@ -16,8 +16,8 @@ public class WebSecurityConfig {
 
     @Bean //(name = BeanIds.SPRING_SECURITY_FILTER_CHAIN)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(a -> a
-                .antMatchers("/actuator/health")
+        http.authorizeHttpRequests(a -> a
+                .requestMatchers("/actuator/health")
                 .permitAll()
                 .anyRequest()
                 .denyAll());

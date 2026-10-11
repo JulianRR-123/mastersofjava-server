@@ -1,0 +1,6 @@
+{
+  "pom.xml": "1e8d369c6cc8d1afa21aa262d226bab8449e55a9624eca763da478739749de94",
+  ".github/workflows/publish-images.yml": "774dc1a4073eba958f251dfbd57a82ddc00ff17b19579a1ba9da508b143298fb",
+  "src/deploy/docker-compose/java-base/Dockerfile": "6874265f00791b47c85b4b036b03eeab3797091df40f50ef53bf9acebb504920",
+  "src/deploy/docker-compose/java-base/buildkitd.toml": "656b6c17ecf460536b43e1ad68d66d3e1c86460a35d3e056653285289d88e913"
+}

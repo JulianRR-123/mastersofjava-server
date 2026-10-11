@@ -1,8 +1,8 @@
 # Server Compose configuration
 
-This standalone configuration pulls the controller and worker from GHCR. It has
-no local build step and must be used on its own, without merging the all-in-one
-development file. Both application images use the same published SHA tag.
+This standalone configuration pulls the controller and worker from GHCR and
+builds the patched Caddy proxy locally with Docker. Use it on its own, without
+merging the all-in-one development file. Both application images use the same published SHA tag.
 
 ## Quick start: run the current setup
 
@@ -10,8 +10,9 @@ For local HTTP testing through the same proxy, use [Running locally](#running-lo
 
 These steps are for a new installation using the default HTTPS domains. You need
 Docker with Compose 2.17 or newer, Python 3, and published controller/worker images.
-Caddy handles HTTPS and certificate renewal. Keycloak still runs with `start-dev`;
-production authentication configuration remains task 15.
+Caddy handles HTTPS and certificate renewal. Keycloak runs in production mode
+with `start`; participant accounts are created by organizers. Keycloak administration
+is private and reached through an SSH tunnel.
 For an existing installation, keep its `.env` and data and read
 [Moving an existing installation](#moving-an-existing-installation) first.
 
@@ -62,10 +63,11 @@ For an existing installation, keep its `.env` and data and read
    `.env`. Run it again whenever you change either URL. Successful validation
    produces no output.
 
-6. **Pull the images and start the services:**
+6. **Build the patched proxy, pull the application images, and start the services:**
 
    ```sh
-   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml build --pull proxy
+   docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull --ignore-buildable
    docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
    docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml ps
    ```
@@ -84,8 +86,9 @@ For an existing installation, keep its `.env` and data and read
 
    Replace the domain if you changed it. Open `https://moj.avaj.com` (or your chosen
    MoJ URL), complete the application's first-time setup, and test login/logout.
-   The Keycloak administration console is at `https://auth.avaj.com/admin/`;
-   its credentials are `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD` in `.env`.
+   Use [Private Keycloak administration](#private-keycloak-administration) to access
+   `https://auth.avaj.com/admin/` through an SSH tunnel. On a fresh database, use
+   the bootstrap credentials from `.env`, then create a permanent administrator.
 
 For later starts, repeat the `up` and `ps` commands in step 6. To stop services
 without removing their data, run:
@@ -135,13 +138,16 @@ those resolve to a container's own loopback or directly to Keycloak, bypassing C
 ```sh
 python3 prepare-urls.py --mode restricted
 docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml config --quiet
-docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml build --pull proxy
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml pull --ignore-buildable
 docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml up -d --wait --wait-timeout 600
 python3 verify-oidc.py --issuer http://auth.localhost/realms/moj
 ```
 
-Open http://moj.localhost and complete first-time setup. Keycloak administration
-is at http://auth.localhost/admin/; use the administrator credentials in `.env`.
+Open http://moj.localhost and complete first-time setup. The public authentication
+listener blocks administration even in local HTTP mode. Use the private tunnel
+procedure below from a separate workstation, or Keycloak's `kcadm.sh` inside the
+`auth` container for local administration.
 Test login/logout and `/control` with a user in the `moj` realm's `admin` group.
 For private images, run `docker login ghcr.io` before pulling.
 Use `--mode restricted` whenever regenerating these HTTP URLs.
@@ -159,11 +165,12 @@ certificates and renewal for the configured public domains. The committed
 [Caddy reverse proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
 supports WebSocket upgrades and sets trusted `X-Forwarded-For`, `X-Forwarded-Host`,
 and `X-Forwarded-Proto` values. Client-supplied `Forwarded`, `X-Forwarded-Port`,
-and `X-Forwarded` headers are removed. Keycloak 21.1 uses `KC_PROXY=edge` for TLS
-termination; the controller uses its native forwarded-header support.
-Keycloak health/metrics endpoints are blocked at the proxy; its administration
-console remains available through the authentication domain for initial setup.
-Restrict administration access as part of task 15 before public acceptance.
+and `X-Forwarded` headers are removed. Keycloak 26.8.0 uses
+`KC_PROXY_HEADERS=xforwarded` with HTTP enabled behind Caddy for TLS termination; the controller uses its native forwarded-header support. Caddy supplies the configured MoJ origin port through `X-Forwarded-Port`, and Tomcat reads that header so login/logout redirects also work with explicit ports. Regenerate `generated/urls.env` after updating this configuration.
+The public authentication listener permits only the `moj` realm, static resources
+and discovery paths. The admin console/API, `master` realm and management paths
+return 404. Administration uses a separate listener published on
+`127.0.0.1:8443` and reached through SSH; it keeps health/metrics blocked.
 
 Only Caddy publishes host ports. PostgreSQL, Artemis, controller and Keycloak
 are accessible within the Compose network. Generated hostname aliases let the
@@ -186,6 +193,44 @@ Validate Caddy independently before starting:
 docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml run --rm --no-deps proxy \
   caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
 ```
+
+The controller/worker publishing workflow also builds a patched Java base before
+Jib packages each role. See the [base-image remediation report](../../../../docs/TASK15-BASE-IMAGE-REMEDIATION.md).
+Server operators continue to pull the final application pair; no separate Java-base
+image or application build is required on the deployment server.
+
+## Patched proxy build
+
+Before releasing the application pair, resolve the worker credential/file
+isolation finding and remaining dependency decisions in the
+[Task 15 residual review](../../../../docs/TASK15-RESIDUAL-SECURITY-REVIEW.md).
+The documented container configuration is not yet final security acceptance.
+
+The proxy image `moj-caddy:2.11.7-security1` is built from `proxy/Dockerfile`.
+Upstream Caddy 2.11.7's binary predates the October 8 Go security fixes; the local
+build uses Go 1.26.9, Caddy 2.11.7's standard modules, locked x/net 0.60.0, and
+available Alpine security updates. Go runs inside the builder container; no host
+Go or Java installation is needed. The runtime retains the upstream Caddy image's
+startup command, certificate volumes and configuration paths.
+
+Build before the first start or a proxy update:
+
+```sh
+docker compose --env-file .env --env-file generated/urls.env -f docker-compose.yaml build --pull proxy
+```
+
+`pull --ignore-buildable` fetches only the upstream/application services and avoids
+trying to download the locally built proxy tag. The proxy has `pull_policy: never`;
+copy the whole `proxy/` directory when deploying. Keep the lockfiles and Dockerfile
+with the deployment, and retain the previous proxy image ID for rollback. After a
+new security build, scan the exact image ID and verify Caddy configuration, HTTPS,
+login/logout, WebSockets and private administration before recreation. Rebuild
+with `--no-cache` when refreshing Alpine packages under an unchanged Dockerfile.
+
+The JUnit patch also changes controller bootstrap libraries: on an existing data
+volume, sign in as a MoJ administrator and complete `/bootstrap` once to populate
+`junit-4.13.2.jar`. The worker populates the patched library on startup. Saved
+assignments/users/results remain intact; replace controller and worker together.
 
 ## Environment preparation details
 
@@ -214,7 +259,7 @@ docker compose --env-file .env --env-file generated/urls.env -f docker-compose.y
 packages, authenticate to GHCR before pulling with an account that has package
 read access. No Java or Maven installation is needed on the server.
 
-Keep `Caddyfile`, the Python scripts, `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
+Keep `Caddyfile`, the Python scripts, `proxy/`, `scripts/`, `realms/`, and `healthchecks/` beside `docker-compose.yaml` when copying this directory
 to the server; their mounts are relative to the Compose file. `.env` is ignored
 by Git. Avoid sharing the full output of `docker compose config`, which includes
 resolved credentials.
@@ -227,7 +272,7 @@ Named persistent storage, credentials, and readiness checks are configured.
 Full published-image application testing remains task 14.
 
 Compose consumes the generated URL settings and realm, as described below.
-Keycloak still uses `start-dev`; production authentication remains task 15.
+Keycloak uses production startup (`start`) with the generated external hostname.
 Until DNS and certificate issuance for the selected public origins work,
 controller startup can fail while fetching OIDC discovery. Do not substitute an
 internal issuer to bypass that failure.
@@ -266,7 +311,7 @@ Outputs, ignored by Git and regenerated after every URL change, are:
 
 | File | Contents |
 | --- | --- |
-| `generated/urls.env` | Exact MoJ/authentication origins, `OIDC_ISSUER_URI=<AUTH_BASE_URL>/realms/moj`, Keycloak 21.1's `KC_HOSTNAME_URL=<AUTH_BASE_URL>`, and proxy hostname aliases |
+| `generated/urls.env` | Exact MoJ/authentication origins, `OIDC_ISSUER_URI=<AUTH_BASE_URL>/realms/moj`, Keycloak 26.8.0's `KC_HOSTNAME=<AUTH_BASE_URL>`, proxy hostname aliases, and `MOJ_PROXY_PORT`; `AUTH_ADMIN_PROXY_URL` selects the private listener on port 8443 |
 | `generated/realms/realm-mastersofjava.json` | The `moj` client with matching root/base URL, redirect URIs, web origin, and post-logout redirects |
 
 All client redirects are scoped to the chosen MoJ origin; no global wildcard is
@@ -276,9 +321,10 @@ Pass the URL environment file after `.env` in **every** Compose command, as show
 throughout this guide. Compose requires the generated hostname and issuer; the
 realm bind mount refuses to create a missing source directory. Regenerate after
 editing URLs and before recreating services; generated files are a snapshot.
-The hostname setting follows the [Keycloak 21.1.2 hostname guide](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/hostname.adoc):
-`KC_HOSTNAME_URL` sets the full origin, with strict hostname and backchannel
-settings so all advertised endpoints use that origin. There is no competing
+The hostname setting follows the [Keycloak hostname v2 guide](https://www.keycloak.org/server/hostname):
+`KC_HOSTNAME` sets the full origin, with `KC_HOSTNAME_STRICT=true` and
+`KC_HOSTNAME_BACKCHANNEL_DYNAMIC=false` so all advertised endpoints use that
+origin. There is no competing
 `--hostname` argument. The rendered realm also sets its frontend URL to the same
 authentication origin. The generated import is mounted read-only.
 An existing realm needs the administration update below; startup import does not
@@ -301,7 +347,7 @@ python3 prepare-urls.py --mode restricted
 This derives `http://203.0.113.10:8080` and `http://203.0.113.10:8888`; the example
 IP must be replaced. Numeric IPv6 addresses are also supported. Explicit origins
 override the respective derived URL. Restrict any test HTTP exposure to your own
-administration IP and use disposable credentials. The default proxy only publishes 80/443. This port-based test requires additional
+administration IP and use disposable credentials. The proxy publishes public 80/443 and loopback-only administration on 8443. This port-based test requires additional
 proxy mappings for 8080:8080 and 8888:8888; URL preparation does not open ports.
 For local tests prefer the named HTTP origins in [Running locally](#running-locally).
 Numeric IPs do not use Docker hostname aliases, so containers must reach those
@@ -314,13 +360,13 @@ certificate does not establish trusted HTTPS for a numeric IP URL.
 ## Updating an existing realm
 
 For a new database, startup imports the rendered realm. For an existing `moj`
-realm, [Keycloak 21.1 skips startup import](https://github.com/keycloak/keycloak/blob/21.1.2/docs/guides/server/importExport.adoc).
+realm, [Keycloak skips startup import](https://www.keycloak.org/server/importExport).
 Regenerating JSON or restarting alone does not update saved client settings.
 Back up the IAM database and record the current realm/client URL fields before
 a deliberate change during a maintenance window.
 
 1. Render the new URLs, then recreate `auth` with both environment files. Open its
-   administration console through the configured authentication origin and sign
+   administration console through the private SSH tunnel described below and sign
    in with the current administrator credentials.
 2. Select realm `moj`. In **Realm settings → General**, set **Frontend URL** to
    the exact `AUTH_BASE_URL` shown by preparation and save. This replaces any old
@@ -388,15 +434,16 @@ docker compose --env-file .env --env-file generated/urls.env -f docker-compose.y
 
 PostgreSQL must accept TCP connections before Keycloak starts. Using TCP avoids
 accepting the temporary socket-only database used by the initialization scripts.
-Keycloak 21.1 enables health endpoints on port 8080; its probe requires HTTP 200
-from both `/health/ready` and the `moj` realm's OIDC discovery endpoint. This also
+Keycloak 26.8.0 enables health endpoints on the private management port 9000;
+`keycloak-ready.sh` requires HTTP 200 from `/health/ready` on 9000 and the
+`moj` realm's OIDC discovery endpoint on 8080. Management HTTP is explicit. This also
 rejects a missing realm. The controller waits for PostgreSQL and Keycloak, and
 the worker waits for HTTP 200 from the controller's `/actuator/health` (which
 includes database and JMS health). Startup allowances are 60 seconds for
 PostgreSQL and 120 seconds each for Keycloak and the controller, with retries
 afterward. A successful early probe ends the allowance immediately.
 
-The HTTP probes use `/bin/bash` and its TCP support, verified in Keycloak 21.1
+The HTTP probes use `/bin/bash` and its TCP support, verified in Keycloak 26.8.0
 and the Temurin 21 application images; Keycloak has no `curl` or `wget`.
 `healthchecks/` is mounted read-only. Recheck these tools and the health endpoint
 port when upgrading images; newer Keycloak versions use different health ports.
@@ -459,8 +506,147 @@ interactive administration session such as `psql`'s `\password` command. Update
 the matching `.env` entries and recreate the affected services. Do not rerun the
 initializer or delete volumes to rotate credentials. Update an existing Keycloak
 administrator through Keycloak administration; `KEYCLOAK_ADMIN_PASSWORD` bootstraps
-an account only on first creation. To rotate Artemis credentials, change both
+a temporary account only when the master realm is first created. Create a
+permanent administrator, test it, and delete the temporary bootstrap account.
+The deployment variables map to `KC_BOOTSTRAP_ADMIN_USERNAME` and
+`KC_BOOTSTRAP_ADMIN_PASSWORD`; they do not change an existing administrator.
+To rotate Artemis credentials, change both
 shared `.env` entries and recreate the controller and worker together.
+
+## Upgrading authentication from Keycloak 21.1
+
+Server Compose now pins Keycloak `26.8.0`. Before using the new image, rerun
+`python3 prepare-urls.py` (or the documented restricted-mode command): generated
+URL settings now supply `KC_HOSTNAME`, replacing `KC_HOSTNAME_URL`.
+Keep the existing deployment `.env` variable names for administrator credentials;
+Compose maps them to the newer bootstrap options. An existing master realm does
+not create a replacement administrator from those values.
+
+For an existing database, stop authentication writes and take a consistent backup
+of the `iam` database, required roles, and deployment configuration first. Protect
+backups as credentials. Test the upgrade against a restored copy in a disposable
+installation before changing the real image. Keycloak automatically migrates its
+schema; reverting the image alone is not a rollback. Restore the matching backup
+with the old image if rollback is needed. Startup realm import still skips saved
+realms and does not update their client settings.
+
+The new health check uses private port 9000 for management readiness and port 8080
+for realm discovery. Neither port is published. The image upgrade does not finish
+task 15: the [security remediation report](../../../../docs/TASK15-SECURITY-REMEDIATION.md)
+records completed application/proxy patches and local acceptance; residual OS
+findings and final release/public checks remain. Production startup and the application migration are
+implemented; public-domain acceptance still needs the completed domain setup.
+
+## Private Keycloak administration
+
+Only the public `moj` realm's participant endpoints, resources and discovery are
+proxied through `AUTH_BASE_URL`. Requests for `/admin`, the admin API and
+`/realms/master` return 404. Keycloak's HTTP and management ports stay unpublished.
+Caddy serves a second authentication listener on container port 8443, published
+**only** as `127.0.0.1:8443` on the server. Never change this binding to
+`0.0.0.0`, open it in the provider firewall, or expose it through another proxy.
+This follows [Keycloak's exposed-path recommendations](https://www.keycloak.org/server/reverseproxy).
+
+Rerun `prepare-urls.py` to generate `AUTH_ADMIN_PROXY_URL`, validate Compose and
+recreate `proxy` using both environment files. The private listener uses the same
+hostname and certificate as public authentication. Keep `KC_HOSTNAME` and the
+realm's frontend URL at the public origin; a separate admin hostname is not needed.
+The browser reaches that same origin through SSH, including master-realm login,
+console assets and API calls. Setting a different browser port alone would send
+some redirects back to the blocked public listener.
+
+On a separate administrator workstation, for the default HTTPS authentication
+origin (port 443):
+
+1. Temporarily add `127.0.0.1 auth.avaj.com` to the workstation's hosts file. Use
+   your actual authentication hostname. Leave the MoJ hostname unchanged.
+2. Forward the origin's port to the server's private listener:
+
+   ```sh
+   ssh -N -o ExitOnForwardFailure=yes -L 127.0.0.1:443:127.0.0.1:8443 deployment-user@SERVER_IP
+   ```
+
+   Substitute the deployment SSH user and server IP. Binding local port 443 may
+   require administrator privileges on your OS; use your normal SSH identity
+   when starting an elevated session. The local port must be free. For an
+   explicit authentication origin port, forward that port instead of 443.
+3. Keep SSH running and open `https://auth.avaj.com/admin/`. The certificate must
+   remain trusted and match the configured hostname. Sign in with a permanent
+   Keycloak administrator; use bootstrap credentials only for initial setup.
+4. When finished, close SSH and remove the temporary hosts-file entry. Restore
+   normal DNS resolution so participant authentication works without the tunnel.
+
+For restricted HTTP tests, forward local origin port 80 (or its explicit port)
+to server port 8443 and browse the exact configured HTTP origin. The private
+listener follows the authentication origin's scheme. Public production uses HTTPS.
+Port 8443 is reserved for the private listener and cannot be either public origin's port.
+Use a separate workstation where the local origin port is free.
+
+Check from another machine **without** the tunnel: `/admin/`,
+`/admin/realms/moj`, and `/realms/master/.well-known/openid-configuration` must
+return 404, while `/realms/moj/.well-known/openid-configuration` works. With the
+tunnel, test administrator login and account creation. Confirm the host binds
+8443 to loopback and external access to 8443 fails. These live network and browser
+checks remain pending until the server/domain is available.
+
+## Organizer-managed participant accounts
+
+Participant self-registration is disabled in the server realm template
+(`registrationAllowed: false`). Organizers create participant accounts in the
+`moj` realm. Local development realm templates keep their existing settings.
+
+For a **new database**, rerun `prepare-urls.py` before starting Keycloak so the
+rendered import includes this policy. For an **existing database**, importing or
+recreating Keycloak does not update the saved realm. Sign in to Keycloak
+administration, select **moj** (not **master**), open **Realm settings → Login**,
+set **User registration** to **Off**, and save. This preserves existing accounts.
+
+To create a participant, select **Users → Add user** in the `moj` realm, enter
+the username, email and required profile fields, and save. In **Credentials**, set
+a password with **Temporary** enabled so the participant chooses their own
+password on first login. Confirm membership in the `user` group; it is the
+realm's default group for new users. Only organizers who need elevated MoJ access
+should join `admin` or `game-master`. Keycloak's `master` administrators are
+separate from MoJ participant accounts. Deliver each participant's temporary
+credentials privately.
+
+Verify that the login page has no registration link, direct registration requests
+are rejected, and an organizer-created participant can log in but cannot access
+`/control`. The temporary-password flow lets existing users change their password;
+it does not create accounts. See the
+[Keycloak administration guide](https://www.keycloak.org/docs/latest/server_admin/index.html).
+Use [Private Keycloak administration](#private-keycloak-administration) to perform these actions.
+
+## Keycloak production startup
+
+Server Compose starts Keycloak 26.8.0 with `start --import-realm --http-enabled=true`.
+It uses PostgreSQL and the exact generated `KC_HOSTNAME`, with strict hostname
+configuration and a fixed public backchannel origin. Caddy terminates public TLS
+and overwrites forwarded headers; HTTP is enabled only for the private backend
+connection. Keycloak ports 8080 and 9000 are not published. The management readiness
+probe stays on HTTP inside the Compose network.
+
+The upstream image is used directly. `start` applies the configured database and
+health build options when necessary; `--optimized` is deliberately omitted because
+those options have not been baked into a custom Keycloak image. Allow the startup
+timeout to cover this initialization. No hostname, certificate or credential is
+embedded in an application image. See the
+[production guide](https://www.keycloak.org/server/configuration-production) and
+[container guide](https://www.keycloak.org/server/containers).
+
+For first startup, keep the generated bootstrap credentials and create/test a
+permanent Keycloak administrator before deleting the temporary bootstrap account.
+For a saved database, bootstrap variables do not reset accounts or passwords and
+realm import skips existing realms. Keep the existing database and credentials
+when replacing `start-dev` with `start`; follow the backup procedure above before
+a version upgrade.
+
+Rerun URL preparation and Compose validation, then recreate services using the
+normal quick-start command. Test discovery, application login/logout and
+administrator/participant access through the selected HTTPS origins. Local
+restricted HTTP remains available for development checks, while public deployment
+requires working DNS and trusted HTTPS. The actual public-domain acceptance remains
+pending until the domain is ready.
 
 ## Persistent storage and first-time seeding
 
@@ -538,3 +724,23 @@ For routine recreation, use `docker compose --env-file .env --env-file generated
 up -d --force-recreate`. Named volumes survive container removal and `down`.
 **Never run `docker compose down -v` on the real deployment**, or remove its named
 volumes. Changing project names can make an intact installation appear empty.
+
+## Application upgrade to Spring Boot 4
+
+The controller and worker now build with Spring Boot 4.1.1 on JDK 21. Build and
+publish a new matching controller/worker SHA-tagged pair before deploying these
+source changes; existing GHCR tags still contain the previous application. Set
+`MOJ_IMAGE_TAG` to the new published SHA tag, and rerun `prepare-urls.py` to include
+the updated hostname and proxy-port settings.
+
+Back up PostgreSQL databases, controller `/data`, and deployment configuration
+before updating. The Jakarta/Artemis/Jackson migration changes the application
+libraries and message conversion; replace controller and worker together during
+a maintenance window. Stop the worker before replacing the controller so old and
+new versions do not exchange jobs. Existing Flyway SQL migrations were preserved.
+The isolated PostgreSQL restore test is recorded in
+[the dependency review](../../../../docs/PRODUCTION-DEPENDENCY-REVIEW.md).
+
+Keep the old image references and their matching data backups for rollback. A
+future migration may require restoring the database and `/data` as well as images.
+Final public-domain login, WebSocket and competition acceptance remains task 17.

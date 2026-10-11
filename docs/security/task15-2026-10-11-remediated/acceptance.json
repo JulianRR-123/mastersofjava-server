@@ -1,0 +1,61 @@
+{
+  "checks": [
+    "verified HTTPS discovery with exact public issuer/endpoints",
+    "administrator application login, bootstrap and control access",
+    "participant application login and control denial",
+    "real signed bearer tokens: administrator success, participant denial",
+    "spoofed forwarding headers cannot change login origin/HTTPS port",
+    "public administration/master/management routes blocked, including spoofed headers",
+    "private console HTML, master PKCE login and admin API; same token denied on public listener",
+    "authenticated WSS subscriptions and live assignment-start message",
+    "separate worker compile with successful WSS feedback",
+    "separate worker test with successful WSS feedback",
+    "separate worker submit with successful WSS feedback",
+    "successful submission stored and rankings rendered",
+    "administrator application/OIDC logout returns to configured origin",
+    "participant application/OIDC logout returns to configured origin",
+    "container recreation preserved all nine core table hashes/counts",
+    "saved Keycloak users/roles and application rankings recovered after recreation",
+    "final license-notice proxy rebuild: verified HTTPS/OIDC roles/logout, private admin PKCE/API and authenticated WSS passed"
+  ],
+  "tlsVerification": true,
+  "method": "automated HTTP/OIDC/STOMP, disposable Compose",
+  "recoveryRows": {
+    "users": {
+      "count": 2,
+      "hash": "aca3a88b994fed3e8bba937663e924f2"
+    },
+    "teams": {
+      "count": 1,
+      "hash": "aa7fdbb923c8a8d87069f90ec42de4eb"
+    },
+    "assignments": {
+      "count": 1,
+      "hash": "c4d275e8cb1ecb28aa3b2bb1c3be8da8"
+    },
+    "competitions": {
+      "count": 4,
+      "hash": "e9bf2fb0480a579ecb15d4cad8acd173"
+    },
+    "competition_sessions": {
+      "count": 4,
+      "hash": "55bbb1ac3397903bba2ffbd29ddbfa27"
+    },
+    "assignment_results": {
+      "count": 3,
+      "hash": "dd5f8e9f73c1b8c558bec3555b42b42c"
+    },
+    "submit_attempts": {
+      "count": 3,
+      "hash": "67fce81275a5d7a548d8055a812c2825"
+    },
+    "test_attempts": {
+      "count": 6,
+      "hash": "03933316a0419c97b6304d63e173a422"
+    },
+    "compile_attempts": {
+      "count": 9,
+      "hash": "d4b4465d1eb812167238d3a78c61ee75"
+    }
+  }
+}

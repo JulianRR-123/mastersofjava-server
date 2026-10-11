@@ -2,8 +2,8 @@ package nl.moj.server.runtime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -21,6 +21,17 @@ public class AssignmentResourceTest extends BaseRuntimeTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Test
+    public void testVersionlessWebJars() throws Exception {
+        for (String resource : new String[] { "jquery/jquery.min.js", "bootstrap/css/bootstrap.min.css",
+                "stomp__stompjs/bundles/stomp.umd.min.js" }) {
+            mockMvc.perform(MockMvcRequestBuilders.get("/webjars/" + resource)
+                    .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
+                            .user("participant").roles("USER")))
+                    .andExpect(MockMvcResultMatchers.status().isOk());
+        }
+    }
 
     @Test
     public void testOk() throws Exception {

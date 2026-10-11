@@ -1,0 +1,6 @@
+libfreetype6:arm64	2.13.2+dfsg-1ubuntu0.2
+libpng16-16t64:arm64	1.6.43-5ubuntu0.7
+javac 21.0.12.1
+openjdk version "21.0.12.1" 2026-08-18 LTS
+OpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)

@@ -2,15 +2,23 @@ name: moj-server
 
 services:
   proxy:
-    image: caddy:2.11.2-alpine
+    # Build the released Caddy source with patched Go/HTTP2 dependencies.
+    image: moj-caddy:2.11.7-security1
+    build:
+      context: ./proxy
+    pull_policy: never
     restart: unless-stopped
     mem_limit: 256m
     ports:
       - "${PROXY_HTTP_BIND:-0.0.0.0:80}:80"
       - "${PROXY_HTTPS_BIND:-0.0.0.0:443}:443"
+      # Private administration: SSH tunnel only; never bind to all interfaces.
+      - "127.0.0.1:8443:8443"
     environment:
       MOJ_BASE_URL: "${MOJ_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
       AUTH_BASE_URL: "${AUTH_BASE_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
+      AUTH_ADMIN_PROXY_URL: "${AUTH_ADMIN_PROXY_URL:?Run prepare-urls.py}"
+      MOJ_PROXY_PORT: "${MOJ_PROXY_PORT:?Run prepare-urls.py}"
     volumes:
       - type: bind
         source: ./Caddyfile
@@ -52,29 +60,32 @@ services:
       - moj
 
   auth:
-    image: quay.io/keycloak/keycloak:21.1
+    image: quay.io/keycloak/keycloak:26.8.0
     cpus: 1
     mem_reservation: 512m
     mem_limit: 1g
     restart: unless-stopped
     command:
-      - "start-dev"
+      # Production mode; Caddy terminates public TLS on the private Compose network.
+      - "start"
       - "--import-realm"
       - "--http-enabled=true"
     environment:
-      KEYCLOAK_ADMIN: "${KEYCLOAK_ADMIN:?Set KEYCLOAK_ADMIN in .env}"
-      KEYCLOAK_ADMIN_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD:?Set KEYCLOAK_ADMIN_PASSWORD in .env}"
+      # Keep deployment .env names compatible; map to Keycloak's bootstrap options.
+      KC_BOOTSTRAP_ADMIN_USERNAME: "${KEYCLOAK_ADMIN:?Set KEYCLOAK_ADMIN in .env}"
+      KC_BOOTSTRAP_ADMIN_PASSWORD: "${KEYCLOAK_ADMIN_PASSWORD:?Set KEYCLOAK_ADMIN_PASSWORD in .env}"
       KC_DB: postgres
       KC_DB_USERNAME: iam
       KC_DB_PASSWORD: "${IAM_DB_PASSWORD:?Set IAM_DB_PASSWORD in .env}"
       KC_DB_URL: "jdbc:postgresql://postgresql:5432/iam"
       KC_HEALTH_ENABLED: "true"
-      # Keycloak 21.1 uses proxy=edge for TLS termination and forwarded headers.
-      KC_PROXY: edge
-      # Keycloak 21.1 hostname v1: full external origin, including scheme/port.
-      KC_HOSTNAME_URL: "${KC_HOSTNAME_URL:?Run prepare-urls.py and load generated/urls.env after .env}"
+      # Caddy terminates TLS and overwrites X-Forwarded-* headers.
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_MANAGEMENT_SCHEME: http
+      # Hostname v2: both browser and backchannel use the same external origin.
+      KC_HOSTNAME: "${KC_HOSTNAME:?Run prepare-urls.py and load generated/urls.env after .env}"
       KC_HOSTNAME_STRICT: "true"
-      KC_HOSTNAME_STRICT_BACKCHANNEL: "true"
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "false"
     volumes:
       - type: bind
         source: ./generated/realms
@@ -84,8 +95,8 @@ services:
           create_host_path: false
       - "./healthchecks:/opt/moj-healthchecks:ro"
     healthcheck:
-      # Keycloak 21.1 serves health on 8080; it has Bash but no curl/wget.
-      test: ["CMD", "/bin/bash", "/opt/moj-healthchecks/http-ready.sh", "/health/ready", "/realms/moj/.well-known/openid-configuration"]
+      # Readiness on private management port 9000; realm discovery on 8080.
+      test: ["CMD", "/bin/bash", "/opt/moj-healthchecks/keycloak-ready.sh"]
       interval: 10s
       timeout: 10s
       start_period: 120s
@@ -114,6 +125,7 @@ services:
       SPRING_H2_CONSOLE_ENABLED: "false"
       MOJ_BROKER_AUTHENTICATION_ENABLED: "true"
       SERVER_FORWARD_HEADERS_STRATEGY: native
+      SERVER_TOMCAT_REMOTEIP_PORT_HEADER: X-Forwarded-Port
     volumes:
       - "controller_data:/data"
       - "./healthchecks:/opt/moj-healthchecks:ro"

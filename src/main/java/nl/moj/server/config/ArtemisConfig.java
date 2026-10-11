@@ -3,7 +3,7 @@ package nl.moj.server.config;
 import java.util.Collections;
 
 import org.apache.activemq.artemis.core.config.MetricsConfiguration;
-import org.springframework.boot.autoconfigure.jms.artemis.ArtemisConfigurationCustomizer;
+import org.springframework.boot.artemis.autoconfigure.ArtemisConfigurationCustomizer;
 import org.springframework.context.annotation.Configuration;
 
 import io.micrometer.core.instrument.MeterRegistry;

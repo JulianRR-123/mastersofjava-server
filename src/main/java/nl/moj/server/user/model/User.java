@@ -1,6 +1,6 @@
 package nl.moj.server.user.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.*;
 import nl.moj.server.teams.model.Team;

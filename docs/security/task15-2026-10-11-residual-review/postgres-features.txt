@@ -1,0 +1,14 @@
+postgres
+SET
+moj|<safe/>
+RESET
+iam|f|f|f
+moj|f|f|f
+trust
+trust
+trust
+trust
+trust
+trust
+scram-sha-256
+off

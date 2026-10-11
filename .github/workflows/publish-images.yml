@@ -47,6 +47,21 @@ jobs:
       - name: Build and test the packaged JAR
         run: ./mvnw -B -ntp -Dno-format clean verify
 
+      # The patched base stays in a disposable loopback registry. Only the final
+      # controller/worker pair is published to GHCR, including both architectures.
+      - name: Set up ARM emulation
+        run: docker run --privileged --rm tonistiigi/binfmt@sha256:400a4873b838d1b89194d982c45e5fb3cda4593fbfd7e08a02e76b03b21166f0 --install arm64
+
+      - name: Build patched multi-platform Java base
+        run: |
+          docker run -d --name moj-base-registry -p 127.0.0.1:5001:5000 registry:3@sha256:ddf754342cfc8acc51a56d5d0ab6af06826461864460636d8bd5c546dab2a7b8
+          docker buildx create --name moj-base-builder --driver docker-container \
+            --driver-opt network=host \
+            --buildkitd-config src/deploy/docker-compose/java-base/buildkitd.toml
+          docker buildx build --builder moj-base-builder --pull --no-cache --platform linux/amd64,linux/arm64 \
+            --provenance=false --push -t localhost:5001/moj-java-base:${IMAGE_TAG} \
+            src/deploy/docker-compose/java-base
+
       - name: Refuse to overwrite existing SHA tags
         env:
           REGISTRY_USERNAME: ${{ github.actor }}
@@ -84,7 +99,15 @@ jobs:
         run: |
           ./mvnw -B -ntp -Pregistry-build initialize jib:build@controller jib:build@worker \
             "-Dmoj.image.base=${IMAGE_BASE}" \
-            "-Dmoj.image.tag=${IMAGE_TAG}"
+            "-Dmoj.image.tag=${IMAGE_TAG}" \
+            "-Dmoj.image.jdk=localhost:5001/moj-java-base:${IMAGE_TAG}" \
+            -Djib.allowInsecureRegistries=true
+
+      - name: Remove disposable base registry
+        if: always()
+        run: |
+          docker buildx rm moj-base-builder 2>/dev/null || true
+          docker rm -f -v moj-base-registry 2>/dev/null || true
 
       # This step only runs after BOTH Jib executions succeed.
       - name: Record the published image pair

@@ -16,7 +16,7 @@
 */
 package nl.moj.server.competition.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -19,7 +19,7 @@ package nl.moj.server.test.model;
 import java.time.Instant;
 import java.util.UUID;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.*;
 

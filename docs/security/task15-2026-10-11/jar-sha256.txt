@@ -1,0 +1,1 @@
+c8fd599a3302e6df58e8bd2331a64e87734ae48f70f4060f574c459ae1d0bd51  target/moj-game-server.jar

@@ -1,0 +1,3 @@
+WARNING: A command line option has enabled the Security Manager
+WARNING: The Security Manager is deprecated and will be removed in a future release
+CONFIRMED: bundled policy permits reading a harmless marker from parent process environment

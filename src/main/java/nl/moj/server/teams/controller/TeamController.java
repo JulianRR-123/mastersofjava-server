@@ -2,7 +2,7 @@ package nl.moj.server.teams.controller;
 
 import java.security.Principal;
 
-import javax.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

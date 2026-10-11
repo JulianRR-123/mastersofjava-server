@@ -1,0 +1,26 @@
+[
+  {
+    "reference": "moj-caddy:2.11.7-security1",
+    "id": "sha256:2e86ddcc890ffde761fabf03d6a5b2815ff8e092b1a2c4bb81b9e03d6770ec76",
+    "repoDigests": [
+      "moj-caddy@sha256:2e86ddcc890ffde761fabf03d6a5b2815ff8e092b1a2c4bb81b9e03d6770ec76"
+    ],
+    "created": "2026-10-11T12:44:53.605863329+02:00"
+  },
+  {
+    "reference": "golang:1.26.9-alpine",
+    "id": "sha256:3082400e369fa24d5fc60bca20edab3f6d604e0c5a690ec66b295eff4dd87ade",
+    "repoDigests": [
+      "golang@sha256:3082400e369fa24d5fc60bca20edab3f6d604e0c5a690ec66b295eff4dd87ade"
+    ],
+    "created": "2026-10-08T17:12:34.499152297Z"
+  },
+  {
+    "reference": "caddy:2.11.7-alpine",
+    "id": "sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f",
+    "repoDigests": [
+      "caddy@sha256:d8542f48d34a9cf4e4c11a478865229840e87e4c96ea3f439101f31a5d35f75f"
+    ],
+    "created": "2026-10-05T18:46:32.580264212Z"
+  }
+]

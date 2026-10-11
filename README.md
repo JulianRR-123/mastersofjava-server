@@ -14,6 +14,9 @@ Assignments for previous years can be found at [https://github.com/First8/master
 - [PostgreSQL](https://www.postgresql.org)
 - [Docker (Optional)](https://www.docker.com)
 
+The application uses Spring Boot 4.1.1 with Jakarta APIs and Jackson 3.
+Tracing uses Micrometer; the previous Spring Cloud Sleuth dependency has been removed.
+
 ## Building
 
 If you use SDKMAN, run `sdk env install` once and `sdk env` from the project root to select the JDK in `.sdkmanrc`.
@@ -48,7 +51,9 @@ syntax is rejected when disabled. Run them with the full build above and `JAVA_H
 ## Building Containers
 
 The deployment plan is tracked in [docs/TASKS.md](docs/TASKS.md). Both Jib profiles use the full
-Temurin 21 JDK image `eclipse-temurin:21-jdk-noble`, configured once through `moj.image.jdk`.
+Temurin 21 JDK image `eclipse-temurin:21-jdk-noble` with Ubuntu FreeType/libpng
+security updates applied by [the Java base Dockerfile](src/deploy/docker-compose/java-base/Dockerfile).
+The shared `moj.image.jdk` property defaults to `docker://moj-java-base:21-noble-security1`.
 The default application image tag is `21`; registry releases use `sha-<full-commit-sha>` instead.
 
 Build and test the packaged JAR first:
@@ -66,6 +71,7 @@ trigger that workflow automatically.
 Build the controller and worker into the local Docker daemon:
 
 ```shell
+docker build --pull --no-cache -t moj-java-base:21-noble-security1 src/deploy/docker-compose/java-base
 ./mvnw -B -Pdocker-build initialize jib:dockerBuild@controller jib:dockerBuild@worker
 ```
 
@@ -76,13 +82,25 @@ execution remains available explicitly as `jib:dockerBuild@single`.
 
 The [publishing workflow](.github/workflows/publish-images.yml) runs on pushes to `master` and can
 be started manually from that branch. It runs the verification above, then publishes only the
-controller and worker for `linux/amd64` and `linux/arm64`:
+controller and worker for `linux/amd64` and `linux/arm64`. It first builds the patched
+Java base for both architectures in a temporary loopback registry, then invokes:
 
 ```shell
 ./mvnw -B -Pregistry-build initialize jib:build@controller jib:build@worker \
   -Dmoj.image.base=ghcr.io/julianrr-123/moj \
-  -Dmoj.image.tag=sha-${GITHUB_SHA}
+  -Dmoj.image.tag=sha-${GITHUB_SHA} \
+  -Dmoj.image.jdk=localhost:5001/moj-java-base:sha-${GITHUB_SHA} \
+  -Djib.allowInsecureRegistries=true
 ```
+
+That registry command requires the workflow's base-registry/build steps. Manual
+multi-platform publishers must likewise prepare a patched multi-platform base and
+pass its registry reference through `moj.image.jdk`. The HTTP exception is only
+for the runner's loopback registry; GHCR uses HTTPS. The temporary registry and
+builder are removed after publishing. No separate base image is published to GHCR.
+Rebuild the local base with `--pull --no-cache` before each application release;
+Docker and Jib caches alone do not refresh installed Ubuntu packages. The base build
+checks minimum fixed versions and fails if either fix is unavailable.
 
 The workflow supplies `REGISTRY_USERNAME` from `github.actor` and `REGISTRY_PASSWORD` from its
 automatic `GITHUB_TOKEN`, with `contents: read` and `packages: write`. No personal push token is needed.

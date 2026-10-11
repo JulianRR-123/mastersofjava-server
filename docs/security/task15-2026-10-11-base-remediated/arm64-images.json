@@ -1,0 +1,20 @@
+[
+  {
+    "name": "controller-arm64",
+    "reference": "localhost:5001/moj-test-controller@sha256:53782495386386ede706e92f2d6f911389ae81233b2088a13cfcd885fbec28a3",
+    "id": "sha256:53782495386386ede706e92f2d6f911389ae81233b2088a13cfcd885fbec28a3",
+    "architecture": "arm64",
+    "repoDigests": [
+      "localhost:5001/moj-test-controller@sha256:53782495386386ede706e92f2d6f911389ae81233b2088a13cfcd885fbec28a3"
+    ]
+  },
+  {
+    "name": "worker-arm64",
+    "reference": "localhost:5001/moj-test-worker@sha256:bd8f067b37f7b3bf40cf1e6d3642959d4def9c231360c31f54a24c99e210b362",
+    "id": "sha256:bd8f067b37f7b3bf40cf1e6d3642959d4def9c231360c31f54a24c99e210b362",
+    "architecture": "arm64",
+    "repoDigests": [
+      "localhost:5001/moj-test-worker@sha256:bd8f067b37f7b3bf40cf1e6d3642959d4def9c231360c31f54a24c99e210b362"
+    ]
+  }
+]
